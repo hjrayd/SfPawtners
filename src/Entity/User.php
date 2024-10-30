@@ -41,14 +41,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50)]
     private ?string $pseudo = null;
 
-    #[ORM\Column(length: 150, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatar = null;
 
     #[ORM\Column]
-    private ?bool $ban = null;
+    private ?bool $ban = false;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $registerDate = null;
+
+    public function __construct()
+    {
+        $this->registerDate = new \DateTime();
+    }
 
     public function getId(): ?int
     {
