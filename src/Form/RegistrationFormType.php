@@ -41,20 +41,14 @@ class RegistrationFormType extends AbstractType
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
                 'first_options'  => ['constraints' => [
-                        new NotBlank(['message' => 'Le mot de passe ne peut pas être vide.']),
                         new Regex([
                             'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{12,}$/',
-                            'message' => 'Le mot de passe doit contenir au minimum une majuscule, une minuscule, un chiffre, 12 caractères dont un caractère spécial',
+                            'message' => 'Le mot de passe doit contenir au minimum une majuscule, une minuscule, un chiffre et 12 caractères dont un caractère spécial',
                         ]),
                     ],
                     'label' => 'Password',
                 ],
-                'second_options' => [
-                    'constraints' => [
-                        new NotBlank(['message' => 'Veuillez confirmer votre mot de passe.']),
-                    ],
-                    'label' => 'Repeat Password'
-                ],
+                'second_options' => ['label' => 'Repeat Password'],
                 'mapped' => false,
            
             ])
