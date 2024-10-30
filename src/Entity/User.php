@@ -51,6 +51,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $registerDate = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $google_id = null;
+
     public function __construct()
     {
         $this->registerDate = new \DateTime();
@@ -187,6 +190,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRegisterDate(\DateTimeInterface $registerDate): static
     {
         $this->registerDate = $registerDate;
+
+        return $this;
+    }
+
+    public function getGoogleId(): ?string
+    {
+        return $this->google_id;
+    }
+
+    public function setGoogleId(?string $google_id): static
+    {
+        $this->google_id = $google_id;
 
         return $this;
     }
