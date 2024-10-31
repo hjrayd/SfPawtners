@@ -60,7 +60,7 @@ class Cat
      * @var Collection<int, User>
      */
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'favoriteCats')]
-    private Collection $users;
+    private Collection $userWhoFavorite;
 
 
 
@@ -68,7 +68,7 @@ class Cat
     {
         $this->images = new ArrayCollection();
         $this->catVaccines = new ArrayCollection();
-        $this->users = new ArrayCollection();
+        $this->userWhoFavorite = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -247,15 +247,15 @@ class Cat
     /**
      * @return Collection<int, User>
      */
-    public function getUsers(): Collection
+    public function getUserWhoFavorite(): Collection
     {
-        return $this->users;
+        return $this->userWhoFavorite;
     }
 
     public function addUser(User $user): static
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
+        if (!$this->userWhoFavorite->contains($user)) {
+            $this->userWhoFavorite->add($user);
             $user->addFavoritesCat($this);
         }
 
@@ -264,7 +264,7 @@ class Cat
 
     public function removeUser(User $user): static
     {
-        if ($this->users->removeElement($user)) {
+        if ($this->userWhoFavorite->removeElement($user)) {
             $user->removeFavoritesCat($this);
         }
 

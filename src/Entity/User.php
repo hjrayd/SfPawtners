@@ -86,13 +86,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Cat>
      */
-    #[ORM\ManyToMany(targetEntity: Cat::class, inversedBy: 'users')]
+    #[ORM\ManyToMany(targetEntity: Cat::class, inversedBy: 'userWhoLiked')]
     private Collection $likedCats;
 
     /**
      * @var Collection<int, Cat>
      */
-    #[ORM\ManyToMany(targetEntity: Cat::class, inversedBy: 'users')]
+    #[ORM\ManyToMany(targetEntity: Cat::class, inversedBy: 'userWhoFavorite')]
     private Collection $favoriteCats;
 
 
