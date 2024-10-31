@@ -56,19 +56,21 @@ class Cat
     #[ORM\OneToMany(targetEntity: CatVaccine::class, mappedBy: 'cat', orphanRemoval: true)]
     private Collection $catVaccines;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'favoriteCats')]
-    private Collection $userWhoFavorite;
+    #[ORM\Column]
+    private ?bool $isLiked = null;
 
+    /**
+     * @var Collection<int, Like>
+     */
+    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'cat', orphanRemoval: true)]
+    private Collection $likes;
 
 
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->catVaccines = new ArrayCollection();
-        $this->userWhoFavorite = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -244,28 +246,43 @@ class Cat
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUserWhoFavorite(): Collection
+    public function isLiked(): ?bool
     {
-        return $this->userWhoFavorite;
+        return $this->isLiked;
     }
 
-    public function addUser(User $user): static
+    public function setLiked(bool $isLiked): static
     {
-        if (!$this->userWhoFavorite->contains($user)) {
-            $this->userWhoFavorite->add($user);
-            $user->addFavoritesCat($this);
+        $this->isLiked = $isLiked;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): static
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setCat($this);
         }
 
         return $this;
     }
 
-    public function removeUser(User $user): static
+    public function removeLike(Like $like): static
     {
-        if ($this->userWhoFavorite->removeElement($user)) {
-            $user->removeFavoritesCat($this);
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getCat() === $this) {
+                $like->setCat(null);
+            }
         }
 
         return $this;

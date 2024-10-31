@@ -84,17 +84,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $reviews;
 
     /**
-     * @var Collection<int, Cat>
+     * @var Collection<int, Like>
      */
-    #[ORM\ManyToMany(targetEntity: Cat::class, inversedBy: 'userWhoLiked')]
-    private Collection $likedCats;
-
-    /**
-     * @var Collection<int, Cat>
-     */
-    #[ORM\ManyToMany(targetEntity: Cat::class, inversedBy: 'userWhoFavorite')]
-    private Collection $favoriteCats;
-
+    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $likes;
 
     //on crée un construct de manière à ce que, lorsque l'objet est instancié, sa date d'inscription est automatiquement renseigné avec la date et heure actuelle.
     public function __construct()
@@ -105,8 +98,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->topics = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->reviews = new ArrayCollection();
-        $this->likedCats = new ArrayCollection();
-        $this->favoriteCats = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -395,49 +387,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Cat>
+     * @return Collection<int, Like>
      */
-    public function getLikedCats(): Collection
+    public function getLikes(): Collection
     {
-        return $this->likedCats;
+        return $this->likes;
     }
 
-    public function addLikedCat(Cat $likedCat): static
+    public function addLike(Like $like): static
     {
-        if (!$this->likedCats->contains($likedCat)) {
-            $this->likedCats->add($likedCat);
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeLikedCat(Cat $likedCat): static
+    public function removeLike(Like $like): static
     {
-        $this->likedCats->removeElement($likedCat);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Cat>
-     */
-    public function getFavoriteCats(): Collection
-    {
-        return $this->favoriteCats;
-    }
-
-    public function addFavoriteCat(Cat $favoriteCat): static
-    {
-        if (!$this->favoriteCats->contains($favoriteCat)) {
-            $this->favoriteCats->add($favoriteCat);
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getUser() === $this) {
+                $like->setUser(null);
+            }
         }
-
-        return $this;
-    }
-
-    public function removeFavoriteCat(Cat $favoriteCat): static
-    {
-        $this->favoriteCats->removeElement($favoriteCat);
 
         return $this;
     }
