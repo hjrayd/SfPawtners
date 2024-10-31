@@ -50,9 +50,16 @@ class Cat
     #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'cat', orphanRemoval: true)]
     private Collection $images;
 
+    /**
+     * @var Collection<int, Vaccine>
+     */
+    #[ORM\ManyToMany(targetEntity: Vaccine::class, inversedBy: 'cats')]
+    private Collection $vaccines;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->vaccines = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -194,6 +201,30 @@ class Cat
                 $image->setCat(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Vaccine>
+     */
+    public function getVaccines(): Collection
+    {
+        return $this->vaccines;
+    }
+
+    public function addVaccine(Vaccine $vaccine): static
+    {
+        if (!$this->vaccines->contains($vaccine)) {
+            $this->vaccines->add($vaccine);
+        }
+
+        return $this;
+    }
+
+    public function removeVaccine(Vaccine $vaccine): static
+    {
+        $this->vaccines->removeElement($vaccine);
 
         return $this;
     }
