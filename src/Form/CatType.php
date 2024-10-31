@@ -31,7 +31,7 @@ class CatType extends AbstractType
             ->add('description', TextareaType::class)
             ->add('city', TextType::class)
             ->add('litter', CheckboxType::class, [
-                'label'    => 'Portée ?',
+                'label'    => 'Votre chat a-t-il déjà eu une portée ?',
                 'required' => false
             ])
             ->add('breeds', EntityType::class, [
