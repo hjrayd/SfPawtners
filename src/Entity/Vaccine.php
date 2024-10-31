@@ -18,6 +18,17 @@ class Vaccine
     #[ORM\Column(length: 50)]
     private ?string $vaccineName = null;
 
+    /**
+     * @var Collection<int, CatVaccine>
+     */
+    #[ORM\OneToMany(targetEntity: CatVaccine::class, mappedBy: 'vaccines')]
+    private Collection $catVaccines;
+
+    public function __construct()
+    {
+        $this->catVaccines = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -31,6 +42,36 @@ class Vaccine
     public function setVaccineName(string $vaccineName): static
     {
         $this->vaccineName = $vaccineName;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CatVaccine>
+     */
+    public function getCatVaccines(): Collection
+    {
+        return $this->catVaccines;
+    }
+
+    public function addCatVaccine(CatVaccine $catVaccine): static
+    {
+        if (!$this->catVaccines->contains($catVaccine)) {
+            $this->catVaccines->add($catVaccine);
+            $catVaccine->setVaccines($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCatVaccine(CatVaccine $catVaccine): static
+    {
+        if ($this->catVaccines->removeElement($catVaccine)) {
+            // set the owning side to null (unless already changed)
+            if ($catVaccine->getVaccines() === $this) {
+                $catVaccine->setVaccines(null);
+            }
+        }
 
         return $this;
     }
