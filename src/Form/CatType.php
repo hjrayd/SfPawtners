@@ -12,6 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 
@@ -28,7 +29,7 @@ class CatType extends AbstractType
             ->add('coat', TextType::class)
             ->add('description', TextareaType::class)
             ->add('city', TextType::class)
-            ->add('litter', ChoiceType::class)
+            ->add('litter', TextType::class)
             ->add('user', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'pseudo',
@@ -38,6 +39,7 @@ class CatType extends AbstractType
                 'choice_label' => 'breedName',
                 'multiple' => true,
             ])
+            ->add('Valider', SubmitType::class)
         ;
     }
 

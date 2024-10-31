@@ -71,9 +71,13 @@ class Cat
     #[ORM\ManyToMany(targetEntity: Breed::class, mappedBy: 'cats')]
     private Collection $breeds;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $dateProfile = null;
+
 
     public function __construct()
     {
+        $this->dateProfile = new \DateTime();
         $this->images = new ArrayCollection();
         $this->catVaccines = new ArrayCollection();
         $this->likes = new ArrayCollection();
@@ -310,9 +314,23 @@ class Cat
         return $this;
     }
 
+  
+    public function getDateProfile(): ?\DateTimeInterface
+    {
+        return $this->dateProfile;
+    }
+
+    public function setDateProfile(\DateTimeInterface $dateProfile): static
+    {
+        $this->dateProfile = $dateProfile;
+
+        return $this;
+    }
+
     public function __toString() 
     {
         return $this->name;
     }
+
 
 }
