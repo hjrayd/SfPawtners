@@ -66,4 +66,9 @@ class Like
 
         return $this;
     }
+
+    public function __toString() 
+    {
+        return $this->dateLike;
+    }
 }

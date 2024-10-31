@@ -77,7 +77,9 @@ class Vaccine
         return $this;
     }
 
-   
-
+    public function __toString() 
+    {
+        return $this->vaccineName;
+    }
 
 }
