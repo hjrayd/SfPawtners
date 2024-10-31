@@ -19,6 +19,10 @@ class Image
     #[ORM\Column(length: 50)]
     private ?string $imageAlt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'images')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Cat $cat = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +48,18 @@ class Image
     public function setImageAlt(string $imageAlt): static
     {
         $this->imageAlt = $imageAlt;
+
+        return $this;
+    }
+
+    public function getCat(): ?Cat
+    {
+        return $this->cat;
+    }
+
+    public function setCat(?Cat $cat): static
+    {
+        $this->cat = $cat;
 
         return $this;
     }
