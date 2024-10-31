@@ -28,9 +28,6 @@ class Cat
     #[ORM\Column(length: 50)]
     private ?string $coat = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $breed = null;
-
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
@@ -38,7 +35,11 @@ class Cat
     private ?string $city = null;
 
     #[ORM\Column]
-    private ?bool $litter = null;
+    private ?bool $litter = null;    
+    
+    //on instancie l'objet avec cette valeur comme étant fausse
+    #[ORM\Column]
+    private ?bool $isLiked = false;
 
     #[ORM\ManyToOne(inversedBy: 'cats')]
     #[ORM\JoinColumn(nullable: false)]
@@ -56,8 +57,7 @@ class Cat
     #[ORM\OneToMany(targetEntity: CatVaccine::class, mappedBy: 'cat', orphanRemoval: true)]
     private Collection $catVaccines;
 
-    #[ORM\Column]
-    private ?bool $isLiked = null;
+
 
     /**
      * @var Collection<int, Like>
@@ -65,12 +65,19 @@ class Cat
     #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'cat', orphanRemoval: true)]
     private Collection $likes;
 
+    /**
+     * @var Collection<int, Breed>
+     */
+    #[ORM\ManyToMany(targetEntity: Breed::class, mappedBy: 'cats')]
+    private Collection $breeds;
+
 
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->catVaccines = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->breeds = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -122,18 +129,6 @@ class Cat
     public function setCoat(string $coat): static
     {
         $this->coat = $coat;
-
-        return $this;
-    }
-
-    public function getBreed(): ?string
-    {
-        return $this->breed;
-    }
-
-    public function setBreed(string $breed): static
-    {
-        $this->breed = $breed;
 
         return $this;
     }
@@ -283,6 +278,33 @@ class Cat
             if ($like->getCat() === $this) {
                 $like->setCat(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Breed>
+     */
+    public function getBreeds(): Collection
+    {
+        return $this->breeds;
+    }
+
+    public function addBreed(Breed $breed): static
+    {
+        if (!$this->breeds->contains($breed)) {
+            $this->breeds->add($breed);
+            $breed->addCat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBreed(Breed $breed): static
+    {
+        if ($this->breeds->removeElement($breed)) {
+            $breed->removeCat($this);
         }
 
         return $this;
