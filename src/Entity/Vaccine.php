@@ -21,13 +21,14 @@ class Vaccine
     /**
      * @var Collection<int, CatVaccine>
      */
-    #[ORM\OneToMany(targetEntity: CatVaccine::class, mappedBy: 'vaccines')]
+    #[ORM\OneToMany(targetEntity: CatVaccine::class, mappedBy: 'vaccine', orphanRemoval: true)]
     private Collection $catVaccines;
 
     public function __construct()
     {
         $this->catVaccines = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -58,7 +59,7 @@ class Vaccine
     {
         if (!$this->catVaccines->contains($catVaccine)) {
             $this->catVaccines->add($catVaccine);
-            $catVaccine->setVaccines($this);
+            $catVaccine->setVaccine($this);
         }
 
         return $this;
@@ -68,13 +69,15 @@ class Vaccine
     {
         if ($this->catVaccines->removeElement($catVaccine)) {
             // set the owning side to null (unless already changed)
-            if ($catVaccine->getVaccines() === $this) {
-                $catVaccine->setVaccines(null);
+            if ($catVaccine->getVaccine() === $this) {
+                $catVaccine->setVaccine(null);
             }
         }
 
         return $this;
     }
+
+   
 
 
 }

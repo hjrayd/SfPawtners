@@ -19,11 +19,12 @@ class CatVaccine
 
     #[ORM\ManyToOne(inversedBy: 'catVaccines')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Cat $cats = null;
+    private ?Cat $cat = null;
 
     #[ORM\ManyToOne(inversedBy: 'catVaccines')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Vaccine $vaccines = null;
+    private ?Vaccine $vaccine = null;
+
 
     public function getId(): ?int
     {
@@ -42,27 +43,29 @@ class CatVaccine
         return $this;
     }
 
-    public function getCats(): ?Cat
+    public function getCat(): ?Cat
     {
-        return $this->cats;
+        return $this->cat;
     }
 
-    public function setCats(?Cat $cats): static
+    public function setCat(?Cat $cat): static
     {
-        $this->cats = $cats;
+        $this->cat = $cat;
 
         return $this;
     }
 
-    public function getVaccines(): ?Vaccine
+    public function getVaccine(): ?Vaccine
     {
-        return $this->vaccines;
+        return $this->vaccine;
     }
 
-    public function setVaccines(?Vaccine $vaccines): static
+    public function setVaccine(?Vaccine $vaccine): static
     {
-        $this->vaccines = $vaccines;
+        $this->vaccine = $vaccine;
 
         return $this;
     }
+
+   
 }

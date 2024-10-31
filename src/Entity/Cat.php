@@ -53,7 +53,7 @@ class Cat
     /**
      * @var Collection<int, CatVaccine>
      */
-    #[ORM\OneToMany(targetEntity: CatVaccine::class, mappedBy: 'cats', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: CatVaccine::class, mappedBy: 'cat', orphanRemoval: true)]
     private Collection $catVaccines;
 
     public function __construct()
@@ -217,7 +217,7 @@ class Cat
     {
         if (!$this->catVaccines->contains($catVaccine)) {
             $this->catVaccines->add($catVaccine);
-            $catVaccine->setCats($this);
+            $catVaccine->setCat($this);
         }
 
         return $this;
@@ -227,8 +227,8 @@ class Cat
     {
         if ($this->catVaccines->removeElement($catVaccine)) {
             // set the owning side to null (unless already changed)
-            if ($catVaccine->getCats() === $this) {
-                $catVaccine->setCats(null);
+            if ($catVaccine->getCat() === $this) {
+                $catVaccine->setCat(null);
             }
         }
 
