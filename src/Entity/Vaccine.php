@@ -18,17 +18,6 @@ class Vaccine
     #[ORM\Column(length: 50)]
     private ?string $vaccineName = null;
 
-    /**
-     * @var Collection<int, Cat>
-     */
-    #[ORM\ManyToMany(targetEntity: Cat::class, mappedBy: 'vaccines')]
-    private Collection $cats;
-
-    public function __construct()
-    {
-        $this->cats = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -46,30 +35,5 @@ class Vaccine
         return $this;
     }
 
-    /**
-     * @return Collection<int, Cat>
-     */
-    public function getCats(): Collection
-    {
-        return $this->cats;
-    }
 
-    public function addCat(Cat $cat): static
-    {
-        if (!$this->cats->contains($cat)) {
-            $this->cats->add($cat);
-            $cat->addVaccine($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCat(Cat $cat): static
-    {
-        if ($this->cats->removeElement($cat)) {
-            $cat->removeVaccine($this);
-        }
-
-        return $this;
-    }
 }
