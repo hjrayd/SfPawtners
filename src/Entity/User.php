@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -51,12 +53,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $registerDate = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $google_id = null;
+    /**
+     * @var Collection<int, Cat>
+     */
+    #[ORM\OneToMany(targetEntity: Cat::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $cats;
 
+    //on crée un construct de manière à ce que, lorsque l'objet est instancié, sa date d'inscription est automatiquement renseigné avec la date et heure actuelle.
     public function __construct()
     {
         $this->registerDate = new \DateTime();
+        $this->cats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -194,14 +201,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getGoogleId(): ?string
+    /**
+     * @return Collection<int, Cat>
+     */
+    public function getCats(): Collection
     {
-        return $this->google_id;
+        return $this->cats;
     }
 
-    public function setGoogleId(?string $google_id): static
+    public function addCat(Cat $cat): static
     {
-        $this->google_id = $google_id;
+        if (!$this->cats->contains($cat)) {
+            $this->cats->add($cat);
+            $cat->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCat(Cat $cat): static
+    {
+        if ($this->cats->removeElement($cat)) {
+            // set the owning side to null (unless already changed)
+            if ($cat->getUser() === $this) {
+                $cat->setUser(null);
+            }
+        }
 
         return $this;
     }

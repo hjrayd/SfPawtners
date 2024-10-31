@@ -38,6 +38,10 @@ class Cat
     #[ORM\Column]
     private ?bool $litter = null;
 
+    #[ORM\ManyToOne(inversedBy: 'cats')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -135,6 +139,18 @@ class Cat
     public function setLitter(bool $litter): static
     {
         $this->litter = $litter;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
