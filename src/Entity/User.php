@@ -83,6 +83,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'reviewer')]
     private Collection $reviews;
 
+    /**
+     * @var Collection<int, Cat>
+     */
+    #[ORM\ManyToMany(targetEntity: Cat::class, inversedBy: 'users')]
+    private Collection $likedCats;
+
+    /**
+     * @var Collection<int, Cat>
+     */
+    #[ORM\ManyToMany(targetEntity: Cat::class, inversedBy: 'users')]
+    private Collection $favoriteCats;
+
+
     //on crée un construct de manière à ce que, lorsque l'objet est instancié, sa date d'inscription est automatiquement renseigné avec la date et heure actuelle.
     public function __construct()
     {
@@ -92,6 +105,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->topics = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->reviews = new ArrayCollection();
+        $this->likedCats = new ArrayCollection();
+        $this->favoriteCats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -375,6 +390,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $review->setReviewer(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cat>
+     */
+    public function getLikedCats(): Collection
+    {
+        return $this->likedCats;
+    }
+
+    public function addLikedCat(Cat $likedCat): static
+    {
+        if (!$this->likedCats->contains($likedCat)) {
+            $this->likedCats->add($likedCat);
+        }
+
+        return $this;
+    }
+
+    public function removeLikedCat(Cat $likedCat): static
+    {
+        $this->likedCats->removeElement($likedCat);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cat>
+     */
+    public function getFavoriteCats(): Collection
+    {
+        return $this->favoriteCats;
+    }
+
+    public function addFavoriteCat(Cat $favoriteCat): static
+    {
+        if (!$this->favoriteCats->contains($favoriteCat)) {
+            $this->favoriteCats->add($favoriteCat);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteCat(Cat $favoriteCat): static
+    {
+        $this->favoriteCats->removeElement($favoriteCat);
 
         return $this;
     }
