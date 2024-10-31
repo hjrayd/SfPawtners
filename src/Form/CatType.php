@@ -30,10 +30,6 @@ class CatType extends AbstractType
             ->add('description', TextareaType::class)
             ->add('city', TextType::class)
             ->add('litter', TextType::class)
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'pseudo',
-            ])
             ->add('breeds', EntityType::class, [
                 'class' => Breed::class,
                 'choice_label' => 'breedName',

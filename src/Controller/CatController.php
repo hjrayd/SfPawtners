@@ -32,6 +32,10 @@ class CatController extends AbstractController
     {
         $cat = new Cat();
 
+        //on récupère l'utilisateur directement pour le relié au chat
+        $user = $this->getUser();
+        $cat->setUser($user);
+
         $form = $this->createForm(CatType::class, $cat);
         $form->handleRequest($request);
         if ( $form->isSubmitted() && $form->isValid() ) {
