@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CatController!{% endblock %}
+{% block title %}Liste des chats{% endblock %}
 
 {% block body %}
-<style>
+    <h1> Liste des chats</h1>
 
-</style>
-
-
+        {% for cat in cats %}
+        
+        <li> {{ cat.name }} </li>  <br> 
+       
+        {% endfor %}
 {% endblock %}

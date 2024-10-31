@@ -17,12 +17,12 @@ class CatController extends AbstractController
     #[Route('/cat', name: 'app_cat')]
     public function index(CatRepository $catRepository): Response //On fait passer directement le repository
     {
-        $cats = $catRepository->findBy([], ["dateProfile" => "ASC"]);
+        $cats = $catRepository->findBy([], ["name" => "ASC"]);
 
         //Redirection qui redirige l'utilisateur
         //render permet de faire le lien entre le controller et la vue
         return $this->render('cat/index.html.twig', [
-            'cats' => 'cats',
+            'cats' => $cats,
         ]);
     }
 
@@ -53,7 +53,7 @@ class CatController extends AbstractController
     {
 
         return $this->render('cat/show.html.twig', [
-            'cat' => 'cat'
+            'cat' => $cat
         ]);   
     }
 
