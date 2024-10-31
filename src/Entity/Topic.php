@@ -35,6 +35,10 @@ class Topic
     #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'topic')]
     private Collection $posts;
 
+    #[ORM\ManyToOne(inversedBy: 'topics')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -119,6 +123,18 @@ class Topic
                 $post->setTopic(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }
