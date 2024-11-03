@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil {% endblock %}
+{% block title %} Accueil {% endblock %}
 
 {% block body %}
-    <h1>Home</h1>
-    <nav>
-        <ul class="list-home">
-            <li><a href="{{ path ('new_cat') }}">Ajouter un chat</a></li>
-        </ul>
-    </nav>
+    <h1> Accueil </h1>
+        <h2> Profils des chats </h2>
+            {% for cats in cats %}
+                Nom : {{ cats.name }} <br>
+                Robe : {{ cats.coat }} <br>
+                {% endfor %}
 </div>
 {% endblock %}
