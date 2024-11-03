@@ -13,13 +13,19 @@
     </head>
     <body>
         <header>
-           <nav>
-            <ul>
-                <li><a href="{{ path('app_home')}}"> Accueil </a> <br></li>
-                <li><a href="{{ path('new_cat')}}"> Ajouter un chat </a> <br></li>
-            </ul>
-           </nav>
+            {% if app.user %}
+                <nav>
+                    <ul>
+                        <li><a href="{{ path('app_logout')}}"> Se déconnecter </a> <br></li>
+                        <li><a href="{{ path('app_home')}}"> Accueil </a> <br></li>
+                        <li><a href="{{ path('new_cat')}}"> Ajouter un chat </a> <br></li>
+            {% else %} 
+                    <li><a href="{{ path('app_login')}}"> Se connecter </a> <br></li>
+                </ul>
+                </nav>
+           {% endif %}
         </header>
+
         {% block body %}
         {% endblock %}
     </body>
