@@ -44,7 +44,7 @@ class CatController extends AbstractController
             $entityManager->persist($cat);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_cat');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('cat/new.html.twig' , [

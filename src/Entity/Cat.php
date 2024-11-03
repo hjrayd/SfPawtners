@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\CatRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CatRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: CatRepository::class)]
 class Cat
@@ -23,6 +25,7 @@ class Cat
     private ?string $gender = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\LessThan('today', message: "La date de naissance ne peut pas être future.")]
     private ?\DateTimeInterface $dateBirth = null;
 
     #[ORM\Column(length: 50)]
