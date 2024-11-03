@@ -25,7 +25,13 @@ class CatType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Nom'
             ])
-            ->add('gender', TextType::class, [
+            ->add('gender', ChoiceType::class, [
+                'choices' => [
+                    'Femelle' => 'femelle',
+                    'Mâle' => 'male',
+                ],
+
+                'multiple' => false,
                 'label' => 'Sexe'
             ])
             ->add('dateBirth', DateType::class, [
