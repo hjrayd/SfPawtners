@@ -31,9 +31,10 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Vous devez accepter les conditions d\'utilisation pour vous inscrire',
                     ]),
                 ],
+                'label' => 'J\'accepte les conditions d\'utilisation'
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -46,9 +47,9 @@ class RegistrationFormType extends AbstractType
                             'message' => 'Le mot de passe doit contenir au minimum une majuscule, une minuscule, un chiffre et 12 caractères dont un caractère spécial',
                         ]),
                     ],
-                    'label' => 'Password',
+                    'label' => 'Mot de passe',
                 ],
-                'second_options' => ['label' => 'Repeat Password'],
+                'second_options' => ['label' => 'Confirmer le mot de passe'],
                 'mapped' => false,
            
             ])

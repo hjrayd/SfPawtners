@@ -13,7 +13,12 @@
     </head>
     <body>
         <header>
-           
+           <nav>
+            <ul>
+                <li><a href="{{ path('app_home')}}"> Accueil </a> <br></li>
+                <li><a href="{{ path('new_cat')}}"> Ajouter un chat </a> <br></li>
+            </ul>
+           </nav>
         </header>
         {% block body %}
         {% endblock %}

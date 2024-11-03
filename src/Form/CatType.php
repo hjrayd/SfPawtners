@@ -22,22 +22,32 @@ class CatType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('gender', TextType::class)
+            ->add('name', TextType::class, [
+                'label' => 'Nom'
+            ])
+            ->add('gender', TextType::class, [
+                'label' => 'Sexe'
+            ])
             ->add('dateBirth', DateType::class, [
                 'widget' => 'single_text',
+                'label' => 'Date de naissance'
             ])
-            ->add('coat', TextType::class)
+            ->add('coat', TextType::class, [
+                'label' => 'Robe'
+            ])
             ->add('description', TextareaType::class)
-            ->add('city', TextType::class)
+            ->add('city', TextType::class, [
+                'label' => 'Ville'
+            ])
             ->add('litter', CheckboxType::class, [
-                'label'    => 'Votre chat a-t-il déjà eu une portée ?',
+                'label' => 'Votre chat a-t-il déjà eu une portée ?',
                 'required' => false
             ])
             ->add('breeds', EntityType::class, [
                 'class' => Breed::class,
                 'choice_label' => 'breedName',
                 'multiple' => true,
+                'label' => 'Race(s)'
             ])
             ->add('Valider', SubmitType::class)
         ;
