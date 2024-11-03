@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Détail de {{ cat }} {% endblock %}
+
+{% block body %}
+    <h1> Détail de {{ cat }} </h1>
+            Nom : {{ cat.name }} <br>
+            Robe : {{ cat.coat }} <br>
+            Age: {{ cat.age }} <br>
+            Description: {{ cat.description }} <br> 
+            Proprétaire : {{ cat.user }} <br>
+</div>
+{% endblock %}

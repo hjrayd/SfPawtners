@@ -9,6 +9,7 @@
                 Nom : {{ cats.name }} <br>
                 Robe : {{ cats.coat }} <br>
                 Age: {{ cats.age }} <br>
+                <a href="{{ path('show_cat', {'id' : cats.id} )}}"> Détails </a> <br>
                 {% endfor %}
 </div>
 {% endblock %}
