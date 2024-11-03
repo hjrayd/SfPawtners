@@ -327,6 +327,29 @@ class Cat
         return $this;
     }
 
+    public function getAge(): ?string 
+    {
+       $now = new \DateTime();
+       $interval = $this->dateBirth->diff($now);
+       
+       $year = $interval->y;
+       $month = $interval->m;
+
+       $newAge = '';
+
+       if ($year > 0) {
+        $newAge .= $year. " ans";
+       } else if ($year === 1) {
+        $newAge .=$year. "an";
+       }
+
+       if ($month > 0) {
+        $newAge .= " et " .$month. " mois";
+       }
+
+       return $newAge;
+    }
+
     public function __toString() 
     {
         return $this->name;
