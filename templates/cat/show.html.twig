@@ -4,6 +4,11 @@
 
 {% block body %}
     <h1> Détail de {{ cat }} </h1>
+    {% for image in cat.images %}
+        <li>
+            <img src="{{ asset(image) }}" alt="{{ image.imageAlt }}">
+        </li>
+    {% endfor %}
             Nom : {{ cat.name }} <br>
             Robe : {{ cat.coat }} <br>
             Age: {{ cat.age }} <br>
