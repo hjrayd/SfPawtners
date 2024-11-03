@@ -329,22 +329,31 @@ class Cat
 
     public function getAge(): ?string 
     {
+        //interval entre la date d'aujourd'hui et la date de naissance du chat pour calculer l'âge
        $now = new \DateTime();
        $interval = $this->dateBirth->diff($now);
        
        $year = $interval->y;
        $month = $interval->m;
 
+       //chaine de caractère qui renverra l'âge
        $newAge = '';
 
-       if ($year > 0) {
-        $newAge .= $year. " ans";
+       //si le chat a plus d'un an
+       if ($year > 1) {
+        $newAge .= $year. " ans"; //on met au pluriel
        } else if ($year === 1) {
-        $newAge .=$year. "an";
+        $newAge .=$year. " an"; //si le chat a un an tout pile on met au singulier
        }
 
+       //si le chat a un ou plusieurs mois
        if ($month > 0) {
-        $newAge .= " et " .$month. " mois";
+        //si la chaîne de caractère newAge n'est pas vide on ajout "et"
+        if ($newAge !== '') {
+            $newAge .= " et ";
+        }
+        $newAge .= $month. " mois";
+        
        }
 
        return $newAge;
