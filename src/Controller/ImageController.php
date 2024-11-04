@@ -27,6 +27,7 @@ class ImageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //on récpère l'image uploadé
             $pictures = $form->get('picture')->getData();
 
             //On récupère le chat concerné
