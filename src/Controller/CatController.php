@@ -34,21 +34,32 @@ class CatController extends AbstractController
     public function new(
         Request $request,
         EntityManagerInterface $entityManager,
-        SluggerInterface $slugger,
-        #[Autowire('%pictures_directory%')] string $picturesDirectory
+        SluggerInterface $slugger, // slugger formate les URL pour les simplifer
+        #[Autowire('%pictures_directory%')] string $picturesDirectory // injection de dépendance -> on injecte la dépendance au lieu de la créer dans la classe même
     ): Response {
+
+        //Instanciation d'un objet Cat
         $cat = new Cat();
+
+        //On récupère le User connecté pour ne pas avoir à le renseigner
         $user = $this->getUser();
+
+        //On attribut le user connecté à l'objet Cat
         $cat->setUser($user);
 
+        //On crée une instance de formulaire basé sur l'entité Cat
         $form = $this->createForm(CatType::class, $cat);
+
+        //Gestion de la soumission du formulaire
         $form->handleRequest($request);
 
         // On vérifie que le formulaire a bien été soumis et est valide
         if ($form->isSubmitted() && $form->isValid()) {
+
+            //On récupère les données du formulaire
             $cat = $form->getData();
 
-            // On récupère les images uploadés 
+            // On récupère les images uploadés -> $pictures correspond à l'image qu'on upload
             $pictures = $form->get('images')->getData(); 
 
             //on vérifie que l'on récupère bien un tableau et que les images ont bien été uploadé
@@ -56,7 +67,7 @@ class CatController extends AbstractController
                 foreach ($pictures as $picture) { 
                     if ($picture) {
 
-                        //On crée une nouvelle instance de l'entité Image
+                        //On crée une nouvelle instance de l'entité Image -> $image = nouvel instanciation de l'entité Image
                         $image = new Image(); 
 
                         //On utilise le nom du chat pour créer l'alt automatiquement
@@ -94,15 +105,18 @@ class CatController extends AbstractController
 
             // On persist le chat et les images associés
             $entityManager->persist($cat);
+
+            //On envoie les données dans la base de données
             $entityManager->flush();
 
             return $this->redirectToRoute('app_home'); // Redirection si succès
-        }
+        } else {
 
-        // Si le formulaire n'est pas soumis ou valide, on renvoie la vue du formulaire
-        return $this->render('cat/new.html.twig', [
-            'formAddCat' => $form->createView(),
-        ]);
+            // Si le formulaire n'est pas soumis ou valide, on renvoie la vue du formulaire
+            return $this->render('cat/new.html.twig', [
+                'formAddCat' => $form->createView(),
+            ]);
+        }
     }
 
 
