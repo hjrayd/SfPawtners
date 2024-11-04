@@ -4,6 +4,7 @@ use App\Entity\Cat;
 use App\Entity\Image;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\All;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,10 +23,12 @@ class ImageType extends AbstractType
                 'label' => 'Vos images (JPG/JPEG/GIF/PNG)',
                 'mapped' => false, //ce champ n'existe pas dans notre entité donc unmapped
                 'required' => true,
+                'multiple' => true,
                 'constraints' => [
-                    new File([
-                        
-                        'maxSize' => '5M',
+                    new All([
+                        'constraints' => [
+                            new File([
+                                'maxSize' => '5M',
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/jpg',
@@ -33,6 +36,8 @@ class ImageType extends AbstractType
                             'image/gif'
                         ],
                         'mimeTypesMessage' => 'Veuillez importer une image qui respecte les formats acceptés',
+                            ])
+                        ]
                     ])
                 ]
             ])
