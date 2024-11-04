@@ -14,5 +14,9 @@
             Age: {{ cat.age }} <br>
             Description: {{ cat.description }} <br> 
             Proprétaire : {{ cat.user }} <br>
+            {% for breed in cat.breeds %}
+                Race(s) : {{ breed.breedName }} <br>
+            {% endfor %}
+            
 </div>
 {% endblock %}

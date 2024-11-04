@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Cat;
 use App\Entity\User;
 use App\Entity\Breed;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\All;
@@ -55,9 +56,11 @@ class CatType extends AbstractType
             ])
             ->add('breeds', EntityType::class, [
                 'class' => Breed::class,
+                'choices' => $options['breeds'],
                 'choice_label' => 'breedName',
                 'multiple' => true,
-                'label' => 'Race(s)'
+                'expanded' => false,
+                'label' => 'Race(s)',
             ])
             ->add('images', FileType::class, [
                 'label' => 'Vos images (JPG/JPEG/GIF/PNG)',
@@ -73,6 +76,7 @@ class CatType extends AbstractType
                         'constraints' => [ //on utilise un tableau donc pour éviter que le formulaire attende une valeur de type "string" on encapsule les contraintes pour qu'elles s'appliquent à chaque fichier
                             new File([
                                 'maxSize' => '5M',
+                                "maxSizeMessage" => 'Le fichier est trop volumineux',
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/jpg',
@@ -81,7 +85,8 @@ class CatType extends AbstractType
                         ],
                         'mimeTypesMessage' => 'Veuillez importer une image qui respecte les formats acceptés',
                             ])
-                        ]
+                    ]
+                    
                     ])
                 ]
             ])
@@ -93,6 +98,7 @@ class CatType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Cat::class,
+            'breeds' => [],
         ]);
     }
 }

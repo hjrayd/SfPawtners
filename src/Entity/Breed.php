@@ -58,6 +58,7 @@ class Breed
     {
         if (!$this->cats->contains($cat)) {
             $this->cats->add($cat);
+            $cat->addBreed($this);
         }
 
         return $this;

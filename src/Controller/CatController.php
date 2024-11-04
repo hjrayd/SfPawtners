@@ -6,6 +6,8 @@ use App\Entity\Cat;
 use App\Entity\Image;
 use App\Form\CatType;
 use App\Repository\CatRepository;
+use App\Repository\BreedRepository;
+use App\Repository\ImageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,11 +37,15 @@ class CatController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         SluggerInterface $slugger, // slugger formate les URL pour les simplifer
-        #[Autowire('%pictures_directory%')] string $picturesDirectory // injection de dépendance -> on injecte la dépendance au lieu de la créer dans la classe même
+        #[Autowire('%pictures_directory%')] string $picturesDirectory, // injection de dépendance -> on injecte la dépendance au lieu de la créer dans la classe même
+        BreedRepository $breedRepository,
+        ImageRepository $imageRepository
     ): Response {
 
         //Instanciation d'un objet Cat
         $cat = new Cat();
+
+        $breeds = $breedRepository->findBy([], ['breedName' => 'ASC']);
 
         //On récupère le User connecté pour ne pas avoir à le renseigner
         $user = $this->getUser();
@@ -48,16 +54,24 @@ class CatController extends AbstractController
         $cat->setUser($user);
 
         //On crée une instance de formulaire basé sur l'entité Cat
-        $form = $this->createForm(CatType::class, $cat);
+        $form = $this->createForm(CatType::class, $cat, [
+            'breeds' => $breeds,
+        ]);
 
         //Gestion de la soumission du formulaire
         $form->handleRequest($request);
 
         // On vérifie que le formulaire a bien été soumis et est valide
         if ($form->isSubmitted() && $form->isValid()) {
-
+       
             //On récupère les données du formulaire
             $cat = $form->getData();
+
+            $breedsCat = $form->get('breeds')->getData();
+            foreach ($breedsCat as $breed) {
+                $cat->addBreed($breed);
+                
+            }
 
             // On récupère les images uploadés -> $pictures correspond à l'image qu'on upload
             $pictures = $form->get('images')->getData(); 
@@ -102,13 +116,15 @@ class CatController extends AbstractController
                     }
                 }
             }
+            try {
+                    // On persist le chat et les images associés
+                $entityManager->persist($cat);
 
-            // On persist le chat et les images associés
-            $entityManager->persist($cat);
-
-            //On envoie les données dans la base de données
-            $entityManager->flush();
-
+                //On envoie les données dans la base de données
+                $entityManager->flush();
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'Erreur lors de l\'enregistrement : ' . $e->getMessage());
+            }
             return $this->redirectToRoute('app_home'); // Redirection si succès
         } else {
 
