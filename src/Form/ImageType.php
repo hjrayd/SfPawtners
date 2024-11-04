@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -25,8 +26,12 @@ class ImageType extends AbstractType
                 'required' => true,
                 'multiple' => true,
                 'constraints' => [
+                    new Count([
+                        'max' => 5, // On limite le nombre de fichiers à 5
+                        'maxMessage' => 'Vous ne pouvez pas uploader plus de 5 fichiers.',
+                    ]),
                     new All([
-                        'constraints' => [
+                        'constraints' => [ //on utilise un tableau donc pour éviter que le formulaire attende une valeur de type "string" on encapsule les contraintes pour qu'elles s'appliquent à chaque fichier
                             new File([
                                 'maxSize' => '5M',
                         'mimeTypes' => [
