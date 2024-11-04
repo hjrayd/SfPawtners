@@ -19,7 +19,7 @@ class ImageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('picture', FileType::class, [
+            ->add('images', FileType::class, [
                 'label' => 'Vos images (JPG/JPEG/GIF/PNG)',
                 'mapped' => false, //ce champ n'existe pas dans notre entité donc unmapped
                 'required' => true,

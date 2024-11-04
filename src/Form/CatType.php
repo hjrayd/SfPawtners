@@ -7,9 +7,13 @@ use App\Entity\User;
 use App\Entity\Breed;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\All;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -54,6 +58,32 @@ class CatType extends AbstractType
                 'choice_label' => 'breedName',
                 'multiple' => true,
                 'label' => 'Race(s)'
+            ])
+            ->add('images', FileType::class, [
+                'label' => 'Vos images (JPG/JPEG/GIF/PNG)',
+                'mapped' => false, //ce champ n'existe pas dans notre entité donc unmapped
+                'required' => true,
+                'multiple' => true,
+                'constraints' => [
+                    new Count([
+                        'max' => 5, // On limite le nombre de fichiers à 5
+                        'maxMessage' => 'Vous ne pouvez pas uploader plus de 5 fichiers par chat.',
+                    ]),
+                    new All([
+                        'constraints' => [ //on utilise un tableau donc pour éviter que le formulaire attende une valeur de type "string" on encapsule les contraintes pour qu'elles s'appliquent à chaque fichier
+                            new File([
+                                'maxSize' => '5M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/jpg',
+                            'image/png',
+                            'image/gif'
+                        ],
+                        'mimeTypesMessage' => 'Veuillez importer une image qui respecte les formats acceptés',
+                            ])
+                        ]
+                    ])
+                ]
             ])
             ->add('Valider', SubmitType::class)
         ;
