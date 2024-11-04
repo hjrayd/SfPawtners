@@ -29,6 +29,9 @@ class ImageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $pictures = $form->get('picture')->getData();
 
+            //On récupère le chat concerné
+            $catPicture = $form->get('cat')->getData();
+
             // On vérifie que les images ont bien été uploadé
             if (!empty($pictures) && is_array($pictures)) {
                 foreach ($pictures as $picture) {
@@ -37,9 +40,13 @@ class ImageController extends AbstractController
                         //nouvelle instance pour chaque image uploadé
                         $image = new Image();
 
-                        //on stocke l'alt de notre image dans notre champ imageAlt
-                        $image->setImageAlt($form->get('imageAlt')->getData());
-
+                        if($catPicture) {
+                        //On utilise le nom du chat pour créer l'alt de chaque image
+                        $image->setImageAlt($catPicture->getName());
+                        } else {
+                            $this->addFlash('error', 'Veuillez sélectionner un chat.');
+                            return $this->redirectToRoute('app_image_new'); 
+                        }
                         //on attribue l'image au chat séléctionné dans notre formulaire
                         $image->setCat($form->get('cat')->getData());
 

@@ -19,7 +19,6 @@ class ImageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('imageAlt', TextType::class)
             ->add('picture', FileType::class, [
                 'label' => 'Vos images (JPG/JPEG/GIF/PNG)',
                 'mapped' => false, //ce champ n'existe pas dans notre entité donc unmapped
@@ -28,7 +27,7 @@ class ImageType extends AbstractType
                 'constraints' => [
                     new Count([
                         'max' => 5, // On limite le nombre de fichiers à 5
-                        'maxMessage' => 'Vous ne pouvez pas uploader plus de 5 fichiers.',
+                        'maxMessage' => 'Vous ne pouvez pas uploader plus de 5 fichiers par chat.',
                     ]),
                     new All([
                         'constraints' => [ //on utilise un tableau donc pour éviter que le formulaire attende une valeur de type "string" on encapsule les contraintes pour qu'elles s'appliquent à chaque fichier
