@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Form;
-
 use App\Entity\Cat;
 use App\Entity\Image;
 use Symfony\Component\Form\AbstractType;
@@ -12,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class ImageType extends AbstractType
 {
@@ -37,14 +36,17 @@ class ImageType extends AbstractType
                     ])
                 ]
             ])
+            //->add('removePicture', CheckboxType::class, [
+                //'label' => 'Supprimer',
+                //'required' => false,
+            //])
             ->add('cat', EntityType::class, [
                 'class' => Cat::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
             ->add('Valider', SubmitType::class)
         ;
     }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
