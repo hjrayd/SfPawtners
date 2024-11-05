@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messagerie{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <h1>Messagerie</h1>
+                <p>Boite de réception: </p>
+                <a href="{{path("new_message")}}">Envoyer un message</a> <br>
+                <a href="{{path("app_message")}}">Messagerie</a>
+                {% for message in app.user.received %}
+                    {% if message.isRead == false %}
+                        {% set bold = "fw-bold" %}
+                    {% else %}
+                        {% set bold = "" %}
+                    {% endif %}
+                    <div class="col-3 {{bold}}"><a href="{{path("show_message", {id:message.id}) }}"> {{message.sender.pseudo}} </a>  </div> <br>
+                    
+                {% endfor %}
+        </div>
+    </div>
+{% endblock %}

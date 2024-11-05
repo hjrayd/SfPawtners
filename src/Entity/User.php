@@ -70,12 +70,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $topics;
 
     /**
-     * @var Collection<int, Message>
-     */
-    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'sender')]
-    private Collection $messages;
-
-    /**
      * @var Collection<int, Review>
      */
     #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'reviewer')]
@@ -87,6 +81,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $likes;
 
+    /**
+     * @var Collection<int, Message>
+     */
+    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'sender')]
+    private Collection $sent;
+
+    /**
+     * @var Collection<int, Message>
+     */
+    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'receiver')]
+    private Collection $received;
+
     //on crée un construct de manière à ce que, lorsque l'objet est instancié, sa date d'inscription est automatiquement renseigné avec la date et heure actuelle.
     public function __construct()
     {
@@ -94,9 +100,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->cats = new ArrayCollection();
         $this->posts = new ArrayCollection();
         $this->topics = new ArrayCollection();
-        $this->messages = new ArrayCollection();
         $this->reviews = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->sent = new ArrayCollection();
+        $this->received = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -324,35 +331,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Message>
-     */
-    public function getMessages(): Collection
-    {
-        return $this->messages;
-    }
-
-    public function addMessage(Message $message): static
-    {
-        if (!$this->messages->contains($message)) {
-            $this->messages->add($message);
-            $message->setSender($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMessage(Message $message): static
-    {
-        if ($this->messages->removeElement($message)) {
-            // set the owning side to null (unless already changed)
-            if ($message->getSender() === $this) {
-                $message->setSender(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Review>
@@ -417,5 +395,65 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString() 
     {
         return $this->pseudo;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getSent(): Collection
+    {
+        return $this->sent;
+    }
+
+    public function addSent(Message $sent): static
+    {
+        if (!$this->sent->contains($sent)) {
+            $this->sent->add($sent);
+            $sent->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSent(Message $sent): static
+    {
+        if ($this->sent->removeElement($sent)) {
+            // set the owning side to null (unless already changed)
+            if ($sent->getSender() === $this) {
+                $sent->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getReceived(): Collection
+    {
+        return $this->received;
+    }
+
+    public function addReceived(Message $received): static
+    {
+        if (!$this->received->contains($received)) {
+            $this->received->add($received);
+            $received->setReceiver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReceived(Message $received): static
+    {
+        if ($this->received->removeElement($received)) {
+            // set the owning side to null (unless already changed)
+            if ($received->getReceiver() === $this) {
+                $received->setReceiver(null);
+            }
+        }
+
+        return $this;
     }
 }

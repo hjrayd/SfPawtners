@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messagerie{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <h1>Messagerie</h1>
+                <p>Message avec {{message.sender.pseudo}} </p>
+                <a href="{{path("new_message")}}">Envoyer un message</a> <br>
+                <a href="{{path("app_message")}}">Messagerie</a>
+                    <div class="col-3 {{bold}}"> {{message}} </div> <br>
+                    <div class="col-3 {{bold}}"> {{message.date}} </div> <br>
+                    
+                {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -20,14 +20,22 @@ class Message
     #[ORM\Column(type: Types::TEXT)]
     private ?string $messageContent = null;
 
-    #[ORM\ManyToOne(inversedBy: 'messages')]
+    #[ORM\Column]
+    private ?bool $isRead = false;
+
+    #[ORM\ManyToOne(inversedBy: 'sent')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $sender = null;
 
-    #[ORM\ManyToOne(inversedBy: 'messages')]
+    #[ORM\ManyToOne(inversedBy: 'received')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $receiver = null;
 
+
+    public function __construct() 
+    {
+        $this->messageDate = new \DateTime();
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -53,6 +61,18 @@ class Message
     public function setMessageContent(string $messageContent): static
     {
         $this->messageContent = $messageContent;
+
+        return $this;
+    }
+
+    public function isRead(): ?bool
+    {
+        return $this->isRead;
+    }
+
+    public function setRead(bool $isRead): static
+    {
+        $this->isRead = $isRead;
 
         return $this;
     }
@@ -85,6 +105,13 @@ class Message
     {
         return $this->messageContent;
     }
+
+  
+    public function getDate(): ?string 
+    {
+        return $this->messageDate->format('d.m.Y H:i:s');
+    }
+    
 
 
 }
