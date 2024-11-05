@@ -1,18 +1,13 @@
-{% extends 'base.html.twig' %}
+<h1>Messages de {{ sender.pseudo }}</h1>  {# Assurez-vous que 'username' est une propriété de l'objet User #}
 
-{% block title %}Messagerie{% endblock %}
-
-{% block body %}
-    <div class="row">
-        <div class="col">
-            <h1>Messagerie</h1>
-                <p>Message avec {{message.sender.pseudo}} </p>
-                <a href="{{path("new_message")}}">Envoyer un message</a> <br>
-                <a href="{{path("app_message")}}">Messagerie</a>
-                    <div class="col-3 {{bold}}"> {{message}} </div> <br>
-                    <div class="col-3 {{bold}}"> {{message.date}} </div> <br>
-                    
-                {% endfor %}
-        </div>
-    </div>
-{% endblock %}
+{% if messages is not empty %}
+    <ul>
+        {% for message in messages %}
+            <li>
+                <strong>{{ message.messageContent }}</strong>  {# Remplacez 'content' par le nom de la propriété de message que vous voulez afficher #}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucun message trouvé.</p>
+{% endif %}

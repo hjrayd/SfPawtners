@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Message;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Message>
@@ -16,28 +17,22 @@ class MessageRepository extends ServiceEntityRepository
         parent::__construct($registry, Message::class);
     }
 
-    //    /**
-    //     * @return Message[] Returns an array of Message objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('m.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    //Fonction pour retrouver tous les correspondants avec qui le user passé en paramètre a échangé
+    public function findCorrespondents(User $user): array {
 
-    //    public function findOneBySomeField($value): ?Message
-    //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder(); //Création du queryBuilder pourla requêteD DQL
+
+        $qb = $sub; 
+
+        $qb ->select('DISTINCT u') //On selectionne une seule fois le user
+            ->from('App\Entity\User', 'u')
+            ->innerJoin('App\Entity\Message', 'm', 'WITH', 'm.sender = u OR m.receiver = u')
+            ->where('m.sender = :user OR m.receiver = :user') 
+            ->setParameter('user', $user);
+            
+           
+          $query = $sub->getQuery();
+          return $query->getResult(); //On execute la requête et on retourne le résultat
+    }
 }
