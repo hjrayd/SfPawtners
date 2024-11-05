@@ -23,8 +23,8 @@ class MessageController extends AbstractController
     }
     
     //On gère le formulaire d'envoie de message
-    #[Route('/message/send', name: 'new_message')]
-    public function send(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/message/new', name: 'new_message')]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message);
@@ -38,7 +38,7 @@ class MessageController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash("message", "Votre message a bien été envoyé");
-            return $this->redirectToRoute("app_message");
+            return $this->redirectToRoute("new_message");
         }
 
         
