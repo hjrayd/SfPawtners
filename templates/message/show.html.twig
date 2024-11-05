@@ -1,11 +1,10 @@
-<h1>Messages de {{ sender.pseudo }}</h1>  {# Assurez-vous que 'username' est une propriété de l'objet User #}
+<h1>Messages de {{ sender.pseudo }}</h1> 
 
 {% if messages is not empty %}
     <ul>
         {% for message in messages %}
-            <li>
-                <strong>{{ message.messageContent }}</strong>  {# Remplacez 'content' par le nom de la propriété de message que vous voulez afficher #}
-            </li>
+                {{ message.messageContent }} 
+                {{message.date}} <br>
         {% endfor %}
     </ul>
 {% else %}
