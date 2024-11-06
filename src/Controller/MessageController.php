@@ -81,11 +81,7 @@ class MessageController extends AbstractController
         //On stocke le user connecté dans la variable $user
         $user=$this->getUser();
 
-        //On récupère les messages ou le sender est sender et ou le user et destinataire
-        $messages = $messageRepository->findBy([
-            'sender'=> $sender,
-            'receiver'=> $user,
-        ]);
+        $messages = $messageRepository->findAllMessages($user);
 
         //On affiche le résultat dans notre vue show
         return $this->render('message/show.html.twig', [

@@ -65,6 +65,7 @@ class CatController extends AbstractController
             //On récupère les données du formulaire
             $cat = $form->getData();
  
+            //On récupère les races des chats depuis le formulaire et on les attributs chacune au chat
             $breedsCat = $form->get('breeds')->getData();
             foreach ($breedsCat as $breed) {
                 $cat->addBreed($breed);

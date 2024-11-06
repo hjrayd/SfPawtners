@@ -60,13 +60,16 @@ class MessageRepository extends ServiceEntityRepository
             ->from('App\Entity\Message', 'm')
 
             //On joint les deux deux tables User et Message seulement là ou User et expsditeur ou receveur
-            ->innerJoin('m.sender', 'u')
+            ->innerJoin('m.sender', 'sender')
+            ->innerJoin('m.receiver', 'receiver')
 
             //On filtre les résultat de la requête finale en n'affichant que les messages si le user et expediteur ou receveur
             ->where('m.sender = :user OR m.receiver = :user') 
 
             //On associe la valeur a user passé en paramètre + protection contre injection SQL
-            ->setParameter('message', $message);
+            ->setParameter('user', $user)
+
+            ->orderby('m.messageDate', 'ASC');
     
           $query = $sub->getQuery();
           return $query->getResult(); //On execute la requête et on retourne le résultat

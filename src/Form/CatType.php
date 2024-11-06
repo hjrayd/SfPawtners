@@ -28,31 +28,28 @@ class CatType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom',
-                'data' => "Test"
+                'label' => 'Nom'
                 ])
-                ->add('gender', ChoiceType::class, [
+            ->add('gender', ChoiceType::class, [
                     'choices' => [
                         'Femelle' => 'femelle',
                         'Mâle' => 'male',
                     ],
-                    
                     'multiple' => false,
                     'label' => 'Sexe'
                     ])
-                ->add('dateBirth', DateType::class, [
+            ->add('dateBirth', DateType::class, [
                     'widget' => 'single_text',
                     'label' => 'Date de naissance',
                         
             ])
             ->add('coat', TextType::class, [
                 'label' => 'Robe',
-                'data' => 'test'
                 ])
-                ->add('description', TextareaType::class)
-                ->add('city', TextType::class, [
-                    'label' => 'Ville',
-                    'data' => 'strasbourg'
+
+            ->add('description', TextareaType::class)
+            ->add('city', TextType::class, [
+                    'label' => 'Ville'
             ])
             ->add('litter', CheckboxType::class, [
                 'label' => 'Votre chat a-t-il déjà eu une portée ?',
