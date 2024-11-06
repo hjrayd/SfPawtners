@@ -1,19 +1,25 @@
+{% extends 'base.html.twig' %}
 
+{% block title %}Envoyer un message{% endblock %}
+
+{% block body %}
 <h1> Conversation avec {{ receiver.pseudo}} </h1>
-{% if messages is not empty %}
-    <ul>
-        {% for message in messages %}
-               <strong> {{ message.sender.pseudo}} </strong>
-                {{ message.messageContent }} 
-                {{message.date}} <br>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>Aucun message trouvé.</p>
-{% endif %}
-{{ form_start(formMessage) }}
-{{ form_row(formMessage.messageContent) }}
-{{ form_row(formMessage.Envoyer) }}
-{{ form_end(formMessage) }}
+    <a href="{{path("received_message")}}">Retour à la messagerie -></a>
+    {% if messages is not empty %}
+        <ul>
+            {% for message in messages %}
+                <strong> {{ message.sender.pseudo}} </strong>
+                    {{ message.messageContent }} 
+                    {{message.date}} <br>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun message.</p>
+    {% endif %}
+    {{ form_start(formMessage) }}
+    {{ form_row(formMessage.messageContent) }}
+    {{ form_row(formMessage.Envoyer) }}
+    {{ form_end(formMessage) }}
+{% endblock %}
 
-<a href="{{path("received_message")}}">Retour à la messagerie -></a>
+

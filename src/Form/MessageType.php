@@ -20,18 +20,24 @@ class MessageType extends AbstractType
                 'label' => 'Votre message'
             ]);
             
+            //Si un destinatire est passé en option comme dans notre méthode show
             if (isset($options['receiver'])) {
                 $builder
+                        //Le champ est pré rempli avec le pseudo du destinataire
                     ->add('receiver', EntityType::class, [
                         'class' => User::class,
                         'choice_label' => 'pseudo',
                         'data' => ($options['receiver']),
-                        'attr'=> [
-                            'style' => 'display:none'
+                        "attr" => [
+                            "class" => "d-none"
+                        ],
+                        "label_attr" => [
+                            "class" => "d-none"
                         ]
                     ]);
-            }   else {
+            } else {
 
+                //Si il n'y a pas de destinataire par défaut on choisit un user
                 $builder
                     ->add('receiver', EntityType::class, [
                         'class' => User::class,
@@ -48,7 +54,7 @@ class MessageType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Message::class,
-            'receiver' => null
+            'receiver' => null // si aucun destinataire n'est passé en option il prend la valeur null
         ]);
     }
 }
