@@ -25,11 +25,48 @@ class MessageRepository extends ServiceEntityRepository
 
         $qb = $sub; 
 
-        $qb ->select('DISTINCT u') //On selectionne une seule fois le user
-            ->from('App\Entity\User', 'u')//On crée l'alias et on précise qu'on veut l'objet user de l'entité User
-            ->innerJoin('App\Entity\Message', 'm', 'WITH', 'm.sender = u OR m.receiver = u')//On joint les deux deux tables User et Message seulement là ou User et expsditeur ou receveur
-            ->where('m.sender = :user OR m.receiver = :user') //On filtre les résultat de la requête finale en n'affichant que les messages si le user et expediteur ou receveur
-            ->setParameter('user', $user);//On associe la valeur a user passé en paramètre + protection contre injection SQL
+            //On selectionne une seule fois le user
+        $qb ->select('DISTINCT u')
+
+            //On crée l'alias et on précise qu'on veut l'objet user de l'entité User
+            ->from('App\Entity\User', 'u')
+
+            //On joint les deux deux tables User et Message seulement là ou User et expsditeur ou receveur
+            ->innerJoin('App\Entity\Message', 'm', 'WITH', 'm.sender = u OR m.receiver = u')
+
+            //On filtre les résultat de la requête finale en n'affichant que les messages si le user et expediteur ou receveur
+            ->where('m.sender = :user OR m.receiver = :user') 
+
+            //On associe la valeur a user passé en paramètre + protection contre injection SQL
+            ->setParameter('user', $user);
+    
+          $query = $sub->getQuery();
+          return $query->getResult(); //On execute la requête et on retourne le résultat
+    }
+
+
+    //Fonction pour retrouver tous les messages
+    public function findAllMessages(User $user): array {
+
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder(); //Création du queryBuilder pourla requêteD DQL
+
+        $qb = $sub; 
+
+            //On selectionne une seule fois le user
+        $qb ->select('DISTINCT m')
+
+            //On crée l'alias et on précise qu'on veut l'objet user de l'entité User
+            ->from('App\Entity\Message', 'm')
+
+            //On joint les deux deux tables User et Message seulement là ou User et expsditeur ou receveur
+            ->innerJoin('m.sender', 'u')
+
+            //On filtre les résultat de la requête finale en n'affichant que les messages si le user et expediteur ou receveur
+            ->where('m.sender = :user OR m.receiver = :user') 
+
+            //On associe la valeur a user passé en paramètre + protection contre injection SQL
+            ->setParameter('message', $message);
     
           $query = $sub->getQuery();
           return $query->getResult(); //On execute la requête et on retourne le résultat

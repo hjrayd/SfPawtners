@@ -45,7 +45,7 @@ class CatController extends AbstractController
         //Instanciation d'un objet Cat
         $cat = new Cat();
  
-        $breeds = $breedRepository->findBy([], ['breedName' => 'ASC']);
+        // $breeds = $breedRepository->findBy([], ['breedName' => 'ASC']);
  
         //On récupère le User connecté pour ne pas avoir à le renseigner
         $user = $this->getUser();
@@ -54,9 +54,7 @@ class CatController extends AbstractController
         $cat->setUser($user);
  
         //On crée une instance de formulaire basé sur l'entité Cat
-        $form = $this->createForm(CatType::class, $cat, [
-            'breeds' => $breeds,
-        ]);
+        $form = $this->createForm(CatType::class, $cat);
  
         //Gestion de la soumission du formulaire
         $form->handleRequest($request);
@@ -70,47 +68,48 @@ class CatController extends AbstractController
             $breedsCat = $form->get('breeds')->getData();
             foreach ($breedsCat as $breed) {
                 $cat->addBreed($breed);
+                $breed->addCat($cat);
             }
- 
+
             // On récupère les images uploadés -> $pictures correspond à l'image qu'on upload
             $pictures = $form->get('images')->getData();
- 
+            
             //on vérifie que l'on récupère bien un tableau et que les images ont bien été uploadé
             if (!empty($pictures) && is_array($pictures)) {
  
                 //on parcourt chaque image
                 foreach ($pictures as $picture) {
                     if ($picture) {
- 
+                        
                         //On crée une nouvelle instance de l'entité Image -> $image = nouvel instanciation de l'entité Image
                         $image = new Image();
- 
+                        
                         //On utilise le nom du chat pour créer l'alt automatiquement
                         $image->setImageAlt($cat->getName());
- 
+                        
                         //On établit le lien entre le chat et l'image
                         $image->setCat($cat);
- 
+                        
                         // On renomme chaque fichiers pour éviter les conflits de noms
                         $originalFilename = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
                         $safeFilename = $slugger->slug($originalFilename);
                         $newFilename = $safeFilename . '-' . uniqid() . '.' . $picture->guessExtension();
- 
+                        
                         try {
                             // On déplace le fichier dans le dossier spécifié
                             $picture->move($picturesDirectory, $newFilename);
                         } catch (FileException $e) {
- 
+                            
                             // Si l'upload rencontre un problème on affiche un message d'erreur
                             $this->addFlash('error', 'Erreur lors de l\'upload de l\'image : ' . $e->getMessage());
- 
+                            
                             //Et on redirige vers le formulaire
                             return $this->redirectToRoute('new_cat');
                         }
  
                         //On définit le chemin de l'image
                         $image->setImageLink('/uploads/pictures/' . $newFilename);
- 
+                        
                         // On persist l'image et on ajoute l'image au chat spécifié
                         $entityManager->persist($image);
                         $cat->addImage($image);
@@ -118,7 +117,7 @@ class CatController extends AbstractController
                 }
             }
             try {
-                    // On persist le chat et les images associés
+                // On persist le chat et les images associés
                 $entityManager->persist($cat);
                 //On envoie les données dans la base de données
                 $entityManager->flush();

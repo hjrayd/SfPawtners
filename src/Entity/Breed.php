@@ -21,7 +21,7 @@ class Breed
     /**
      * @var Collection<int, Cat>
      */
-    #[ORM\ManyToMany(targetEntity: Cat::class, inversedBy: 'breeds')]
+    #[ORM\ManyToMany(targetEntity: Cat::class, inversedBy: 'breeds', cascade: ['persist'])]
     private Collection $cats;
 
     public function __construct()

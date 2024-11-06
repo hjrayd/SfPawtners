@@ -28,27 +28,31 @@ class CatType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom'
-            ])
-            ->add('gender', ChoiceType::class, [
-                'choices' => [
-                    'Femelle' => 'femelle',
-                    'Mâle' => 'male',
-                ],
-
-                'multiple' => false,
-                'label' => 'Sexe'
-            ])
-            ->add('dateBirth', DateType::class, [
-                'widget' => 'single_text',
-                'label' => 'Date de naissance'
+                'label' => 'Nom',
+                'data' => "Test"
+                ])
+                ->add('gender', ChoiceType::class, [
+                    'choices' => [
+                        'Femelle' => 'femelle',
+                        'Mâle' => 'male',
+                    ],
+                    
+                    'multiple' => false,
+                    'label' => 'Sexe'
+                    ])
+                ->add('dateBirth', DateType::class, [
+                    'widget' => 'single_text',
+                    'label' => 'Date de naissance',
+                        
             ])
             ->add('coat', TextType::class, [
-                'label' => 'Robe'
-            ])
-            ->add('description', TextareaType::class)
-            ->add('city', TextType::class, [
-                'label' => 'Ville'
+                'label' => 'Robe',
+                'data' => 'test'
+                ])
+                ->add('description', TextareaType::class)
+                ->add('city', TextType::class, [
+                    'label' => 'Ville',
+                    'data' => 'strasbourg'
             ])
             ->add('litter', CheckboxType::class, [
                 'label' => 'Votre chat a-t-il déjà eu une portée ?',
@@ -56,7 +60,6 @@ class CatType extends AbstractType
             ])
             ->add('breeds', EntityType::class, [
                 'class' => Breed::class,
-                'choices' => $options['breeds'],
                 'choice_label' => 'breedName',
                 'multiple' => true,
                 'expanded' => false,

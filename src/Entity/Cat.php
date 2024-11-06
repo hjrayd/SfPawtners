@@ -71,7 +71,7 @@ class Cat
     /**
      * @var Collection<int, Breed>
      */
-    #[ORM\ManyToMany(targetEntity: Breed::class, mappedBy: 'cats')]
+    #[ORM\ManyToMany(targetEntity: Breed::class, mappedBy: 'cats', cascade: ['persist'])]
     private Collection $breeds;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
