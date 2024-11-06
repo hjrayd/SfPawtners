@@ -75,17 +75,21 @@ class MessageController extends AbstractController
     public function show($id, EntityManagerInterface $entityManager, MessageRepository $messageRepository, Request $request): Response
     {
 
-        //On interroge la BDD via le repository User avec la méthode find pour trouver le user correspondant a l'ID sur lequel on a cliqué
+        //On interroge la BDD pour associer le paramètre receiver à $id
         $receiver = $entityManager->getRepository(User::class)->find($id);
 
         //On stocke le user connecté dans la variable $user
         $user=$this->getUser();
 
+        //On utilise notre requête DQL pour afficher tous les messages entre deux userss
         $messages = $messageRepository->findAllMessages($user, $receiver);
 
+        //Instanciation d'un nouvel objet message
         $message = new Message();
+
+        //On crée le formulaire
         $form = $this->createForm(MessageType::class, $message, [
-            'receiver' => $receiver //on passe le receiver en option
+            'receiver' => $receiver //on passe le receiver en option pour notre formulaire dans une conversation
         ]);
 
         $form ->handleRequest($request);
@@ -95,6 +99,8 @@ class MessageController extends AbstractController
 
             //On attribut à l'expediteur du message l'id du user connecté
             $message->setSender($this->getUser());
+
+            //On attribue au receiver le user passé en paramètre de la fonction 
             $message->setReceiver($receiver);
 
 
@@ -102,13 +108,14 @@ class MessageController extends AbstractController
             $entityManager->persist($message);
             $entityManager->flush();
            
+            //On redirige vers la conversation avec le user dont l'id et passé en paramètre
             return $this->redirectToRoute("show_message", ['id' => $id]);
         }
 
 
         //On affiche le résultat dans notre vue show
+        //On retourne les messages et le destinataire
         return $this->render('message/show.html.twig', [
-    
             'receiver' => $receiver,
             'messages' => $messages, 
             'formMessage' => $form->createView(),

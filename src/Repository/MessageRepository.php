@@ -53,26 +53,25 @@ class MessageRepository extends ServiceEntityRepository
 
         $qb = $sub; 
 
-            //On selectionne une seule fois le user
-        $qb ->select('DISTINCT m')
-
-            //On crée l'alias et on précise qu'on veut l'objet user de l'entité User
+            //On selectione tous les messages
+        $qb ->select('m')
             ->from('App\Entity\Message', 'm')
 
-            //On joint les deux deux tables User et Message seulement là ou User et expsditeur ou receveur
+            //On joint les table User et Message 
             ->innerJoin('m.sender', 'sender')
             ->innerJoin('m.receiver', 'receiver')
 
-            //On filtre les résultat de la requête finale en n'affichant que les messages si le user et expediteur ou receveur
+            //Là où notre :user est receiver et $id = sender OU :user = sender et $id = receiver
             ->where('
             (m.sender = :user AND m.receiver = :receiver)
             OR (m.sender = :receiver AND m.receiver = :user)
         ')
 
-            //On associe la valeur a user passé en paramètre + protection contre injection SQL
+            //On associe les valeurs aux paramètres user et receiver + protection contre injection SQL
             ->setParameter('user', $user)
             ->setParameter('receiver', $receiver)
 
+            //Tri des messages par ordre croissant pour avoir les plus récents en bas
             ->orderby('m.messageDate', 'ASC');
     
           $query = $sub->getQuery();
