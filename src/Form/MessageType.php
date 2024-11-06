@@ -16,19 +16,39 @@ class MessageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('messageContent', TextareaType::class)
-            ->add('receiver', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'pseudo',
-            ])
-            ->add('Envoyer', SubmitType::class)
-        ;
+            ->add('messageContent', TextareaType::class,[
+                'label' => 'Votre message'
+            ]);
+            
+            if (isset($options['receiver'])) {
+                $builder
+                    ->add('receiver', EntityType::class, [
+                        'class' => User::class,
+                        'choice_label' => 'pseudo',
+                        'data' => ($options['receiver']),
+                        'attr'=> [
+                            'style' => 'display:none'
+                        ]
+                    ]);
+            }   else {
+
+                $builder
+                    ->add('receiver', EntityType::class, [
+                        'class' => User::class,
+                        'choice_label' => 'pseudo'
+                    ]);
+                }
+
+                $builder
+                ->add('Envoyer', SubmitType::class);
+            
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Message::class,
+            'receiver' => null
         ]);
     }
 }

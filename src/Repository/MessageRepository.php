@@ -46,7 +46,7 @@ class MessageRepository extends ServiceEntityRepository
 
 
     //Fonction pour retrouver tous les messages
-    public function findAllMessages(User $user): array {
+    public function findAllMessages(User $user, User $receiver): array {
 
         $em = $this->getEntityManager();
         $sub = $em->createQueryBuilder(); //Création du queryBuilder pourla requêteD DQL
@@ -64,10 +64,14 @@ class MessageRepository extends ServiceEntityRepository
             ->innerJoin('m.receiver', 'receiver')
 
             //On filtre les résultat de la requête finale en n'affichant que les messages si le user et expediteur ou receveur
-            ->where('m.sender = :user OR m.receiver = :user') 
+            ->where('
+            (m.sender = :user AND m.receiver = :receiver)
+            OR (m.sender = :receiver AND m.receiver = :user)
+        ')
 
             //On associe la valeur a user passé en paramètre + protection contre injection SQL
             ->setParameter('user', $user)
+            ->setParameter('receiver', $receiver)
 
             ->orderby('m.messageDate', 'ASC');
     

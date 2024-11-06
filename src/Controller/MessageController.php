@@ -72,21 +72,46 @@ class MessageController extends AbstractController
 
     //Lorsque l'on clique sur un pseudo, on peut voir les messages envoyé par ce user
     #[Route('/message/show/{id}', name: 'show_message')]
-    public function show($id, EntityManagerInterface $entityManager, MessageRepository $messageRepository): Response
+    public function show($id, EntityManagerInterface $entityManager, MessageRepository $messageRepository, Request $request): Response
     {
 
         //On interroge la BDD via le repository User avec la méthode find pour trouver le user correspondant a l'ID sur lequel on a cliqué
-        $sender = $entityManager->getRepository(User::class)->find($id);
+        $receiver = $entityManager->getRepository(User::class)->find($id);
 
         //On stocke le user connecté dans la variable $user
         $user=$this->getUser();
 
-        $messages = $messageRepository->findAllMessages($user);
+        $messages = $messageRepository->findAllMessages($user, $receiver);
+
+        $message = new Message();
+        $form = $this->createForm(MessageType::class, $message, [
+            'receiver' => $receiver //on passe le receiver en option
+        ]);
+
+        $form ->handleRequest($request);
+
+        //Si le formulaire et soumis et valide
+        if($form->isSubmitted() && $form->isValid()) {
+
+            //On attribut à l'expediteur du message l'id du user connecté
+            $message->setSender($this->getUser());
+            $message->setReceiver($receiver);
+
+
+            //On persiste et envoie les données en BDD
+            $entityManager->persist($message);
+            $entityManager->flush();
+           
+            return $this->redirectToRoute("show_message", ['id' => $id]);
+        }
+
 
         //On affiche le résultat dans notre vue show
         return $this->render('message/show.html.twig', [
-            'sender' => $sender,
-            'messages' => $messages
+    
+            'receiver' => $receiver,
+            'messages' => $messages, 
+            'formMessage' => $form->createView(),
         ]);
     }
 
