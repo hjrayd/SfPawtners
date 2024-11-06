@@ -20,7 +20,7 @@ class MessageType extends AbstractType
                 'label' => 'Votre message'
             ]);
             
-            //Si un destinatire est passé en option comme dans notre méthode show
+            //Si un destinataire est passé en option comme dans notre méthode show
             if (isset($options['receiver'])) {
                 $builder
                         //Le champ est pré rempli avec le pseudo du destinataire
@@ -28,6 +28,8 @@ class MessageType extends AbstractType
                         'class' => User::class,
                         'choice_label' => 'pseudo',
                         'data' => ($options['receiver']),
+
+                        //On masque le champ et le label
                         "attr" => [
                             "class" => "d-none"
                         ],

@@ -63,8 +63,10 @@ class MessageController extends AbstractController
         //On récupère le user connecté et on le stocke
         $user = $this->getUser();
 
-        //On utilise notre requête DQL pour trouver les correspondants du user
-        $correspondents = $messageRepository->findCorrespondents($user);
+         //On utilise notre requête DQL pour trouver les correspondants du user
+         $correspondents = $messageRepository->findCorrespondents($user);
+
+         //On retourne le résultat avec les correspondants
         return $this->render('message/received.html.twig', [
             'correspondents' => $correspondents,
         ]);
