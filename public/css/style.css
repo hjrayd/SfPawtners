@@ -1,7 +1,5 @@
-h1 {
-    color:red;
-}
 
+/*Cacher le label et le champ dans notre conversation*/
 .d-none {
     display: none;
 }

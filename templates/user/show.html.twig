@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+    <h1>Profil de {{user}} </h1>
+    {{ user.pseudo }}
+
+    <h2>Profil</h2> 
+        {% for cat in user.cats %}
+            {{cat}}
+        {% endfor %}
+
+        {%  if app.user == user %}
+            <h2> Mes informations </h2>
+                {{user.pseudo}} <br>
+                {{user.email}} <br>
+                {{user.registerDateFr}} <br>
+        {% endif %}
+{% endblock %}

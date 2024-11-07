@@ -392,11 +392,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function __toString() 
-    {
-        return $this->pseudo;
-    }
-
     /**
      * @return Collection<int, Message>
      */
@@ -455,5 +450,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function getRegisterDateFr(): ?string
+    {
+        return $this->registerDate->format('d.m.Y');
+    }
+
+    public function __toString() 
+    {
+        return $this->pseudo;
     }
 }
