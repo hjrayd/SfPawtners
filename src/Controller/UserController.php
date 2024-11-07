@@ -24,7 +24,7 @@ class UserController extends AbstractController
     #[Route('/user/{id}', name: 'show_user')]
     public function show(User $user, CatRepository $catRepository): Response {
 
-        // $cats = $user->getCats();
+         $cats = $user->getCats();
 
 
         // foreach($cats as $cat) 
@@ -35,7 +35,7 @@ class UserController extends AbstractController
         
         return $this->render('user/show.html.twig', [
             'user' => $user,
-            //'catImages' => $catImages
+            'cats' => $cats
         ]);
     }
 

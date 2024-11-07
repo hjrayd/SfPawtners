@@ -17,13 +17,17 @@
     <h2> {{ user.pseudo }}</h2>
 
     <h2>Profil(s):</h2> <br>
+
         {% for cat in user.cats %}
+        <div class="cats-user">
             <div class="cat-user">
-                {% for image in cat.images %}
-                    <img src="{{ asset(image) }}" alt="{{ image.imageAlt }}">
-                {% endfor %}
+
+                {# First = filtre qui permet de récupèrer le premier élément d'un tableau #}
+                {% set firstImage = cat.images|first %}
+                    <img src="{{ asset(firstImage) }}" alt="{{ firstImage.imageAlt }}">
                <h3>{{cat}}</h3> <br>
             </div>
+        </div>
            
         {% endfor %}
 
