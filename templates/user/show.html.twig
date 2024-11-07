@@ -3,18 +3,30 @@
 {% block title %}Profil{% endblock %}
 
 {% block body %}
-    <h1>Profil de {{user}} </h1>
-    {{ user.pseudo }}
+    {%  if app.user == user %}
+        <h1>Votre profil </h1>
+    {% else %}
+        <h1>Profil de {{user}}</h1>
+    {% endif %}
 
-    <h2>Profil</h2> 
+    <h2> {{ user.pseudo }}</h2>
+
+    <h2>Profil(s):</h2> <br>
         {% for cat in user.cats %}
-            {{cat}}
+            <div class="cat-user">
+                {% for image in cat.images %}
+                    <img src="{{ asset(image) }}" alt="{{ image.imageAlt }}">
+                {% endfor %}
+               <h3>{{cat}}</h3> <br>
+            </div>
+           
         {% endfor %}
 
         {%  if app.user == user %}
-            <h2> Mes informations </h2>
-                {{user.pseudo}} <br>
-                {{user.email}} <br>
-                {{user.registerDateFr}} <br>
+            <h2> Mes informations: </h2>
+               Mon pseudo : {{user.pseudo}} <br>
+               Mon email : {{user.email}} <br>
+            Date d'inscription : {{user.registerDateFr}} <br>
         {% endif %}
+
 {% endblock %}
