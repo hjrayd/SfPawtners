@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[isGranted("ROLE_USER")]
+
 class HomeController extends AbstractController
 {
     #[Route('/home', name: 'app_home')]
@@ -19,4 +19,6 @@ class HomeController extends AbstractController
             'cats' => $cats
         ]);
     }
+
+    
 }
