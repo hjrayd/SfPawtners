@@ -4,6 +4,7 @@
 
 {% block body %}
     <h1> Détail de {{ cat }} </h1>
+    
     {% for image in cat.images %}
         <li>
             <img src="{{ asset(image) }}" alt="{{ image.imageAlt }}">
@@ -13,9 +14,12 @@
             Robe : {{ cat.coat }} <br>
             Age: {{ cat.age }} <br>
             Description: {{ cat.description }} <br> 
-            Proprétaire : {{ cat.user }} <br>
+            Propriétaire : <a href="{{ path('show_user', {'id':cat.user.id})}}"> {{ cat.user }} </a> <br>
+            Portées : {{ cat.litter }} <br>
+            Race(s) : 
+
             {% for breed in cat.breeds %}
-                Race(s) : {{ breed.breedName }} <br>
+                {{ breed.breedName }} <br>
             {% endfor %}
             
 </div>
