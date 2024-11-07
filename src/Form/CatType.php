@@ -56,6 +56,10 @@ class CatType extends AbstractType
                 'label' => 'Votre chat a-t-il déjà eu une portée ?',
                 'required' => false
             ])
+            ->add('vaccinated', CheckboxType::class, [
+                'label' => 'Vacciné',
+                'required' => false
+            ])
             ->add('breeds', EntityType::class, [
                 'class' => Breed::class,
                 'choice_label' => 'breedName',

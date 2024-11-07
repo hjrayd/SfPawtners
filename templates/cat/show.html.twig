@@ -16,6 +16,7 @@
             Description: {{ cat.description }} <br> 
             Propriétaire : <a href="{{ path('show_user', {'id':cat.user.id})}}"> {{ cat.user }} </a> <br>
             Portée(s) : {{ cat.litterStatut }} <br>
+            Vacciné : {{ cat.vaccinatedStatut }} <br>
             Race(s) : 
 
             {% for breed in cat.breeds %}

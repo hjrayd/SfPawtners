@@ -55,14 +55,6 @@ class Cat
     private Collection $images;
 
     /**
-     * @var Collection<int, CatVaccine>
-     */
-    #[ORM\OneToMany(targetEntity: CatVaccine::class, mappedBy: 'cat', orphanRemoval: true)]
-    private Collection $catVaccines;
-
-
-
-    /**
      * @var Collection<int, Like>
      */
     #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'cat', orphanRemoval: true)]
@@ -77,12 +69,15 @@ class Cat
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateProfile = null;
 
+    #[ORM\Column]
+    private ?bool $vaccinated = null;
+
+  
 
     public function __construct()
     {
         $this->dateProfile = new \DateTime();
         $this->images = new ArrayCollection();
-        $this->catVaccines = new ArrayCollection();
         $this->likes = new ArrayCollection();
         $this->breeds = new ArrayCollection();
     }
@@ -178,7 +173,7 @@ class Cat
 
     public function getLitterStatut(): string
     {
-        if ($this->litter === 1) 
+        if ($this->litter === true) 
         {
             return 'Oui';
         } else {
@@ -222,36 +217,6 @@ class Cat
             // set the owning side to null (unless already changed)
             if ($image->getCat() === $this) {
                 $image->setCat(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, CatVaccine>
-     */
-    public function getCatVaccines(): Collection
-    {
-        return $this->catVaccines;
-    }
-
-    public function addCatVaccine(CatVaccine $catVaccine): static
-    {
-        if (!$this->catVaccines->contains($catVaccine)) {
-            $this->catVaccines->add($catVaccine);
-            $catVaccine->setCat($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCatVaccine(CatVaccine $catVaccine): static
-    {
-        if ($this->catVaccines->removeElement($catVaccine)) {
-            // set the owning side to null (unless already changed)
-            if ($catVaccine->getCat() === $this) {
-                $catVaccine->setCat(null);
             }
         }
 
@@ -375,6 +340,28 @@ class Cat
     public function __toString() 
     {
         return $this->name;
+    }
+
+    public function isVaccinated(): ?bool
+    {
+        return $this->vaccinated;
+    }
+
+    public function setVaccinated(bool $vaccinated): static
+    {
+        $this->vaccinated = $vaccinated;
+
+        return $this;
+    }
+
+    public function getVaccinatedStatut(): string
+    {
+        if ($this->vaccinated === true) 
+        {
+            return 'Oui';
+        } else {
+            return 'Non';
+        }
     }
 
 
