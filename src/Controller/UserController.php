@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\CatRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -21,9 +22,20 @@ class UserController extends AbstractController
 
 
     #[Route('/user/{id}', name: 'show_user')]
-    public function show(User $user): Response {
+    public function show(User $user, CatRepository $catRepository): Response {
+
+        // $cats = $user->getCats();
+
+
+        // foreach($cats as $cat) 
+        // {
+        //     $catImages =  $cat->getImages()->first();
+        // }
+           
+        
         return $this->render('user/show.html.twig', [
-            'user' => $user
+            'user' => $user,
+            //'catImages' => $catImages
         ]);
     }
 
