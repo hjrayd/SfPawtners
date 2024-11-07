@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des users{% endblock %}
-{% block body %}
+    {% block title %}Liste des users{% endblock %}
 
-    {% for user in users %}
-    <li><a href="{{ path('show_user', {'id':user.id})}}"> {{ user }} </a> <br></li>
-    {% endfor %}
-    
+        {% block body %}
 
-{% endblock %}
+            {% if is_granted('ROLE_ADMIN') %}  
+                {% for user in users %}
+                <li><a href="{{ path('show_user', {'id':user.id})}}"> {{ user }} </a> <br></li>
+                {% endfor %}
+            {% endif %}
+            
+        {% endblock %}
+

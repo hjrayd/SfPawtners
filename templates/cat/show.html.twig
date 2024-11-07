@@ -15,7 +15,7 @@
             Age: {{ cat.age }} <br>
             Description: {{ cat.description }} <br> 
             Propriétaire : <a href="{{ path('show_user', {'id':cat.user.id})}}"> {{ cat.user }} </a> <br>
-            Portées : {{ cat.litter }} <br>
+            Portée(s) : {{ cat.litterStatut }} <br>
             Race(s) : 
 
             {% for breed in cat.breeds %}

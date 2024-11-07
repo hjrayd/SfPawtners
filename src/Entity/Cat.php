@@ -176,6 +176,16 @@ class Cat
         return $this;
     }
 
+    public function getLitterStatut(): string
+    {
+        if ($this->litter === 1) 
+        {
+            return 'Oui';
+        } else {
+            return 'Non';
+        }
+    }
+
     public function getUser(): ?User
     {
         return $this->user;
