@@ -63,7 +63,5 @@ class LikeController extends AbstractController
             $this->addFlash('message', sprintf('Vous avez liké %s !', $cat)); //On utilise sprintf pour inclure la variable
             return $this->redirectToRoute('show_cat', ['id' => $cat->getId()]);
         }
-
-
     }
 }

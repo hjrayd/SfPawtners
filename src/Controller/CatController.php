@@ -6,6 +6,7 @@ use App\Entity\Cat;
 use App\Entity\Image;
 use App\Form\CatType;
 use App\Repository\CatRepository;
+use App\Repository\LikeRepository;
 use App\Repository\BreedRepository;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -137,11 +138,24 @@ class CatController extends AbstractController
  
  
     #[Route('/cat/{id}', name: 'show_cat')]
-    public function show(Cat $cat): Response
+    public function show(Cat $cat, LikeRepository $likeRepository): Response
     {
+        $user = $this->getUser();
+        
+        $like = $likeRepository -> findOneBy ([
+            'cat' => $cat,
+            'user' => $user
+        ]);
+        
+        if($like ){
+            $alreadyLike = true;
+        } else {
+            $alreadyLike = false;
+        }
  
         return $this->render('cat/show.html.twig', [
-            'cat' => $cat
+            'cat' => $cat,
+            'alreadyLike' => $alreadyLike
         ]);  
     }
  

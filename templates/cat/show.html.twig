@@ -24,9 +24,12 @@
             {% endfor %}
 
             {#Ajout et suppression d'un like #}
-            {% set likeStatus = app.user.likes|filter(cat => cat.id == cat.id) %} {# On recherche si l'id du chat apparait dans la collection de likes du user connecté #}
-            <a href="{{ path('new_like', {'id': cat.id}) }}" class="btn-like">
-                {{ likeStatus|length > 0 ? 'Unlike' : 'Like' }} {# si le user a déjà liker ce chat la longueur de la collection = 1 donc elle renvoie unlike #}
+            <a href="{{ path('new_like', {'id': cat.id}) }}" class="btn btn-primary">
+                {% if alreadyLike %}
+                    Unlike
+                {% else %}
+                    Like
+                {% endif %}
             </a>
        
         
