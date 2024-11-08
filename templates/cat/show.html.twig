@@ -22,6 +22,13 @@
             {% for breed in cat.breeds %}
                 {{ breed.breedName }} <br>
             {% endfor %}
+
+           
+<form action="{{ path('new_like', { id: cat.id }) }}" method="post" style="display:inline;">
+    <input type="hidden" name="_token" value="{{ csrf_token('like' ~ cat.id) }}">
+    <button type="submit">Like</button>
+</form>
+
             
 </div>
 {% endblock %}

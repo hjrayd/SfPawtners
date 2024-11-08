@@ -26,6 +26,12 @@ class Like
     #[ORM\JoinColumn(nullable: false)]
     private ?Cat $cat = null;
 
+    public function __construct()
+    {
+        $this->dateLike = new \DateTime();
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +75,6 @@ class Like
 
     public function __toString() 
     {
-        return $this->dateLike;
+        return $this->dateLike->format('d.m.Y');
     }
 }
