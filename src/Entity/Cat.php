@@ -39,10 +39,6 @@ class Cat
 
     #[ORM\Column]
     private ?bool $litter = null;    
-    
-    //on instancie l'objet avec cette valeur comme étant fausse
-    #[ORM\Column]
-    private ?bool $isLiked = false;
 
     #[ORM\ManyToOne(inversedBy: 'cats')]
     #[ORM\JoinColumn(nullable: false)]
@@ -219,18 +215,6 @@ class Cat
                 $image->setCat(null);
             }
         }
-
-        return $this;
-    }
-
-    public function isLiked(): ?bool
-    {
-        return $this->isLiked;
-    }
-
-    public function setLiked(bool $isLiked): static
-    {
-        $this->isLiked = $isLiked;
 
         return $this;
     }
