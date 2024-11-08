@@ -24,10 +24,15 @@
             {% endfor %}
 
            
-<form action="{{ path('new_like', { id: cat.id }) }}" method="post" style="display:inline;">
-    <input type="hidden" name="_token" value="{{ csrf_token('like' ~ cat.id) }}">
-    <button type="submit">Like</button>
-</form>
+            
+            {% set likeStatus = app.user.likes|filter(cat => cat.id == cat.id) %}
+            
+            {# Créer un bouton avec un lien vers la route toggleLike qui va ajouter/supprimer le like #}
+            <a href="{{ path('new_like', {'id': cat.id}) }}" class="btn-like">
+                {{ likeStatus|length > 0 ? 'Unlike' : 'Like' }}
+            </a>
+       
+        
 
             
 </div>

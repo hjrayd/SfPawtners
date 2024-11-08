@@ -6,6 +6,7 @@ use App\Entity\Cat;
 use App\Entity\Like;
 use App\Repository\LikeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,10 +23,11 @@ class LikeController extends AbstractController
 
     //Création d'un nouvea like
     #[Route('/like/new/{id}', name: 'new_like')]
-    public function new(Cat $cat, EntityManagerInterface $entityManager, LikeRepository $likeRepository): Response
+    public function new(Cat $cat, EntityManagerInterface $entityManager, LikeRepository $likeRepository, Request $request): Response
     {
         //On récupère le user connecté
         $user = $this->getUser();
+        $request->get('user_cat_id');
 
         if($cat->getUser() === $user) {
             $this->addFlash('message' , 'Vous ne pouvez pas liker votre propre chat');
@@ -33,15 +35,18 @@ class LikeController extends AbstractController
         }
 
         //On vérifie qu'il n'y ai pas déjà un like entre cet utilisateur et le chat
-        $alreadyLike = $likeRepository -> findOneBy ([
+        $like = $likeRepository -> findOneBy ([
             'cat' => $cat,
             'user' => $user
         ]);
 
         //Si il y a déjà eu like un message apparait et ça ne s'enregistre pas en BDD
-        if ($alreadyLike) {
-            $this->addFlash('message' , 'Vous avez déjà liker ce chat.');
-            return $this->redirectToRoute('show_cat', ['id' => $cat->getId()]);
+        if ($like) {
+           $entityManager-> remove($like);
+           $entityManager->flush();
+           $this->addFlash('message' , 'Like supprimé');
+           return $this->redirectToRoute('show_cat', ['id' => $cat->getId()]);
+
         }
 
         else {
