@@ -51,12 +51,6 @@ class Cat
     private Collection $images;
 
     /**
-     * @var Collection<int, Like>
-     */
-    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'cat', orphanRemoval: true)]
-    private Collection $likes;
-
-    /**
      * @var Collection<int, Breed>
      */
     #[ORM\ManyToMany(targetEntity: Breed::class, mappedBy: 'cats', cascade: ['persist'])]
@@ -74,15 +68,21 @@ class Cat
     #[ORM\OneToMany(targetEntity: Matches::class, mappedBy: 'catOne', orphanRemoval: true)]
     private Collection $matches;
 
+    /**
+     * @var Collection<int, Like>
+     */
+    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'catOne', orphanRemoval: true)]
+    private Collection $likes;
+
   
 
     public function __construct()
     {
         $this->dateProfile = new \DateTime();
         $this->images = new ArrayCollection();
-        $this->likes = new ArrayCollection();
         $this->breeds = new ArrayCollection();
         $this->matches = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -226,35 +226,7 @@ class Cat
         return $this;
     }
 
-    /**
-     * @return Collection<int, Like>
-     */
-    public function getLikes(): Collection
-    {
-        return $this->likes;
-    }
-
-    public function addLike(Like $like): static
-    {
-        if (!$this->likes->contains($like)) {
-            $this->likes->add($like);
-            $like->setCat($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLike(Like $like): static
-    {
-        if ($this->likes->removeElement($like)) {
-            // set the owning side to null (unless already changed)
-            if ($like->getCat() === $this) {
-                $like->setCat(null);
-            }
-        }
-
-        return $this;
-    }
+  
 
     /**
      * @return Collection<int, Breed>
@@ -379,6 +351,36 @@ class Cat
             // set the owning side to null (unless already changed)
             if ($match->getCatOne() === $this) {
                 $match->setCatOne(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): static
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setCatOne($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): static
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getCatOne() === $this) {
+                $like->setCatOne(null);
             }
         }
 

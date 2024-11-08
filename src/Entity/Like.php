@@ -20,18 +20,18 @@ class Like
 
     #[ORM\ManyToOne(inversedBy: 'likes')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    private ?Cat $catOne = null;
 
     #[ORM\ManyToOne(inversedBy: 'likes')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Cat $cat = null;
+    private ?Cat $catTwo = null;
+
 
     public function __construct()
     {
         $this->dateLike = new \DateTime();
     }
-
-
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -49,32 +49,27 @@ class Like
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getCatOne(): ?Cat
     {
-        return $this->user;
+        return $this->catOne;
     }
 
-    public function setUser(?User $user): static
+    public function setCatOne(?Cat $catOne): static
     {
-        $this->user = $user;
+        $this->catOne = $catOne;
 
         return $this;
     }
 
-    public function getCat(): ?Cat
+    public function getCatTwo(): ?Cat
     {
-        return $this->cat;
+        return $this->catTwo;
     }
 
-    public function setCat(?Cat $cat): static
+    public function setCatTwo(?Cat $catTwo): static
     {
-        $this->cat = $cat;
+        $this->catTwo = $catTwo;
 
         return $this;
-    }
-
-    public function __toString() 
-    {
-        return $this->dateLike->format('d.m.Y');
     }
 }

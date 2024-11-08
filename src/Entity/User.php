@@ -76,12 +76,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $reviews;
 
     /**
-     * @var Collection<int, Like>
-     */
-    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'user', orphanRemoval: true)]
-    private Collection $likes;
-
-    /**
      * @var Collection<int, Message>
      */
     #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'sender')]
@@ -101,7 +95,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->posts = new ArrayCollection();
         $this->topics = new ArrayCollection();
         $this->reviews = new ArrayCollection();
-        $this->likes = new ArrayCollection();
         $this->sent = new ArrayCollection();
         $this->received = new ArrayCollection();
     }
@@ -356,36 +349,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($review->getReviewer() === $this) {
                 $review->setReviewer(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Like>
-     */
-    public function getLikes(): Collection
-    {
-        return $this->likes;
-    }
-
-    public function addLike(Like $like): static
-    {
-        if (!$this->likes->contains($like)) {
-            $this->likes->add($like);
-            $like->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLike(Like $like): static
-    {
-        if ($this->likes->removeElement($like)) {
-            // set the owning side to null (unless already changed)
-            if ($like->getUser() === $this) {
-                $like->setUser(null);
             }
         }
 

@@ -56,7 +56,7 @@ class MessageController extends AbstractController
         ]);
     }
 
-    //On affiche les messages reçus
+    //On affiche les pseudos des gens a qui on a envoyé/reçu un message
     #[Route('/message/received', name: 'received_message')]
     public function received(EntityManagerInterface $entityManager, MessageRepository $messageRepository): Response
     {
@@ -91,7 +91,7 @@ class MessageController extends AbstractController
 
         //On crée le formulaire
         $form = $this->createForm(MessageType::class, $message, [
-            'receiver' => $receiver //on passe le receiver en option pour notre formulaire dans une conversation
+            'receiver' => $receiver //on passe le receiver en option pour ne pas avoir a choisir un destinataire
         ]);
 
         $form ->handleRequest($request);

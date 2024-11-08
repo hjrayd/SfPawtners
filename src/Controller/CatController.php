@@ -140,22 +140,9 @@ class CatController extends AbstractController
     #[Route('/cat/{id}', name: 'show_cat')]
     public function show(Cat $cat, LikeRepository $likeRepository): Response
     {
-        $user = $this->getUser();
-        
-        $like = $likeRepository -> findOneBy ([
-            'cat' => $cat,
-            'user' => $user
-        ]);
-        
-        if($like ){
-            $alreadyLike = true;
-        } else {
-            $alreadyLike = false;
-        }
  
         return $this->render('cat/show.html.twig', [
-            'cat' => $cat,
-            'alreadyLike' => $alreadyLike
+            'cat' => $cat
         ]);  
     }
  

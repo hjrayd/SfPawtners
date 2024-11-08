@@ -23,17 +23,5 @@
                 {{ breed.breedName }} <br>
             {% endfor %}
 
-            {#Ajout et suppression d'un like #}
-            <a href="{{ path('new_like', {'id': cat.id}) }}" class="btn btn-primary">
-                {% if alreadyLike %}
-                    Unlike
-                {% else %}
-                    Like
-                {% endif %}
-            </a>
-       
-        
-
-            
 </div>
 {% endblock %}
