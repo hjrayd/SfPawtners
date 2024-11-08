@@ -68,6 +68,12 @@ class Cat
     #[ORM\Column]
     private ?bool $vaccinated = null;
 
+    /**
+     * @var Collection<int, Matches>
+     */
+    #[ORM\OneToMany(targetEntity: Matches::class, mappedBy: 'catOne', orphanRemoval: true)]
+    private Collection $matches;
+
   
 
     public function __construct()
@@ -76,6 +82,7 @@ class Cat
         $this->images = new ArrayCollection();
         $this->likes = new ArrayCollection();
         $this->breeds = new ArrayCollection();
+        $this->matches = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -346,6 +353,36 @@ class Cat
         } else {
             return 'Non';
         }
+    }
+
+    /**
+     * @return Collection<int, Matches>
+     */
+    public function getMatches(): Collection
+    {
+        return $this->matches;
+    }
+
+    public function addMatch(Matches $match): static
+    {
+        if (!$this->matches->contains($match)) {
+            $this->matches->add($match);
+            $match->setCatOne($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMatch(Matches $match): static
+    {
+        if ($this->matches->removeElement($match)) {
+            // set the owning side to null (unless already changed)
+            if ($match->getCatOne() === $this) {
+                $match->setCatOne(null);
+            }
+        }
+
+        return $this;
     }
 
 
