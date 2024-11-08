@@ -32,13 +32,13 @@ class LikeController extends AbstractController
             return $this->redirectToRoute('show_cat', ['id' => $cat->getId()]);
         }
 
-        //On vérifié qu'il n'y ai pas déjà un like entre cet utilisateur et le chat
+        //On vérifie qu'il n'y ai pas déjà un like entre cet utilisateur et le chat
         $alreadyLike = $likeRepository -> findOneBy ([
             'cat' => $cat,
             'user' => $user
         ]);
 
-        //Si il y a déjà eu like un message apprait et ça ne s'enregistre pas en BDD
+        //Si il y a déjà eu like un message apparait et ça ne s'enregistre pas en BDD
         if ($alreadyLike) {
             $this->addFlash('message' , 'Vous avez déjà liker ce chat.');
             return $this->redirectToRoute('show_cat', ['id' => $cat->getId()]);
