@@ -25,14 +25,6 @@ class UserController extends AbstractController
     public function show(User $user, CatRepository $catRepository): Response {
 
          $cats = $user->getCats();
-
-
-        // foreach($cats as $cat) 
-        // {
-        //     $catImages =  $cat->getImages()->first();
-        // }
-           
-        
         return $this->render('user/show.html.twig', [
             'user' => $user,
             'cats' => $cats

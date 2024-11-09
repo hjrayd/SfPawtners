@@ -3,8 +3,10 @@
 namespace App\Controller;
  
 use App\Entity\Cat;
+use App\Entity\Like;
 use App\Entity\Image;
 use App\Form\CatType;
+use App\Form\LikeType;
 use App\Repository\CatRepository;
 use App\Repository\LikeRepository;
 use App\Repository\BreedRepository;
@@ -138,12 +140,47 @@ class CatController extends AbstractController
  
  
     #[Route('/cat/{id}', name: 'show_cat')]
-    public function show(Cat $cat, LikeRepository $likeRepository): Response
+    public function show(Cat $cat, LikeRepository $likeRepository, EntityManagerInterface $entityManager, CatRepository $catRepository, Request $request): Response
     {
- 
-        return $this->render('cat/show.html.twig', [
-            'cat' => $cat
-        ]);  
-    }
- 
+
+            // On récupère le user connecté
+            $user = $this->getUser();
+
+            // On récupère tous les chats du user à l'aide du repository
+            $cats = $user->getCats();
+
+            $like = new Like(); //On crée un nouvel objet like
+            
+            // On crée le formulaire
+            $form = $this->createForm(LikeType::class, $like, [
+                'cats' => $cats, // Liste des chats de l'utilisateur qu'on passe en options
+                'catOne' => $cat, // Le chat à liker passé en option également
+            ]);
+
+            // On traite le formulaire
+            $form->handleRequest($request);
+
+            //Si il est soumit et valide
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                
+                $like->setCatOne($cat); // On attribue au $catOne dans Like le chat qu'on like
+                $catTwo = $form->get('catTwo')->getData(); // On récupère le chat qu'on a choisit dans la liste
+
+                
+                $like->setCatTwo($catTwo); //On attribut à $catTwo le chat qu'on a choisit
+                $entityManager->persist($like); //On persist l'objet et on le stocke en BDD
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Vous avez liké ce chat !'); //Message de succès
+                return $this->redirectToRoute('show_cat', ['id' => $cat->getId()]); // On redirige vers la même page
+            }
+
+            //On rend le formulaire dans la vue et le chat dont l'id est passé dans l'URL
+            return $this->render('cat/show.html.twig', [
+                'cat' => $cat,
+                'form' => $form->createView(),
+            ]);
 }
+}
+ 
