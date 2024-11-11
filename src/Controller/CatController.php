@@ -166,21 +166,38 @@ class CatController extends AbstractController
                 
                 $like->setCatOne($cat); // On attribue au $catOne dans Like le chat qu'on like
                 $catTwo = $form->get('catTwo')->getData(); // On récupère le chat qu'on a choisit dans la liste
-
-                
                 $like->setCatTwo($catTwo); //On attribut à $catTwo le chat qu'on a choisit
+
+                //On vérifie que l'utilisateur n'a pas déjà liké ce chat
+                $alreadyLike = $likeRepository -> findBy([
+                    'catOne' => $cat, //Chat qu"on like
+                    'catTwo' => $catTwo //Chat choisit via le formulaire
+                ]);
+
+                if($cats->contains($cat)) 
+                {
+                    $this->addFlash('message', 'Vous ne pouvez pas liker vos propres chats '); //Message de succès
+                    return $this->redirectToRoute('show_cat', ['id' => $cat->getId()]); // On redirige vers la même page
+                };
+    
+                if($alreadyLike) {
+                    $this->addFlash('message', 'Vous avez déjà liké ce chat'); //Message d'erreur
+                } else {
+
                 $entityManager->persist($like); //On persist l'objet et on le stocke en BDD
                 $entityManager->flush();
 
-                $this->addFlash('success', 'Vous avez liké ce chat !'); //Message de succès
+                $this->addFlash('message', 'Vous avez liké ' . $cat . ' !'); //Message de succès
                 return $this->redirectToRoute('show_cat', ['id' => $cat->getId()]); // On redirige vers la même page
+                }
             }
 
             //On rend le formulaire dans la vue et le chat dont l'id est passé dans l'URL
             return $this->render('cat/show.html.twig', [
                 'cat' => $cat,
                 'form' => $form->createView(),
+                
             ]);
-}
+    }   
 }
  
