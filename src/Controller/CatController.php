@@ -7,10 +7,12 @@ use App\Entity\Like;
 use App\Entity\Image;
 use App\Form\CatType;
 use App\Form\LikeType;
+use App\Entity\Matches;
 use App\Repository\CatRepository;
 use App\Repository\LikeRepository;
 use App\Repository\BreedRepository;
 use App\Repository\ImageRepository;
+use App\Repository\MatchesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -140,7 +142,7 @@ class CatController extends AbstractController
  
  
     #[Route('/cat/{id}', name: 'show_cat')]
-    public function show(Cat $cat, LikeRepository $likeRepository, EntityManagerInterface $entityManager, CatRepository $catRepository, Request $request): Response
+    public function show(Cat $cat, LikeRepository $likeRepository, EntityManagerInterface $entityManager, CatRepository $catRepository, MatchesRepository $matchesRepository, Request $request): Response
     {
 
             // On récupère le user connecté
@@ -162,42 +164,58 @@ class CatController extends AbstractController
 
             //Si il est soumit et valide
             if ($form->isSubmitted() && $form->isValid()) {
-
-                
                 $like->setCatOne($cat); // On attribue au $catOne dans Like le chat qu'on like
                 $catTwo = $form->get('catTwo')->getData(); // On récupère le chat qu'on a choisit dans la liste
                 $like->setCatTwo($catTwo); //On attribut à $catTwo le chat qu'on a choisit
 
+                
                 //On vérifie que l'utilisateur n'a pas déjà liké ce chat
                 $alreadyLike = $likeRepository -> findBy([
                     'catOne' => $cat, //Chat qu"on like
                     'catTwo' => $catTwo //Chat choisit via le formulaire
                 ]);
 
-                if($cats->contains($cat)) 
-                {
-                    $this->addFlash('message', 'Vous ne pouvez pas liker vos propres chats '); //Message de succès
-                    return $this->redirectToRoute('show_cat', ['id' => $cat->getId()]); // On redirige vers la même page
-                };
-    
                 if($alreadyLike) {
                     $this->addFlash('message', 'Vous avez déjà liké ce chat'); //Message d'erreur
                 } else {
 
-                $entityManager->persist($like); //On persist l'objet et on le stocke en BDD
-                $entityManager->flush();
+                    if($cats->contains($cat)) 
+                    {
+                        $this->addFlash('message', 'Vous ne pouvez pas liker vos propres chats '); //Message de succès
+                        return $this->redirectToRoute('show_cat', ['id' => $cat->getId()]); // On redirige vers la même page
+                    };
 
-                $this->addFlash('message', 'Vous avez liké ' . $cat . ' !'); //Message de succès
-                return $this->redirectToRoute('show_cat', ['id' => $cat->getId()]); // On redirige vers la même page
+                    $entityManager->persist($like); //On persist l'objet et on le stocke en BDD
+                    $entityManager->flush();
+
+                    $reverseLike = $likeRepository -> findOneBy ([
+                        'catOne' => $catTwo,
+                        'catTwo' => $cat
+                    ]);
+                    
+                    if($reverseLike) {
+                        $match = new Matches();
+                        $match -> setCatOne($cat);
+                        $match -> setCatTwo($catTwo);
+                        $match->setStatutMatch('Validé');
+
+                        $entityManager->persist($match); //On persist l'objet et on le stocke en BDD
+                        $entityManager->flush();
+                        // Message de succès
+                        $this->addFlash('message', 'Félicitations ! ' . $catTwo . ' a matché avec ' . $cat . ' !');
+                        } else {
+                            // Message de succès pour le Like
+                            $this->addFlash('message', 'Vous avez liké ' . $catTwo . ' !');
+                        }
+                    }
                 }
-            }
 
-            //On rend le formulaire dans la vue et le chat dont l'id est passé dans l'URL
-            return $this->render('cat/show.html.twig', [
-                'cat' => $cat,
-                'form' => $form->createView(),
-                
-            ]);
+                    //On rend le formulaire dans la vue et le chat dont l'id est passé dans l'URL
+                    return $this->render('cat/show.html.twig', [
+                        'cat' => $cat,
+                        'form' => $form->createView(),
+                        
+                    ]);
     }   
 }
  

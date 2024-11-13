@@ -28,6 +28,11 @@ class Matches
     #[ORM\JoinColumn(nullable: false)]
     private ?Cat $catTwo = null;
 
+    public function __construct()
+    {
+        $this->dateMatch = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
