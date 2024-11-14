@@ -5,13 +5,13 @@
 {% block body %}
     <h1>Liste de vos likes</h1>
         {% for userLikes in userLikes %}
-        
+
         <div class="cat-like">
             {{ userLikes.catOne.name }}
             {{ userLikes.likeDate}}
             <a href="{{ path('delete_like', {'id': userLikes.id}) }}" 
             class="btn btn-danger" 
-            onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce like ?')">Supprimer le like</a>
+            >Supprimer le like</a>
         </div>
 
         {% endfor %}
