@@ -205,7 +205,7 @@ class CatController extends AbstractController
                         $this->addFlash('message', 'Félicitations ! ' . $catTwo . ' a matché avec ' . $cat . ' !');
                         } else {
                             // Message de succès pour le Like
-                            $this->addFlash('message', 'Vous avez liké ' . $catTwo . ' !');
+                            $this->addFlash('message', 'Vous avez liké ' . $cat . ' !');
                         }
                     }
                 }

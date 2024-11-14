@@ -85,4 +85,9 @@ class Matches
 
         return $this;
     }
+
+    public function getMatchDate(): string 
+    {
+        return $this->dateMatch->format('d.m.Y');
+    }
 }

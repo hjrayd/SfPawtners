@@ -72,4 +72,9 @@ class Like
 
         return $this;
     }
+
+    public function getLikeDate(): string 
+    {
+        return $this->dateLike->format('d.m.Y');
+    }
 }
