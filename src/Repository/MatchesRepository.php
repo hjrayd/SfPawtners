@@ -16,28 +16,24 @@ class MatchesRepository extends ServiceEntityRepository
         parent::__construct($registry, Matches::class);
     }
 
-    //    /**
-    //     * @return Matches[] Returns an array of Matches objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('m.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findMatches( $userCats ): array {
 
-    //    public function findOneBySomeField($value): ?Matches
-    //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder(); //Création d'une nouvelle instance du queryBuilder pour la requête DQL
+            //On selectionne une seule fois le user
+        $qb ->select('m')
+
+            //On crée l'alias et on précise qu'on veut l'objet user de l'entité User
+            ->from('App\Entity\Matches', 'm')
+
+            //On filtre les résultat de la requête finale en n'affichant que les messages si le user et expediteur ou receveur
+            ->where('m.catOne IN (:userCats) OR m.catTwo IN (:userCats)') 
+            
+            //On associe la valeur a user passé en paramètre + protection contre injection SQL
+            ->setParameter('userCats', $userCats);
+    
+          $query = $qb->getQuery();
+          return $query->getResult(); //On execute la requête et on retourne le résultat
+    }
+
 }

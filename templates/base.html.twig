@@ -28,9 +28,9 @@
                         <li><a href="{{ path('new_cat')}}"> Ajouter un chat </a> <br></li>
                         <li><a href="{{path("app_message")}}"> Messagerie </a> <br></li>
                         <li><a href="{{path("app_like")}}"> Mes likes </a> <br></li>
-                        <li><a href="{{path("app_match")}}"> Mes match </a> <br></li>
+                        <li><a href="{{path("app_matches")}}"> Mes match </a> <br></li>
 
-            {#Si le user a le rôle Admin#}
+            {# Si le user a le rôle Admin #}
             {% if is_granted('ROLE_ADMIN') %}
                         <li><a href="{{ path('app_user')}}"> Liste des utilisateurs </a> <br></li>
             {% endif %}

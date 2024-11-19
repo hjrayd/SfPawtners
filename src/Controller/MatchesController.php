@@ -9,16 +9,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MatchesController extends AbstractController
 {
-   //Le routage remplace le lien du controller + méthode + id qu'on appelait avant dans l'url du site
-   #[Route('/matches', name: 'app_matches')]
-   public function index(MatchesRepository $matchesRepository): Response //On fait passer directement le repository
-   {
-       $matches = $matchesRepository->findAll();
+    #[Route('/matches', name: 'app_matches')]
+    public function index(MatchesRepository $matchesRepository): Response
+    {
+        $user = $this->getUser();
 
-       //Redirection qui redirige l'utilisateur
-       //render permet de faire le lien entre le controller et la vue
-       return $this->render('matches/index.html.twig', [
-           'matches' => $matches,
-       ]);
-   }
+        $userCats = $user->getCats()->toArray();
+
+        $userMatches = $matchesRepository->findMatches($userCats);
+
+        return $this->render('matches/index.html.twig', [
+            'userMatches' => $userMatches,
+        ]);
+    }
 }
