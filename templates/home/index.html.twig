@@ -4,12 +4,24 @@
 
 {% block body %}
     <h1> Accueil </h1>
-        <h2> Profils des chats </h2>
-            {% for cats in cats %}
-                Nom : {{ cats.name }} <br>
-                Robe : {{ cats.coat }} <br>
-                Age: {{ cats.age }} <br>
-                <a href="{{ path('show_cat', {'id' : cats.id} )}}"> Détails </a> <br>
+        <h3>Filtrer les chats</h3>
+            {{ form_start(form) }}
+                {{ form_row(form.breeds) }}
+                {{ form_row(form.ageMin) }}
+                {{ form_row(form.ageMax) }}
+                {{ form_row(form.coat) }}
+                {{ form_row(form.city) }}
+                <button type="submit" class="btn btn-primary">Filtrer</button>
+            {{ form_end(form) }}
+            <h2> Profils des chats </h2>
+                {% for cats in cats %}
+                    Nom : {{ cats.name }} <br>
+                    Robe : {{ cats.coat }} <br>
+                    Age: {{ cats.age }} <br>
+                    Age: {{ cats.city }} <br>
+                    <a href="{{ path('show_cat', {'id' : cats.id} )}}"> Détails </a> <br>
+                {% else %}
+                     <p> Aucun chats trouvés</p>
                 {% endfor %}
 </div>
 {% endblock %}

@@ -2,11 +2,14 @@
 
 namespace App\Form;
 
+use App\Entity\Breed;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class FilterType extends AbstractType
 {
@@ -16,35 +19,31 @@ class FilterType extends AbstractType
             ->add('breeds', EntityType::class, [
                 'class' => Breed::class,
                 'choice_label' => 'breedName',
+                'label' => 'Race(s)',
                 'multiple' => true,
                 'required' => false,
-                'placeholder' => 'Race(s)'
+             
             ])
             ->add('ageMin', NumberType::class, [
                 'required' => false,
-                'placeholder' => 'Âge minimum',
+                 'label' => 'Âge maximum',
+        
             ])
             ->add('ageMax', NumberType::class, [
                 'required' => false,
-                'placeholder' => 'Âge maximum',
+                'label' => 'Âge minimum'
             ])
-            ->add('color', ChoiceType::class, [
-                'choices' => $options['colors'],
-                'multiple' => true,
+            ->add('coat', TextType::class, [
                 'required' => false,
-                'placeholder' => 'Couleur(s)',
+                'label' => 'Couleur',
             ])
             ->add('city', TextType::class, [
                 'required' => false,
-                'placeholder' => 'Ville',
+                'label'=> 'Ville',
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'colors' => [],
-        ]);
-       
     }
 }
