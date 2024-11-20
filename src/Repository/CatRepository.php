@@ -44,7 +44,7 @@ class CatRepository extends ServiceEntityRepository
         
         if (isset($filters['ageMin']) || isset($filters['ageMax'])) {
             $cats = array_filter($cats, function($cat) use ($filters) {
-                $age = $cat->getAge(); // Utilise ta méthode getAge() pour calculer l'âge
+                $age = $cat->getAge(); // On utilise notre méthode getAge dans notre entité Cat
                 return ($age >= $filters['ageMin'] && $age <= $filters['ageMax']);
             });
         }
