@@ -268,7 +268,15 @@ class Cat
         return $this;
     }
 
-    public function getAge(): ?string 
+    public function getAge(): ?int //Fonction pour calculer l'âge et l'utiliser dans des calculs
+    {
+        $now = new \DateTime();
+        $interval = $this->dateBirth->diff($now);
+
+        return $interval->y;
+    }
+
+    public function getAgeFormatted(): ?string //Fonction qui renvoie l'âge sous forme de chaîne de caractères
     {
         //interval entre la date d'aujourd'hui et la date de naissance du chat pour calculer l'âge
        $now = new \DateTime();

@@ -10,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class FilterType extends AbstractType
 {
@@ -26,12 +27,12 @@ class FilterType extends AbstractType
             ])
             ->add('ageMin', NumberType::class, [
                 'required' => false,
-                 'label' => 'Âge maximum',
+                 'label' => 'Âge minimum',
         
             ])
             ->add('ageMax', NumberType::class, [
                 'required' => false,
-                'label' => 'Âge minimum'
+                'label' => 'Âge maximum'
             ])
             ->add('coat', TextType::class, [
                 'required' => false,

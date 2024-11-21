@@ -17,7 +17,7 @@
                 {% for cats in cats %}
                     Nom : {{ cats.name }} <br>
                     Robe : {{ cats.coat }} <br>
-                    Age: {{ cats.age }} <br>
+                    Age: {{ cats.ageFormatted }} <br>
                     Age: {{ cats.city }} <br>
                     <a href="{{ path('show_cat', {'id' : cats.id} )}}"> Détails </a> <br>
                 {% else %}

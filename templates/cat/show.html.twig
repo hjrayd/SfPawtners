@@ -12,7 +12,7 @@
     {% endfor %}
             Nom : {{ cat.name }} <br>
             Robe : {{ cat.coat }} <br>
-            Age: {{ cat.age }} <br>
+            Age: {{ cat.ageFormatted }} <br>
             Ville: {{ cat.city }} <br>
             Description: {{ cat.description }} <br> 
             Propriétaire : <a href="{{ path('show_user', {'id':cat.user.id})}}"> {{ cat.user }} </a> <br>

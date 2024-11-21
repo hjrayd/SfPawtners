@@ -39,18 +39,22 @@ class CatRepository extends ServiceEntityRepository
             ->setParameter('city', '%' . $filters['city'] . '%');
         }
 
-        $query = $qb->getQuery();
-        $cats = $query->getResult();
-        
-        if (isset($filters['ageMin']) || isset($filters['ageMax'])) {
-            $cats = array_filter($cats, function($cat) use ($filters) {
-                $age = $cat->getAge(); // On utilise notre méthode getAge dans notre entité Cat
-                return ($age >= $filters['ageMin'] && $age <= $filters['ageMax']);
-            });
+            
+        if (isset($filters['ageMin'])) {
+            $ageMinDate = (new \DateTime())->modify('-' . $filters['ageMin'] . ' years'); //On utilise la méthode modify pour plus de précision (mois et années)
+                                                                                        //La méthode modify modifie l'objet dateTime
+            $qb->andWhere('c.dateBirth <= :ageMin')
+            ->setParameter('ageMin', $ageMinDate);
         }
-    
-        return $cats;
 
+        if (isset($filters['ageMax'])) {
+            $ageMaxDate = (new \DateTime())->modify('-' . $filters['ageMax'] . ' years');
+            $qb->andWhere('c.dateBirth >= :ageMax')
+            ->setParameter('ageMax', $ageMaxDate);
+        }
 
+        // Exécution de la requête
+        $query = $qb->getQuery();
+        return $query->getResult();
     }
 }
