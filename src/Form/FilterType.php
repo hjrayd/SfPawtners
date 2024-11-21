@@ -23,6 +23,7 @@ class FilterType extends AbstractType
                 'label' => 'Race(s)',
                 'multiple' => true,
                 'required' => false,
+                'expanded' => true
              
             ])
             ->add('ageMin', NumberType::class, [
