@@ -63,9 +63,9 @@ class Cat
     private ?bool $vaccinated = null;
 
     /**
-     * @var Collection<int, Matches>
+     * @var Collection<int, Matche>
      */
-    #[ORM\OneToMany(targetEntity: Matches::class, mappedBy: 'catOne', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Matche::class, mappedBy: 'catOne', orphanRemoval: true)]
     private Collection $matches;
 
     /**
@@ -335,36 +335,35 @@ class Cat
         }
     }
 
-    /**
-     * @return Collection<int, Matches>
+        /**
+     * @return Collection<int, Match>
      */
     public function getMatches(): Collection
     {
         return $this->matches;
     }
 
-    public function addMatch(Matches $match): static
+    public function addMatche(Matche $matche): static
     {
-        if (!$this->matches->contains($match)) {
-            $this->matches->add($match);
-            $match->setCatOne($this);
+        if (!$this->matches->contains($matche)) {
+            $this->matches->add($matche);
+            $matche->setCatOne($this);
         }
 
         return $this;
     }
 
-    public function removeMatch(Matches $match): static
+    public function removeMatche(Matche $matche): static
     {
-        if ($this->matches->removeElement($match)) {
+        if ($this->matches->removeElement($matche)) {
             // set the owning side to null (unless already changed)
-            if ($match->getCatOne() === $this) {
-                $match->setCatOne(null);
+            if ($matche->getCatOne() === $this) {
+                $matche->setCatOne(null);
             }
         }
 
-        return $this;
-    }
-
+    return $this;
+}
     /**
      * @return Collection<int, Like>
      */

@@ -2,23 +2,23 @@
 
 namespace App\Controller;
 
-use App\Repository\MatchesRepository;
+use App\Repository\MatcheRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class MatchesController extends AbstractController
+class MatcheController extends AbstractController
 {
-    #[Route('/matches', name: 'app_matches')]
-    public function index(MatchesRepository $matchesRepository): Response
+    #[Route('/matche', name: 'app_matche')]
+    public function index(MatcheRepository $matcheRepository): Response
     {
         $user = $this->getUser();
 
         $userCats = $user->getCats()->toArray();
 
-        $userMatches = $matchesRepository->findMatches($userCats);
+        $userMatches = $matcheRepository->findMatches($userCats);
 
-        return $this->render('matches/index.html.twig', [
+        return $this->render('matche/index.html.twig', [
             'userMatches' => $userMatches,
         ]);
     }

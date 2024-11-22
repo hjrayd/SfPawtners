@@ -7,12 +7,12 @@ use App\Entity\Like;
 use App\Entity\Image;
 use App\Form\CatType;
 use App\Form\LikeType;
-use App\Entity\Matches;
+use App\Entity\Matche;
 use App\Repository\CatRepository;
 use App\Repository\LikeRepository;
 use App\Repository\BreedRepository;
 use App\Repository\ImageRepository;
-use App\Repository\MatchesRepository;
+use App\Repository\MatcheRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -142,7 +142,7 @@ class CatController extends AbstractController
  
  
     #[Route('/cat/{id}', name: 'show_cat')]
-    public function show(Cat $cat, LikeRepository $likeRepository, EntityManagerInterface $entityManager, CatRepository $catRepository, MatchesRepository $matchesRepository, Request $request): Response
+    public function show(Cat $cat, LikeRepository $likeRepository, EntityManagerInterface $entityManager, CatRepository $catRepository, MatcheRepository $matcheRepository, Request $request): Response
     {
 
             // On récupère le user connecté
@@ -194,7 +194,7 @@ class CatController extends AbstractController
                     ]);
                     
                     if($reverseLike) {
-                        $match = new Matches();
+                        $match = new Matche();
                         $match -> setCatOne($cat);
                         $match -> setCatTwo($catTwo);
 

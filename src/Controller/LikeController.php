@@ -6,7 +6,7 @@ use App\Entity\Like;
 use App\Form\LikeType;
 use App\Repository\CatRepository;
 use App\Repository\LikeRepository;
-use App\Repository\MatchesRepository;
+use App\Repository\MatcheRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,11 +30,11 @@ class LikeController extends AbstractController
     }
 
     #[Route('/like/delete/{id}', name: 'delete_like')]
-    public function delete($id, LikeRepository $likeRepository, MatchesRepository $matchesRepository, EntityManagerInterface $entityManager): Response
+    public function delete($id, LikeRepository $likeRepository, MatcheRepository $matcheRepository, EntityManagerInterface $entityManager): Response
    {
     $like = $likeRepository->find($id);
 
-    $match = $matchesRepository-> findOneBy ([
+    $match = $matcheRepository-> findOneBy ([
         'catOne' => $like->getCatOne(),
         'catTwo' => $like->getCatTwo()
     ]);

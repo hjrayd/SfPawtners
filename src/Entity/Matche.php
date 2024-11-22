@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\MatchesRepository;
+use App\Repository\MatcheRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: MatchesRepository::class)]
-class Matches
+#[ORM\Entity(repositoryClass: MatcheRepository::class)]
+class Matche
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
