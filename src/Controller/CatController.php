@@ -197,7 +197,6 @@ class CatController extends AbstractController
                         $match = new Matches();
                         $match -> setCatOne($cat);
                         $match -> setCatTwo($catTwo);
-                        $match->setStatutMatch('Validé');
 
                         $entityManager->persist($match); //On persist l'objet et on le stocke en BDD
                         $entityManager->flush();

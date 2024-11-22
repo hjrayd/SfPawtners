@@ -17,7 +17,6 @@ class MatchType extends AbstractType
             ->add('dateMatch', null, [
                 'widget' => 'single_text',
             ])
-            ->add('statutMatch')
             ->add('catOne', EntityType::class, [
                 'class' => Cat::class,
                 'choice_label' => 'id',

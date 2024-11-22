@@ -17,9 +17,6 @@ class Matches
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateMatch = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $statutMatch = null;
-
     #[ORM\ManyToOne(inversedBy: 'matches')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Cat $catOne = null;
@@ -46,18 +43,6 @@ class Matches
     public function setDateMatch(\DateTimeInterface $dateMatch): static
     {
         $this->dateMatch = $dateMatch;
-
-        return $this;
-    }
-
-    public function getStatutMatch(): ?string
-    {
-        return $this->statutMatch;
-    }
-
-    public function setStatutMatch(string $statutMatch): static
-    {
-        $this->statutMatch = $statutMatch;
 
         return $this;
     }
