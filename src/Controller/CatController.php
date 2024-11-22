@@ -36,7 +36,6 @@ class CatController extends AbstractController
         ]);
     }
  
- 
     #[Route('/cat/new', name: 'new_cat')]
     public function new(
         Request $request,
@@ -138,6 +137,28 @@ class CatController extends AbstractController
                 'formAddCat' => $form->createView(),
             ]);
         }
+    }
+
+    #[Route('/cat/delete/{id}', name: 'delete_cat')]
+    public function delete($id, CatRepository $catRepository, EntityManagerInterface $entityManager): Response //On fait passer directement le repository
+    {
+        $cat = $catRepository->find($id);
+        $user = $this->getUser();
+
+        if ($cat->getUser() === $user ) 
+        {
+            $entityManager->remove($cat);
+            $entityManager->flush();
+            $this->addFlash('message', $cat.' a bien été supprimé');
+        }
+        
+        else {
+            throw $this->createAccessDeniedException('Vous n\avez pas les autorisations pour supprimer ce chat.');
+        }
+
+        return $this->redirectToRoute('app_home');
+
+        
     }
  
  
