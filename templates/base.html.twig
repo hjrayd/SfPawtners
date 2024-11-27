@@ -20,7 +20,7 @@
         <header>
 
             {# Si le user est connecté #}
-            {% if app.user %}
+            {% if app.user is not null %}
                 <nav>
                     <ul>
                         <li><a href="{{ path('app_logout')}}"> Se déconnecter </a> <br></li>
@@ -29,6 +29,7 @@
                         <li><a href="{{path("app_message")}}"> Messagerie </a> <br></li>
                         <li><a href="{{path("app_like")}}"> Mes likes </a> <br></li>
                         <li><a href="{{path("app_matche")}}"> Mes match </a> <br></li>
+                        <li><a href="{{ path('show_user', {'id': app.user.id}) }}">Mon profil</a></li>
 
             {# Si le user a le rôle Admin #}
             {% if is_granted('ROLE_ADMIN') %}
