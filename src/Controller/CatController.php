@@ -76,6 +76,13 @@ class CatController extends AbstractController
                 $breed->addCat($cat);
             }
 
+            //On récupère les couleurs des chats depuis le formulaire et on les attributs chacune au chat
+            $coatsCat = $form->get('coats')->getData();
+            foreach ($coatsCat as $coat) {
+                $cat->addCoat($coat);
+                $coat->addCat($cat);
+            }
+
             // On récupère les images uploadés -> $pictures correspond à l'image qu'on upload
             $pictures = $form->get('images')->getData();
             

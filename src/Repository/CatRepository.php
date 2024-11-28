@@ -29,9 +29,10 @@ class CatRepository extends ServiceEntityRepository
             ->setParameter('breeds', $filters['breeds']);
         }
 
-        if (!empty($filters['coat'])) {
-            $qb->andwhere('c.coat LIKE :coat')
-            ->setParameter('coat', '%' . $filters['coat'] . '%'); //nous permet de trouver la couleur même si elle est précéder ou succèder par un autre mot
+        if (!empty($filters['coats'])) {
+            $qb->join('c.coats', 'co') //On joint la table Breed avec la table Cat équivalent d'un INNER JOIN
+            ->andwhere('co.id IN (:coats)')
+            ->setParameter('coats', $filters['coats']);
         }
 
         if (!empty($filters['city'])) {

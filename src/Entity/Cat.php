@@ -28,9 +28,6 @@ class Cat
     #[Assert\LessThan('today', message: "La date de naissance ne peut pas être future.")]
     private ?\DateTimeInterface $dateBirth = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $coat = null;
-
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
@@ -74,6 +71,12 @@ class Cat
     #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'catOne', orphanRemoval: true)]
     private Collection $likes;
 
+    /**
+     * @var Collection<int, Coat>
+     */
+    #[ORM\ManyToMany(targetEntity: Coat::class, mappedBy: 'cats')]
+    private Collection $coats;
+
   
 
     public function __construct()
@@ -83,6 +86,7 @@ class Cat
         $this->breeds = new ArrayCollection();
         $this->matches = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->coats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -126,17 +130,6 @@ class Cat
         return $this;
     }
 
-    public function getCoat(): ?string
-    {
-        return $this->coat;
-    }
-
-    public function setCoat(string $coat): static
-    {
-        $this->coat = $coat;
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
@@ -389,6 +382,33 @@ class Cat
             if ($like->getCatOne() === $this) {
                 $like->setCatOne(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Coat>
+     */
+    public function getCoats(): Collection
+    {
+        return $this->coats;
+    }
+
+    public function addCoat(Coat $coat): static
+    {
+        if (!$this->coats->contains($coat)) {
+            $this->coats->add($coat);
+            $coat->addCat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCoat(Coat $coat): static
+    {
+        if ($this->coats->removeElement($coat)) {
+            $coat->removeCat($this);
         }
 
         return $this;

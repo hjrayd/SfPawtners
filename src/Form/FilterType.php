@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Coat;
 use App\Entity\Breed;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,9 +36,14 @@ class FilterType extends AbstractType
                 'required' => false,
                 'label' => 'Âge maximum'
             ])
-            ->add('coat', TextType::class, [
+            ->add('coats', EntityType::class, [
+                'class' => Coat::class,
+                'choice_label' => 'coatName',
+                'label' => 'Couleur(s)',
+                'multiple' => true,
                 'required' => false,
-                'label' => 'Couleur',
+                'expanded' => true
+             
             ])
             ->add('city', TextType::class, [
                 'required' => false,

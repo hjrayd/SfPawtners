@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Cat;
+use App\Entity\Coat;
 use App\Entity\User;
 use App\Entity\Breed;
 use Doctrine\ORM\EntityRepository;
@@ -44,10 +45,13 @@ class CatType extends AbstractType
                     'label' => 'Date de naissance',
                         
             ])
-            ->add('coat', TextType::class, [
-                'label' => 'Robe',
-                ])
-
+            ->add('coats', EntityType::class, [
+                'class' => Coat::class,
+                'choice_label' => 'coatName',
+                'multiple' => true,
+                'expanded' => false,
+                'label' => 'Couleur(s)',
+            ])
             ->add('description', TextareaType::class)
             ->add('city', TextType::class, [
                     'label' => 'Ville'
