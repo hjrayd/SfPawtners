@@ -10,7 +10,13 @@
                 <a href="{{path("new_message")}}">Envoyer un message</a> <br>
                 <ul>
                     {% for correspondent in correspondents %}
-                        <li> <a href="{{path("show_message", {id:correspondent.id}) }}">{{ correspondent.pseudo }} </a></li> 
+                        <li> <a href="{{path("show_message", {id:correspondent.id}) }}">
+                            {% if correspondent.pseudo is null %}
+                                Utilisateur supprimé
+                            {% else %}
+                               {{ correspondent.pseudo }}
+                            {% endif %}
+                           
                     {% endfor %}
                 </ul>
         </div>

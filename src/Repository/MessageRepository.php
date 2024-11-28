@@ -36,6 +36,7 @@ class MessageRepository extends ServiceEntityRepository
 
             //On filtre les résultat de la requête finale en n'affichant que les messages si le user et expediteur ou receveur
             ->where('m.sender = :user OR m.receiver = :user') 
+            ->orwhere('m.sender IS NULL OR m.receiver IS NULL')
             
             //On associe la valeur a user passé en paramètre + protection contre injection SQL
             ->setParameter('user', $user);

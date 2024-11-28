@@ -38,58 +38,60 @@ class UserController extends AbstractController
                 'user' => $user
             ]);
 
-            foreach($cats as $cat) {
-                $likeCatOne = $likeRepository->findBy([
-                    'catOne' => $cat
-                ]);
-
-                $likeCatTwo = $likeRepository->findBy([
-                    'catTwo' => $cat
-                ]);
-            }
-
-            foreach($likeCatOne as $like) {
-                $entityManager->remove($like);
-            }
-
-            foreach($likeCatTwo as $like) {
-                $entityManager->remove($like);
-            }
-
-
-            foreach($cats as $cat) {
-                $matchCatOne = $matcheRepository->findBy([
-                    'catOne' => $cat
-                ]);
-
-                $matchCatTwo = $matcheRepository->findBy([
-                    'catTwo' => $cat
-                ]);
-            }
-
-            foreach($matchCatOne as $match) {
-                $entityManager->remove($match);
-            }
-
-            foreach($matchCatTwo as $match) {
-                $entityManager->remove($match);
+            if($cats) {
+                foreach($cats as $cat) {
+                    $likeCatOne = $likeRepository->findBy([
+                        'catOne' => $cat
+                    ]);
+    
+                    $likeCatTwo = $likeRepository->findBy([
+                        'catTwo' => $cat
+                    ]);
+                }
+    
+                foreach($likeCatOne as $like) {
+                    $entityManager->remove($like);
+                }
+    
+                foreach($likeCatTwo as $like) {
+                    $entityManager->remove($like);
+                }
+    
+    
+                foreach($cats as $cat) {
+                    $matchCatOne = $matcheRepository->findBy([
+                        'catOne' => $cat
+                    ]);
+    
+                    $matchCatTwo = $matcheRepository->findBy([
+                        'catTwo' => $cat
+                    ]);
+                }
+    
+                foreach($matchCatOne as $match) {
+                    $entityManager->remove($match);
+                }
+    
+                foreach($matchCatTwo as $match) {
+                    $entityManager->remove($match);
+                }
             }
 
             $messages = $messageRepository->findBy([
                 'sender'=>$user
             ]);
 
-            foreach($messages as $message) {
-                $message->setSender(null);
-            }
-
-
-            $messages = $messageRepository->findBy([
-                'receiver'=>$user
-            ]);
-
-            foreach($messages as $message) {
-                $message->setReceiver(null);
+            if($messages) {
+                foreach($messages as $message) {
+                    $message->setSender(null);
+                }
+                $messages = $messageRepository->findBy([
+                    'receiver'=>$user
+                ]);
+    
+                foreach($messages as $message) {
+                    $message->setReceiver(null);
+                }
             }
 
             $entityManager->remove($user);
