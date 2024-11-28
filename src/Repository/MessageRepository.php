@@ -32,12 +32,11 @@ class MessageRepository extends ServiceEntityRepository
             ->from('App\Entity\User', 'u')
 
             //On joint les deux tables User et Message seulement là ou User est expéditeur ou receveur
-            ->innerJoin('App\Entity\Message', 'm', 'WITH', 'm.sender = u OR m.receiver = u') //With permet de poser une condition 
-
+            ->join('App\Entity\Message', 'm', 'WITH', 'm.sender = u OR m.receiver = u') //With permet de poser une condition
+                                                                                            //On utilise un leftJoin pour récupérer le nom du user même si il est null dans notre BDD 
             //On filtre les résultat de la requête finale en n'affichant que les messages si le user et expediteur ou receveur
             ->where('m.sender = :user OR m.receiver = :user') 
-            ->orwhere('m.sender IS NULL OR m.receiver IS NULL')
-            
+            ->andWhere('u.id != :user')
             //On associe la valeur a user passé en paramètre + protection contre injection SQL
             ->setParameter('user', $user);
     

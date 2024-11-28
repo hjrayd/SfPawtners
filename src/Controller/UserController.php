@@ -83,14 +83,14 @@ class UserController extends AbstractController
 
             if($messages) {
                 foreach($messages as $message) {
-                    $message->setSender(null);
+                    $entityManager->remove($message);
                 }
                 $messages = $messageRepository->findBy([
                     'receiver'=>$user
                 ]);
     
                 foreach($messages as $message) {
-                    $message->setReceiver(null);
+                    $entityManager->remove($message);
                 }
             }
 

@@ -11,11 +11,7 @@
                 <ul>
                     {% for correspondent in correspondents %}
                         <li> <a href="{{path("show_message", {id:correspondent.id}) }}">
-                            {% if correspondent.pseudo is null %}
-                                Utilisateur supprimé
-                            {% else %}
                                {{ correspondent.pseudo }}
-                            {% endif %}
                            
                     {% endfor %}
                 </ul>

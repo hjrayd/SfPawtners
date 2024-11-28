@@ -21,11 +21,11 @@ class Message
     private ?string $messageContent = null;
 
     #[ORM\ManyToOne(inversedBy: 'sent')]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $sender = null;
 
     #[ORM\ManyToOne(inversedBy: 'received')]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $receiver = null;
 
 
