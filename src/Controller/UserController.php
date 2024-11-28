@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\CatRepository;
+use App\Repository\LikeRepository;
 use App\Repository\UserRepository;
+use App\Repository\MatcheRepository;
+use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,11 +28,70 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/delete', name: 'delete_user')]
-    public function delete( Security $security,  EntityManagerInterface $entityManager, SessionInterface $session, TokenStorageInterface $tokenStorage): Response 
+    public function delete( Security $security,  EntityManagerInterface $entityManager, SessionInterface $session, TokenStorageInterface $tokenStorage, CatRepository $catRepository, LikeRepository $likeRepository, MatcheRepository $matcheRepository, MessageRepository $messageRepository): Response 
     {
         $user = $security->getUser();
 
         if($user) {
+
+            $cats = $catRepository->findBy([
+                'user' => $user
+            ]);
+
+            foreach($cats as $cat) {
+                $likeCatOne = $likeRepository->findBy([
+                    'catOne' => $cat
+                ]);
+
+                $likeCatTwo = $likeRepository->findBy([
+                    'catTwo' => $cat
+                ]);
+            }
+
+            foreach($likeCatOne as $like) {
+                $entityManager->remove($like);
+            }
+
+            foreach($likeCatTwo as $like) {
+                $entityManager->remove($like);
+            }
+
+
+            foreach($cats as $cat) {
+                $matchCatOne = $matcheRepository->findBy([
+                    'catOne' => $cat
+                ]);
+
+                $matchCatTwo = $matcheRepository->findBy([
+                    'catTwo' => $cat
+                ]);
+            }
+
+            foreach($matchCatOne as $match) {
+                $entityManager->remove($match);
+            }
+
+            foreach($matchCatTwo as $match) {
+                $entityManager->remove($match);
+            }
+
+            $messages = $messageRepository->findBy([
+                'sender'=>$user
+            ]);
+
+            foreach($messages as $message) {
+                $message->setSender(null);
+            }
+
+
+            $messages = $messageRepository->findBy([
+                'receiver'=>$user
+            ]);
+
+            foreach($messages as $message) {
+                $message->setReceiver(null);
+            }
+
             $entityManager->remove($user);
             $entityManager->flush();
             $session->invalidate(); //On supprime la session et ses données du user

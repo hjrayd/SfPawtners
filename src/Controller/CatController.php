@@ -140,19 +140,50 @@ class CatController extends AbstractController
     }
 
     #[Route('/cat/delete/{id}', name: 'delete_cat')]
-    public function delete($id, CatRepository $catRepository, EntityManagerInterface $entityManager): Response //On fait passer directement le repository
+    public function delete($id, CatRepository $catRepository, EntityManagerInterface $entityManager, MatcheRepository $matcheRepository, LikeRepository $likeRepository): Response //On fait passer directement le repository
     {
         $cat = $catRepository->find($id);
         $user = $this->getUser();
 
         if ($cat->getUser() === $user ) 
         {
+            $likes = $likeRepository->findBy([
+                'catOne' => $cat
+            ]);
+            foreach ($likes as $like) {
+                $entityManager->remove($like);
+            }
+
+            $likes = $likeRepository->findBy([
+                'catTwo' => $cat
+            ]);
+
+            foreach ($likes as $like)
+            {
+                $entityManager->remove($like);
+            }
+
+            $matches = $matcheRepository->findBy([
+                'catOne' => $cat
+            ]);
+
+            foreach ($matches as $match) {
+                $entityManager->remove($match);
+            }
+
+            $matches = $matcheRepository->findBy([
+                'catTwo' => $cat
+            ]);
+
+            foreach ($matches as $match)
+            {
+                $entityManager->remove($match);
+            }
+
             $entityManager->remove($cat);
             $entityManager->flush();
             $this->addFlash('message', $cat.' a bien été supprimé');
-        }
-        
-        else {
+        } else {
             throw $this->createAccessDeniedException('Vous n\avez pas les autorisations pour supprimer ce chat.');
         }
 
