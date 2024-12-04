@@ -24,7 +24,14 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class)
-            ->add('pseudo', TextType::class)
+            ->add('pseudo', TextType::class, [
+                'constraints' => [
+                    new Length(['min' => 3, 'max'=> 20, 
+                    'minMessage'=>'Le pseudo doit contenir 3 caractères minimum.',
+                    'maxMessag'=>'Le pseudo doit contenir 20 caractères minimum']),
+                ],
+                'required'=> true,
+            ])
             ->add('image', FileType::class, [
                 'label' => 'Ajouter une photo de profil',
                 'multiple' => false,
@@ -60,7 +67,7 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'first_options'  => ['constraints' => [
                         new Regex([
-                            'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{12,}$/',
+                            'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{12,}$/',
                             'message' => 'Le mot de passe doit contenir au minimum une majuscule, une minuscule, un chiffre et 12 caractères dont un caractère spécial',
                         ]),
                     ],

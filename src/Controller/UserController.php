@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\EditPseudoType;
+use App\Form\EditPasswordType;
 use App\Repository\CatRepository;
 use App\Repository\LikeRepository;
 use App\Repository\UserRepository;
@@ -10,10 +12,12 @@ use App\Repository\MatcheRepository;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class UserController extends AbstractController
@@ -107,16 +111,47 @@ class UserController extends AbstractController
 
 
     #[Route('/user/{id}', name: 'show_user')]
-    public function show(User $user, CatRepository $catRepository): Response {
+    public function show(User $user, CatRepository $catRepository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response {
         if(!$user) {
             return $this->redirectToRoute('app_register');
         }
 
-        $cats = $user->getCats();
-        return $this->render('user/show.html.twig', [
-            'user' => $user,
-            'cats' => $cats
-        ]);
+        $formPseudo = $this->createForm(EditPseudoType::class, $user);
+        $formPseudo->handleRequest($request);
+
+        $formPassword = $this->createForm(EditPasswordType::class, $user);
+        $formPassword->handleRequest($request);
+
+        if($formPseudo->isSubmitted() && $formPseudo->isValid()) {
+            $newPseudo = $formPseudo->get('pseudo')->getData();
+            if($newPseudo) {
+                $user->setPseudo($newPseudo);
+               $entityManager->persist($user);
+               $entityManager->flush();
+               $this->addFlash('message', 'Votre pseudo à bien été modifier');
+            }
+            return $this->redirectToRoute('show_user', ['id'=>$user->getId()]);
+        }
+
+        if($formPassword->isSubmitted() && $formPassword->isValid()) {
+            $newPassword = $formPassword->get('plainPassword')->getData();
+            if($newPassword) {
+              $hashedPassword = $passwordHasher->hashPassword($user, $newPassword);
+              $user->setPassword($hashedPassword);
+              $entityManager->persist($user);
+              $entityManager->flush();
+              $this->addFlash('message', 'Votre mot de passe à bien été modifier');
+            }
+            return $this->redirectToRoute('show_user', ['id'=>$user->getId()]);
+        }
+            $cats = $user->getCats();
+            return $this->render('user/show.html.twig', [
+                'user' => $user,
+                'cats' => $cats, 
+                'formPassword'=>$formPassword->createView(),
+                'formPseudo'=>$formPseudo->createView(),
+
+            ]);
         
     }
 
