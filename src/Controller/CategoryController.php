@@ -27,7 +27,9 @@ class CategoryController extends AbstractController
             $entityManager->persist($category);
             $entityManager->flush();
 
-            $this->adFlash('message', 'La catégorie a bien été ajoutée');
+            $this->addFlash('message', 'La catégorie a bien été ajoutée');
+
+            return $this -> redirectToRoute('app_category');
         }
         
         //Redirection qui redirige l'utilisateur
@@ -36,9 +38,19 @@ class CategoryController extends AbstractController
             'categories' => $categories,
             'formCategory' => $formCategory->createView() 
         ]);
-
-
     }
 
+    #[Route('/category/delete/{id}', name: 'delete_category')]
+    public function delete($id , CategoryRepository $categoryRepository, EntityManagerInterface $entityManager): Response //On fait passer directement le repository
+    {
+        $category = $categoryRepository -> find($id);
+
+        $entityManager -> remove($category);
+        $entityManager->flush();
+        $this->addFlash('message', 'La catégorie a bien été supprimée');
+
+        return $this-> redirectToRoute('app_category');
+
+    }
 
 }

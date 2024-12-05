@@ -6,7 +6,12 @@
     <h1> Bienvenue sur le forum ! </h1>
     Catégories : 
     {% for categories in categories %} <br>
-        {{ categories}} <br>
+        {{ categories}}  
+
+        <form method="post" action="{{ path('delete_category', {id: categories.id}) }}";
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit">Supprimer</button>
+        </form>   <br>
     {% endfor %}
 
     Ajouter une catégorie :
