@@ -128,7 +128,7 @@ class UserController extends AbstractController
                 $user->setPseudo($newPseudo);
                $entityManager->persist($user);
                $entityManager->flush();
-               $this->addFlash('message', 'Votre pseudo à bien été modifier');
+               $this->addFlash('message', 'Votre pseudo a bien été modifier');
             }
             return $this->redirectToRoute('show_user', ['id'=>$user->getId()]);
         }
@@ -140,7 +140,7 @@ class UserController extends AbstractController
               $user->setPassword($hashedPassword);
               $entityManager->persist($user);
               $entityManager->flush();
-              $this->addFlash('message', 'Votre mot de passe à bien été modifier');
+              $this->addFlash('message', 'Votre mot de passe a bien été modifier');
             }
             return $this->redirectToRoute('show_user', ['id'=>$user->getId()]);
         }
