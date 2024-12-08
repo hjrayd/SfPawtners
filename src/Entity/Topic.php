@@ -42,6 +42,7 @@ class Topic
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->topicDate = new \DateTime();
     }
 
     public function getId(): ?int

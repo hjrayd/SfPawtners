@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Topic;
+use App\Form\TopicType;
 use App\Entity\Category;
 use App\Form\CategoryType;
+use App\Repository\TopicRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,6 +41,39 @@ class CategoryController extends AbstractController
             'categories' => $categories,
             'formCategory' => $formCategory->createView() 
         ]);
+    }
+
+    #[Route('/category/show/{id}', name: 'show_category')]
+    public function show(int $id , CategoryRepository $categoryRepository, TopicRepository $topicRepository, Request $request, EntityManagerInterface $entityManager): Response //On fait passer directement le repository
+    {
+        $category = $categoryRepository->find($id);
+        $user = $this->getUser();
+
+        $topic = new Topic();
+        $topic->setCategory($category);
+        $topic->setUser($user);
+
+
+        $formTopic = $this->createForm(TopicType::class, $topic);
+        $formTopic->handleRequest($request);
+
+        if ($formTopic->isSubmitted() && $formTopic->isValid()) {
+            $entityManager->persist($topic);
+            $entityManager->flush();
+
+            $this->addFlash('message', 'Le topic a bien été ajouté');
+
+            return $this->redirectToRoute('show_category', ['id' => $category->getId()]);
+        }
+        
+        //Redirection qui redirige l'utilisateur
+        //render permet de faire le lien entre le controller et la vue
+        return $this->render('category/show.html.twig', [
+            'formTopic' => $formTopic->createView(),
+            'category' => $category,
+            'topics' => $category->getTopics()
+        ]);
+
     }
 
     #[Route('/category/delete/{id}', name: 'delete_category')]

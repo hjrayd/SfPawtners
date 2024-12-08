@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ category }}{% endblock %}
+
+{% block body %}
+    <h1> {{category}} </h1>
+    Topics : <br>
+    {% for topics in topics %} <br>
+        {{ topics }} <bRr>
+        <form method="post" action="{{ path('delete_topic', {id: topics.id}) }}";
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit">Supprimer</button>
+        </form>   <br>
+    {% endfor %}
+
+    Ajouter un topic :
+
+    {{ form(formTopic)}}
+{% endblock %}
