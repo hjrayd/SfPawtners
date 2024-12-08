@@ -14,9 +14,6 @@ class MatchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('dateMatch', null, [
-                'widget' => 'single_text',
-            ])
             ->add('catOne', EntityType::class, [
                 'class' => Cat::class,
                 'choice_label' => 'id',
