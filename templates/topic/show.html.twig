@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ topic }}{% endblock %}
+
+{% block body %}
+    <h1> {{topic}} </h1>
+    Posts : <br>
+    {% for posts in posts %} <br>
+        {{ posts }} <bRr>
+        <form method="post" action="{{ path('delete_post', {id: posts.id}) }}";
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit">Supprimer</button>
+        </form>   <br>
+    {% endfor %}
+
+    Ajouter un post :
+
+    {{ form(formPost)}}
+{% endblock %}
