@@ -3,14 +3,25 @@
 {% block title %}{{ category }}{% endblock %}
 
 {% block body %}
+
     <h1> {{category}} </h1>
+
     Topics : <br>
     {% for topics in topics %} <br>
+
+    {# Bouton de suppression #}
     <a href="{{ path('show_topic', {id: topics.id}) }}">{{ topics }}</a>
         <form method="post" action="{{ path('delete_topic', {id: topics.id}) }}";
             <input type="hidden" name="_method" value="DELETE">
             <button type="submit">Supprimer</button>
         </form>   <br>
+
+    {# Bouton de Verrouillage/Déverouillage #}
+    <form method="post" action="{{ path(topics.locked ? 'unlock_topic' : 'lock_topic', {id: topics.id}) }}" style="display: inline;">
+        <button type="submit">
+            {{ topics.locked ? 'Déverrouiller' : 'Verrouiller' }} 
+        </button>
+    </form> <br>
     {% endfor %}
 
     Ajouter un topic :

@@ -57,8 +57,38 @@ class TopicController extends AbstractController
 
     }
 
+    #[Route('/topic/lock/{id}', name: 'lock_topic')]
+    public function lock($id , TopicRepository $topicRepository, EntityManagerInterface $entityManager): Response
+    {
+        $topic = $topicRepository -> find($id);
+        $categoryId = $topic->getCategory()->getId();
+
+        $topic -> setLocked(true);
+        $entityManager -> persist($topic);
+        $entityManager -> flush();
+
+        return $this->redirectToRoute('show_category', ['id' => $categoryId]);
+
+
+    }
+
+    #[Route('/topic/unlock/{id}', name: 'unlock_topic')]
+    public function unlock($id , TopicRepository $topicRepository, EntityManagerInterface $entityManager): Response
+    {
+        $topic = $topicRepository -> find($id);
+        $categoryId = $topic->getCategory()->getId();
+
+        $topic -> setLocked(false);
+        $entityManager -> persist($topic);
+        $entityManager -> flush();
+
+        return $this->redirectToRoute('show_category', ['id' => $categoryId]);
+
+
+    }
+
     #[Route('/topic/delete/{id}', name: 'delete_topic')]
-    public function delete($id , TopicRepository $topicRepository, EntityManagerInterface $entityManager): Response //On fait passer directement le repository
+    public function delete($id , TopicRepository $topicRepository, EntityManagerInterface $entityManager): Response
     {
         $topic = $topicRepository -> find($id);
 
