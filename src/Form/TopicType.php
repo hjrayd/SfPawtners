@@ -19,10 +19,6 @@ class TopicType extends AbstractType
     {
         $builder
             ->add('title', TextType::class)
-            ->add('locked', CheckboxType::class, [
-            'required' => false, 
-            'label' => 'Verrouiller'
-            ])
             ->add('Valider', SubmitType::class)
         ;
     }

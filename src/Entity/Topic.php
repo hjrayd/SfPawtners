@@ -43,6 +43,7 @@ class Topic
     {
         $this->posts = new ArrayCollection();
         $this->topicDate = new \DateTime();
+        $this->locked = false;
     }
 
     public function getId(): ?int
