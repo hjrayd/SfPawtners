@@ -17,7 +17,7 @@
         </form>   <br>
 
     {# Bouton de Verrouillage/Déverouillage #}
-    <form method="post" action="{{ path(topics.locked ? 'unlock_topic' : 'lock_topic', {id: topics.id}) }}" style="display: inline;">
+    <form method="post" action="{{ path(topics.locked ? 'unlock_topic' : 'lock_topic', {id: topics.id}) }}">  {# On vérifie le statut du champ "Locked" dans l'entité topic pour l'affichage du bouton #} 
         <button type="submit">
             {{ topics.locked ? 'Déverrouiller' : 'Verrouiller' }} 
         </button>

@@ -1,5 +1,99 @@
+  /* 
+=================================================================
+=========================BASE==================================
+=================================================================
+ */
 
-/*Cacher le label et le champ dans notre conversation*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Fredoka", sans-serif;
+}
+
+#wrapper-base {
+    background-color: var(--base-color);
+    min-width: 100vw;
+    min-height: 100vh;
+    color: var(--text-color);
+
+}
+
+
+.nav-base {
+    display: flex;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    background-color: var(--nav-color);
+}
+
+.nav-base ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+
+.nav-base li {
+    padding-left: 10px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+    color: var(--base-color);
+}
+
+  /* 
+=================================================================
+=========================ROOTS==================================
+=================================================================
+ */
+:root {
+    --base-color: #FCF0F0;
+    --section-color: rgba(219, 189, 181, 0.6);
+    --text-color: #5E3636;
+    --nav-color: #70424A;
+
+}
+
+  /* 
+=================================================================
+=========================CONNEXION==================================
+=================================================================
+ */
+
+ #wrapper-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+ }
+
+ .form-login {
+    display: flex;
+    width: 500px;
+    height: 500px;
+    padding: 30px;
+    flex-direction: column;
+    border-radius: 20px;
+    background-color: var(--section-color);
+ }
+
+ .form-login h1 {
+    text-align: center;
+    margin-bottom: 100px;
+
+
+ }
+
+
+
+
+
+/*Cacher le label et le champ dans les conversations*/
 .d-none {
     display: none;
 }
