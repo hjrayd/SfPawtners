@@ -6,6 +6,7 @@ use App\Entity\Topic;
 use App\Form\TopicType;
 use App\Entity\Category;
 use App\Form\CategoryType;
+use App\Repository\PostRepository;
 use App\Repository\TopicRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -77,9 +78,24 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/category/delete/{id}', name: 'delete_category')]
-    public function delete($id , CategoryRepository $categoryRepository, EntityManagerInterface $entityManager): Response //On fait passer directement le repository
+    public function delete($id , CategoryRepository $categoryRepository, EntityManagerInterface $entityManager, TopicRepository $topicRepository, PostRepository $postRepository): Response //On fait passer directement le repository
     {
         $category = $categoryRepository -> find($id);
+        $topics = $topicRepository -> findBy([
+            "category" => $category
+        ]);
+
+        if($topics) {
+            foreach ($topics as $topic) {
+                $posts = $postRepository-> findBy([
+                    "topic" => $topic
+                ]);
+                foreach ($posts as $post) {
+                    $entityManager -> remove ($post);
+                }
+                $entityManager -> remove($topic);
+            }
+        }
 
         $entityManager -> remove($category);
         $entityManager->flush();

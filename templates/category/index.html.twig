@@ -5,9 +5,9 @@
 {% block body %}
     <h1> Bienvenue sur le forum ! </h1>
     Catégories : 
-    {% for categories in categories %} <br>
-    <a href="{{ path('show_category', {id: categories.id}) }}">{{ categories }}</a>
-        <form method="post" action="{{ path('delete_category', {id: categories.id}) }}";
+    {% for categorie in categories %} <br>
+    <a href="{{ path('show_category', {id: categorie.id}) }}">{{ categorie }}</a>
+        <form method="post" action="{{ path('delete_category', {id: categorie.id}) }}";
             <input type="hidden" name="_method" value="DELETE">
             <button type="submit">Supprimer</button>
         </form>   <br>

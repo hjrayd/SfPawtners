@@ -24,7 +24,12 @@
     display: flex;
     padding-bottom: 15px;
     padding-top: 15px;
+    color: var(--base-color);
     background-color: var(--nav-color);
+}
+
+.nav-base a:visited {
+    color: var(--base-color);
 }
 
 .nav-base ul {
@@ -39,11 +44,12 @@
 
 a {
     text-decoration: none;
+    color: var(--text-color);
 }
 
 a:visited {
     text-decoration: none;
-    color: var(--base-color);
+    color: var(--text-color);
 }
 
   /* 

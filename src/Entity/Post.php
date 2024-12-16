@@ -62,6 +62,14 @@ class Post
         return $this;
     }
 
+    public function getDatePost() {
+        return $this->postDate->format('d.m.Y');
+    }
+
+    public function getHourPost() {
+        return $this->postDate->format('H:i:s');
+    }
+
     public function getUser(): ?User
     {
         return $this->user;

@@ -14,11 +14,11 @@
                 <button type="submit" class="btn btn-primary">Filtrer</button>
             {{ form_end(form) }}
             <h2> Profils des chats </h2>
-                {% for cats in cats %}
-                    Nom : {{ cats.name }} <br>
-                    Age: {{ cats.ageFormatted }} <br>
-                    Ville: {{ cats.city }} <br>
-                    <a href="{{ path('show_cat', {'id' : cats.id} )}}"> Détails </a> <br>
+                {% for cat in cats %}
+                    Nom : {{ cat.name }} <br>
+                    Age: {{ cat.ageFormatted }} <br>
+                    Ville: {{ cat.city }} <br>
+                    <a href="{{ path('show_cat', {'id' : cat.id} )}}"> Détails </a> <br>
                 {% else %}
                      <p> Aucun chats trouvés</p>
                 {% endfor %}

@@ -88,9 +88,23 @@ class TopicController extends AbstractController
     }
 
     #[Route('/topic/delete/{id}', name: 'delete_topic')]
-    public function delete($id , TopicRepository $topicRepository, EntityManagerInterface $entityManager): Response
+    public function delete($id , TopicRepository $topicRepository, EntityManagerInterface $entityManager, PostRepository $postRepository): Response
     {
         $topic = $topicRepository -> find($id);
+
+        if(!$topic) {
+            throw $this->CreateNotFoundException('Topic non trouvé') ;
+        }
+
+        $posts = $postRepository -> findBy ([
+            "topic" => $topic
+        ]);
+
+        if ($posts) {
+            foreach($posts as $post) {
+                $entityManager -> remove ($post);
+            }
+        }
 
         $categoryId = $topic->getCategory()->getId();
         $entityManager -> remove($topic);

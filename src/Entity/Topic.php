@@ -87,6 +87,16 @@ class Topic
         return $this;
     }
 
+    public function getDateTopic() {
+        return $this->topicDate->format('d.m.Y');
+    }
+
+    public function getHourTopic() {
+        return $this->topicDate->format('H:i:s');
+    }
+
+
+
     public function getUser(): ?User
     {
         return $this->user;

@@ -14,11 +14,6 @@
     </head>
     <body>
         <div id="wrapper-base">
-            {# Affichage des messages flash #}
-            {% for message in app.flashes("message") %}
-                {{ message }}
-            {% endfor %}
-
             <header>
 
                 {# Si le user est connecté #}
@@ -53,9 +48,15 @@
                                 </nav>
                             </div>
                             {% endif %}
+                            {# Affichage des messages flash #}
+                            {% for message in app.flashes("message") %}
+                                {{ message }}
+                            {% endfor %}
             </header>
         
             {% block body %}
+                
+
             {% endblock %}
         </div>
 

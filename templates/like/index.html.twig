@@ -4,12 +4,12 @@
 
 {% block body %}
     <h1>Liste de vos likes</h1>
-        {% for userLikes in userLikes %}
+        {% for userLike in userLikes %}
 
         <div class="cat-like">
-            {{ userLikes.catOne.name }}
-            {{ userLikes.likeDate}}
-            <a href="{{ path('delete_like', {'id': userLikes.id}) }}" 
+            {{ userLike.catOne.name }}
+            {{ userLike.likeDate}}
+            <a href="{{ path('delete_like', {'id': userLike.id}) }}" 
             class="btn btn-danger" 
             >Supprimer le like</a>
         </div>

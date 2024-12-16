@@ -10,7 +10,7 @@
     {% for topics in topics %} <br>
 
     {# Bouton de suppression #}
-    <a href="{{ path('show_topic', {id: topics.id}) }}">{{ topics }}</a>
+    <a href="{{ path('show_topic', {id: topics.id}) }}">{{ topics }} par {{ topics.user}} le {{ topics.dateTopic }} à {{ topics.hourTopic }}</a>
         <form method="post" action="{{ path('delete_topic', {id: topics.id}) }}";
             <input type="hidden" name="_method" value="DELETE">
             <button type="submit">Supprimer</button>
