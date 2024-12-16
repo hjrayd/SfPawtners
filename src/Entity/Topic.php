@@ -26,7 +26,7 @@ class Topic
     private ?\DateTimeInterface $topicDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'topics')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
     /**

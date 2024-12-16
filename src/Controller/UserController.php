@@ -7,9 +7,12 @@ use App\Form\EditPseudoType;
 use App\Form\EditPasswordType;
 use App\Repository\CatRepository;
 use App\Repository\LikeRepository;
+use App\Repository\PostRepository;
 use App\Repository\UserRepository;
+use App\Repository\TopicRepository;
 use App\Repository\MatcheRepository;
 use App\Repository\MessageRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +35,10 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/delete', name: 'delete_user')]
-    public function delete( Security $security,  EntityManagerInterface $entityManager, SessionInterface $session, TokenStorageInterface $tokenStorage, CatRepository $catRepository, LikeRepository $likeRepository, MatcheRepository $matcheRepository, MessageRepository $messageRepository): Response 
+    public function delete( 
+    Security $security,  EntityManagerInterface $entityManager, SessionInterface $session, TokenStorageInterface $tokenStorage, 
+    CatRepository $catRepository, LikeRepository $likeRepository, MatcheRepository $matcheRepository, MessageRepository $messageRepository, 
+    PostRepository $postRepository, CategoryRepository $categoryRepository, TopicRepository $topicRepository): Response 
     {
         $user = $security->getUser();
 
@@ -95,6 +101,26 @@ class UserController extends AbstractController
     
                 foreach($messages as $message) {
                     $entityManager->remove($message);
+                }
+            }
+
+            $posts = $postRepository->findBy([
+                "user" => $user
+            ]);
+
+            if ($posts) {
+                foreach ($posts as $post) {
+                    $post->setUser(null);
+                }
+            }
+
+            $topics = $topicRepository->findBy([
+                "user" => $user
+            ]);
+
+            if ($topics) {
+                foreach ($topics as $topic) {
+                    $topic->setUser(null);
                 }
             }
 

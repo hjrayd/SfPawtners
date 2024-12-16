@@ -6,7 +6,15 @@
     <h1> {{topic}} </h1>
     Posts : <br>
     {% for post in posts %} <br>
-        {{ post }} par {{ post.user}} le {{ post.datePost }} à {{ post.hourPost}} <br>
+        {{ post }} par 
+        
+        {% if post.user %}
+            {{ post.user}}
+        {% else %}
+            Utilisateur supprimé
+        {% endif %} 
+            le {{ post.datePost }} à {{ post.hourPost}} <br>
+
         <form method="post" action="{{ path('delete_post', {id: post.id}) }}";
             <input type="hidden" name="_method" value="DELETE">
             <button type="submit">Supprimer</button>

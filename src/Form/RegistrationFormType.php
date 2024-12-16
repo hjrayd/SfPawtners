@@ -28,7 +28,7 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new Length(['min' => 3, 'max'=> 20, 
                     'minMessage'=>'Le pseudo doit contenir 3 caractères minimum.',
-                    'maxMessag'=>'Le pseudo doit contenir 20 caractères minimum']),
+                    'maxMessage'=>'Le pseudo doit contenir 20 caractères minimum']),
                 ],
                 'required'=> true,
             ])
