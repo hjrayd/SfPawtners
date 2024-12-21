@@ -83,6 +83,7 @@ a:visited {
     flex-direction: column;
     height: 100%;
     width: 100%;
+   
  }
 
  .form-login {
@@ -95,20 +96,26 @@ a:visited {
     padding: 30px;
     border-radius: 20px;
     background-color: var(--section-color);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
  }
 
     .form-login button {
     font-size: 20px;
     padding-left: 20px;
     padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     background-color: var(--text-color);
     color: var(--base-color);
     border: none;
     border-radius: 20px;
+    height: 100%;
+    width: 60%;
  }
 
  .form-login button:hover {
     background-color: #70424A;
+    cursor: pointer;
  }
 
  .btn-login {
@@ -116,11 +123,16 @@ a:visited {
     align-items: center;
     justify-content: center;
     margin-top: 50px;
-    
+ }
+
+ .btn-login i {
+    padding-left: 5px;
+    font-size: 15px;
  }
 
 .form-login label {
     margin-top: 20px;
+   
 }
 
 .form-login input {
