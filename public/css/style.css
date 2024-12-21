@@ -147,6 +147,38 @@ a:visited {
     margin-bottom: 50px;
  }
 
+   /* 
+=================================================================
+=========================INSCRIPTION==================================
+=================================================================
+ */
+
+ #wrapper-register {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+
+ }
+
+ .section-register, 
+ .section-presentation {
+    width: 50%;
+    min-width: 50%; 
+    max-width: 50%; 
+    height: 100%; 
+ }
+
+.form-register input {
+    max-width: 100%;
+
+}
+ .section-register {
+    background-color: var(--section-color);
+ }
+
+ 
 
 
 

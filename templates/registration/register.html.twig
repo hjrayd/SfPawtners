@@ -1,24 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+    <div id="wrapper-register">
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
 
-    <h1>S'inscrire</h1>
+        <div class="section-presentation">
+            <h1>Bienvenue sur Pawtners !</h1>
 
-    {{ form_errors(registrationForm) }}
+            <p> Le site idéal pour tous les propriétaires à la recherche d'un partenaire pour leurs matous !</p>
 
-    {{ form_start(registrationForm) }}
-    {{ form_row(registrationForm.pseudo) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+            <p>Inscrivez vous pour commencer l'aventure</p>
 
-        <button type="submit" class="btn">S'inscrire</button>
-    {{ form_end(registrationForm) }}
+            <p> Vous avez déjà un compte ?</p>
+
+            <a href="{{ path('app_login')}}"> Me connecter </a>
+        </div>
+
+        <div class="section-register">
+            <h2> S'inscrire </h2>
+            <div class="form-register">
+                {{ form_errors(registrationForm) }}
+
+                {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.pseudo) }}
+                    {{ form_row(registrationForm.email) }}
+                    {{ form_row(registrationForm.plainPassword, {
+                        label: 'Password'
+                    }) }}
+                    {{ form_row(registrationForm.agreeTerms) }}
+                    <div class="btn-login">
+                        <button type="submit" class="btn">S'inscrire</button>
+                    </div>
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>  
+    </div>
 {% endblock %}
