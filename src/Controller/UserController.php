@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Review;
+use App\Form\ReviewType;
 use App\Form\EditPseudoType;
 use App\Form\EditPasswordType;
 use App\Repository\CatRepository;
@@ -137,16 +139,15 @@ class UserController extends AbstractController
 
 
     #[Route('/user/{id}', name: 'show_user')]
-    public function show(User $user, CatRepository $catRepository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response {
+    public function show(int $id, User $user, CatRepository $catRepository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository): Response {
+
         if(!$user) {
             return $this->redirectToRoute('app_register');
         }
 
+        //Formulaire de modification de pseudo
         $formPseudo = $this->createForm(EditPseudoType::class, $user);
         $formPseudo->handleRequest($request);
-
-        $formPassword = $this->createForm(EditPasswordType::class, $user);
-        $formPassword->handleRequest($request);
 
         if($formPseudo->isSubmitted() && $formPseudo->isValid()) {
             $newPseudo = $formPseudo->get('pseudo')->getData();
@@ -159,6 +160,10 @@ class UserController extends AbstractController
             return $this->redirectToRoute('show_user', ['id'=>$user->getId()]);
         }
 
+        //Formulaire de modification de mot de apsse
+        $formPassword = $this->createForm(EditPasswordType::class, $user);
+        $formPassword->handleRequest($request);
+
         if($formPassword->isSubmitted() && $formPassword->isValid()) {
             $newPassword = $formPassword->get('plainPassword')->getData();
             if($newPassword) {
@@ -170,12 +175,34 @@ class UserController extends AbstractController
             }
             return $this->redirectToRoute('show_user', ['id'=>$user->getId()]);
         }
+
+        //Formulaire d'ajout d'avis
+        $reviewee = $userRepository->find($id);
+        $reviewer = $this->getUser();
+        $review = new Review();
+
+        $formReview = $this->createForm(ReviewType::class, $review);
+        $formReview->handleRequest($request);
+
+        if($formReview->isSubmitted() && $formReview->isValid()) {
+              if ($reviewee == $reviewer) {
+                $this->addFlash('message', 'Vous ne pouvez pas vous notez vous même');
+              } else  {
+                $review->setReviewer($reviewer);
+                $review->setReviewee($reviewee);
+                $entityManager->persist($review);
+                $entityManager->flush();
+                $this->addFlash('message', 'Votre avis a bien été mis en ligne');
+              }
+              return $this->redirectToRoute('show_user', ['id'=>$user->getId()]);
+            } 
             $cats = $user->getCats();
             return $this->render('user/show.html.twig', [
                 'user' => $user,
                 'cats' => $cats, 
                 'formPassword'=>$formPassword->createView(),
                 'formPseudo'=>$formPseudo->createView(),
+                'formReview' => $formReview->createView()
 
             ]);
         

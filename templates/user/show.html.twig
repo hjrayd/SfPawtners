@@ -28,6 +28,12 @@
                <h3>{{cat}}</h3> <br>
             </div>
         </div>
+
+        <h2>Dîtes à {{user}} ce que vous en avez pensé !</h2>
+        {{ form_start(formReview) }}
+            {{ form_widget(formReview) }}
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        {{ form_end(formReview) }}
            
         {% endfor %}
 
@@ -48,7 +54,6 @@
                     {{ form_widget(formPassword) }}
                     <button type="submit" class="btn btn-primary">Mettre à jour</button>
                 {{ form_end(formPassword) }}
-
 
                 <form method="post" action="{{ path('delete_user') }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.');">
                     <input type="hidden" name="_method" value="DELETE">
