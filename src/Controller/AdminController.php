@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Form\UserFilterType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,12 +13,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminController extends AbstractController
 {
     #[Route('/admin', name: 'app_admin')]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, Request $request): Response
     {
-        $users = $userRepository ->findBy([], ["pseudo" => "ASC"]);
+    
+        $form = $this->createForm(UserFilterType::class);
+        $form->handleRequest($request);
+
+        $filter = [];
+        if ($form->isSubmitted() && $form->isValid()) {
+            $filter = $form->getData();
+           
+        }
+
+        // Appliquer le filtre de recherche sur les utilisateurs
+        if (!empty($filter['pseudo'])) {
+            $users = $userRepository->findUserPseudo($filter['pseudo']);
+        } else {
+            $users = $userRepository->findBy([], ['pseudo' => 'ASC']);
+        }
+
         return $this->render('admin/index.html.twig', [
-            'users' => $users
+            'users' => $users,
+            'form' => $form->createView(),
         ]);
+    
     }
 
     #[Route('/admin/ban/{id}', name: 'ban_admin')]
@@ -55,6 +75,7 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('app_admin');
 
     }
+
 
 
 }

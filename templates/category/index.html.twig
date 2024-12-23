@@ -17,8 +17,8 @@
         <br>
     {% endfor %}
 
-    Ajouter une catégorie :
     {% if is_granted('ROLE_ADMIN')  %}
+        Ajouter une catégorie :
         {{ form(formCategory)}}
     {% endif %}
 {% endblock %}

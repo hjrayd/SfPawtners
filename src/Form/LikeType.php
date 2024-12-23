@@ -28,6 +28,7 @@ class LikeType extends AbstractType
                         ]
             ])
             ->add('catTwo', EntityType::class, [
+                'label' => 'Votre chat',
                 'class' => Cat::class,
                 'choices' => $cats,
                 'choice_label' => 'name',

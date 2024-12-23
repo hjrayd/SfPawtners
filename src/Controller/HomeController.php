@@ -17,8 +17,7 @@ class HomeController extends AbstractController
     public function index(Request $request, CatRepository $catRepository, BreedRepository $breedRepository): Response
     {
         $breeds = $breedRepository->findAll();
-
-
+        
         $form = $this->createForm(FilterType::class);
 
         $form->handleRequest($request);
