@@ -27,7 +27,7 @@ class CatController extends AbstractController
     #[Route('/cat', name: 'app_cat')]
     public function index(CatRepository $catRepository): Response //On fait passer directement le repository
     {
-        $cats = $catRepository->findBy([], ["name" => "ASC"]);
+        $cats = $catRepository->findBy([], ["dateProfile" => "DESC"]);
  
         //Redirection qui redirige l'utilisateur
         //render permet de faire le lien entre le controller et la vue

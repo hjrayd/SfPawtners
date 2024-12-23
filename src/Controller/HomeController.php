@@ -32,7 +32,7 @@ class HomeController extends AbstractController
         } else {
 
              //On fait appel au catRepository afin de trouver tous les profils des chats et les afficher sur la page 'Home'
-            $cats = $catRepository->findAll();
+            $cats = $catRepository->findBy([], ["dateProfile" => "DESC"]);
         }
 
         return $this->render('home/index.html.twig', [

@@ -30,6 +30,12 @@
             </div>
         {% endfor %}
 
+        <h2> Avis </h2>
+        {% for review in reviews %}
+            {{review.reviewContent}}
+            {{review.reviewRating}}/5
+        {% endfor %}
+
         {% if canPostReview %}
             <h2>Dîtes à {{user}} ce que vous en avez pensé !</h2>
             {{ form_start(formReview) }}

@@ -13,6 +13,7 @@ use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use App\Repository\TopicRepository;
 use App\Repository\MatcheRepository;
+use App\Repository\ReviewRepository;
 use App\Repository\MessageRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -139,7 +140,7 @@ class UserController extends AbstractController
 
 
     #[Route('/user/{id}', name: 'show_user')]
-    public function show(int $id, User $user, CatRepository $catRepository, MessageRepository $messageRepository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository): Response {
+    public function show(int $id, User $user, CatRepository $catRepository, MessageRepository $messageRepository, ReviewRepository $reviewRepository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository): Response {
 
         if(!$user) {
             return $this->redirectToRoute('app_register');
@@ -180,6 +181,10 @@ class UserController extends AbstractController
         $reviewee = $userRepository->find($id);
         $reviewer = $this->getUser();
         $canPostReview = $messageRepository->findIfMessageExchanged($reviewee, $reviewer);
+        $alreadyReviewed = $reviewRepository->findBy([
+            "reviewer" => $reviewer,
+            "reviewee" => $reviewee
+        ]);
 
         $review = new Review();
         $formReview = $this->createForm(ReviewType::class, $review);
@@ -188,7 +193,9 @@ class UserController extends AbstractController
         if($formReview->isSubmitted() && $formReview->isValid()) {
               if ($reviewee == $reviewer) {
                 $this->addFlash('message', 'Vous ne pouvez pas vous notez vous même');
-              } else  {
+              } elseif($alreadyReviewed) {
+                $this->addFlash('message', 'Vous avez déjà noté cet utilisateur');
+              } else {
                 $review->setReviewer($reviewer);
                 $review->setReviewee($reviewee);
                 $entityManager->persist($review);
@@ -197,13 +204,18 @@ class UserController extends AbstractController
               }
               return $this->redirectToRoute('show_user', ['id'=>$user->getId()]);
             } 
+        $reviews = $reviewRepository -> findBy([
+            "reviewee" => $reviewee
+        ]);
             $cats = $user->getCats();
             return $this->render('user/show.html.twig', [
                 'user' => $user,
                 'cats' => $cats, 
+                'review' => $review,
                 'formPassword'=>$formPassword->createView(),
                 'formPseudo'=>$formPseudo->createView(),
                 'formReview' => $formReview->createView(),
+                'reviews' => $reviews,
                 'canPostReview' => $canPostReview
 
             ]);
