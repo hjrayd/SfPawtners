@@ -32,6 +32,11 @@
 
         <h2> Avis </h2>
         {% for review in reviews %}
+            {% if review.reviewer %}
+                {{ review.reviewer}}
+            {% else %}
+                Utilisateur supprimé
+            {% endif %} 
             {{review.reviewContent}}
             {{review.reviewRating}}/5
             {% if review.reviewer == app.user %}

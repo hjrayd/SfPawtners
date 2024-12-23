@@ -33,7 +33,7 @@
                  
                             {# Si le user a le rôle Admin #}
                             {% if is_granted('ROLE_ADMIN') %}
-                                        <li><a href="{{ path('app_user')}}"> Liste des utilisateurs </a> <br></li>
+                                        <li><a href="{{ path('app_admin')}}"> Dashboard Admin </a> <br></li>
                             {% endif %}
                         </ul>
                     </div>

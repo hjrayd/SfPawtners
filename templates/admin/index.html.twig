@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+    {% block title %}Liste des users{% endblock %}
+
+        {% block body %}
+
+            {% if is_granted('ROLE_ADMIN') %}  
+                {% for user in users %}
+
+                    {# On affiche seulement les pseudos des personnes ayant le rôle 'ROLE_USER' #}
+                    {% if 'ROLE_ADMIN' not in user.roles %}
+                        <li><a href="{{ path('show_user', {'id':user.id})}}"> {{ user }} </a> <br></li>
+                
+                        {% if user.ban == false %}
+                                    <a href="{{ path('ban_admin', {'id': user.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir bannir cet utilisateur ?');">Bannir</a>
+                                {% else %}
+                                    <a href="{{ path('unban_admin', {'id': user.id}) }}"  onclick="return confirm('Êtes-vous sûr de vouloir débannir cet utilisateur ?');">Débannir</a>
+                                {% endif %}
+                    {% endif %}
+                {% endfor %}
+                
+            {% endif %}
+            
+        {% endblock %}
+

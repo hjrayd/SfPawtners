@@ -41,7 +41,7 @@ class UserController extends AbstractController
     public function delete( 
     Security $security,  EntityManagerInterface $entityManager, SessionInterface $session, TokenStorageInterface $tokenStorage, 
     CatRepository $catRepository, LikeRepository $likeRepository, MatcheRepository $matcheRepository, MessageRepository $messageRepository, 
-    PostRepository $postRepository, CategoryRepository $categoryRepository, TopicRepository $topicRepository): Response 
+    PostRepository $postRepository, CategoryRepository $categoryRepository, TopicRepository $topicRepository, ReviewRepository $reviewRepository): Response 
     {
         $user = $security->getUser();
 
@@ -124,6 +124,16 @@ class UserController extends AbstractController
             if ($topics) {
                 foreach ($topics as $topic) {
                     $topic->setUser(null);
+                }
+            }
+
+            $reviews = $reviewRepository->findBy([
+                "reviewer" => $user
+            ]);
+
+            if($reviews) {
+                foreach($reviews as $review) {
+                    $review->setReviewer(null);
                 }
             }
 
