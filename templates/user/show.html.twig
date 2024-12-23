@@ -34,6 +34,9 @@
         {% for review in reviews %}
             {{review.reviewContent}}
             {{review.reviewRating}}/5
+            {% if review.reviewer == app.user %}
+                <a href="{{ path('delete_review', {'id': review.id}) }}">Supprimer</a>
+            {% endif %}
         {% endfor %}
 
         {% if canPostReview %}
