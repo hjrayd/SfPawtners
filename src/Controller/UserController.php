@@ -139,7 +139,7 @@ class UserController extends AbstractController
 
 
     #[Route('/user/{id}', name: 'show_user')]
-    public function show(int $id, User $user, CatRepository $catRepository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository): Response {
+    public function show(int $id, User $user, CatRepository $catRepository, MessageRepository $messageRepository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository): Response {
 
         if(!$user) {
             return $this->redirectToRoute('app_register');
@@ -160,7 +160,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('show_user', ['id'=>$user->getId()]);
         }
 
-        //Formulaire de modification de mot de apsse
+        //Formulaire de modification de mot de passe
         $formPassword = $this->createForm(EditPasswordType::class, $user);
         $formPassword->handleRequest($request);
 
@@ -179,8 +179,9 @@ class UserController extends AbstractController
         //Formulaire d'ajout d'avis
         $reviewee = $userRepository->find($id);
         $reviewer = $this->getUser();
-        $review = new Review();
+        $canPostReview = $messageRepository->findIfMessageExchanged($reviewee, $reviewer);
 
+        $review = new Review();
         $formReview = $this->createForm(ReviewType::class, $review);
         $formReview->handleRequest($request);
 
@@ -202,7 +203,8 @@ class UserController extends AbstractController
                 'cats' => $cats, 
                 'formPassword'=>$formPassword->createView(),
                 'formPseudo'=>$formPseudo->createView(),
-                'formReview' => $formReview->createView()
+                'formReview' => $formReview->createView(),
+                'canPostReview' => $canPostReview
 
             ]);
         

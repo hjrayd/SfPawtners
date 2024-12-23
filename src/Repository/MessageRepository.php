@@ -77,4 +77,29 @@ class MessageRepository extends ServiceEntityRepository
           $query = $sub->getQuery();
           return $query->getResult(); //On execute la requête et on retourne le résultat
     }
+
+    public function findIfMessageExchanged (User $user1, User $user2) {
+        $messagesExchanged1 = $this->findBy([
+            'sender' => $user1,
+            'receiver' => $user2
+        ]);
+
+        if(!empty($messagesExchanged1)) {
+            return true;
+        }
+
+        $messagesExchanged2 = $this->findBy([
+            'sender' => $user2,
+            'receiver' => $user1
+        ]);
+
+        if(!empty($messagesExchanged2)) {
+            return true;
+        }
+        
+        return false;
+    }
+
+
+    
 }

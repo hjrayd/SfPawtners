@@ -43,7 +43,8 @@ class MessageType extends AbstractType
                 $builder
                     ->add('receiver', EntityType::class, [
                         'class' => User::class,
-                        'choice_label' => 'pseudo'
+                        'choice_label' => 'pseudo',
+                        'label' => 'Destinataire',
                     ]);
                 }
 

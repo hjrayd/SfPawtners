@@ -19,23 +19,26 @@
     <h2>Profil(s):</h2> <br>
 
         {% for cat in user.cats %}
-        <div class="cats-user">
-            <div class="cat-user">
+            <div class="cats-user">
+                <div class="cat-user">
 
-                {# First = filtre qui permet de récupèrer le premier élément d'un tableau #}
-                {% set firstImage = cat.images|first %}
-                    <img src="{{ asset(firstImage) }}" alt="{{ firstImage.imageAlt }}">
-               <h3>{{cat}}</h3> <br>
+                    {# First = filtre qui permet de récupèrer le premier élément d'un tableau #}
+                    {% set firstImage = cat.images|first %}
+                        <img src="{{ asset(firstImage) }}" alt="{{ firstImage.imageAlt }}">
+                <h3>{{cat}}</h3> <br>
+                </div>
             </div>
-        </div>
-
-        <h2>Dîtes à {{user}} ce que vous en avez pensé !</h2>
-        {{ form_start(formReview) }}
-            {{ form_widget(formReview) }}
-            <button type="submit" class="btn btn-primary">Envoyer</button>
-        {{ form_end(formReview) }}
-           
         {% endfor %}
+
+        {% if canPostReview %}
+            <h2>Dîtes à {{user}} ce que vous en avez pensé !</h2>
+            {{ form_start(formReview) }}
+                {{ form_widget(formReview) }}
+                <button type="submit" class="btn btn-primary">Envoyer</button>
+            {{ form_end(formReview) }}
+        {% endif %}
+        
+       
 
         {%  if app.user == user %}
             <h2> Mes informations: </h2>
@@ -46,18 +49,18 @@
             <h2> Modifier mon Pseudo: </h2>
                 {{ form_start(formPseudo) }}
                     {{ form_widget(formPseudo) }}
-                    <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                    <button type="submit">Mettre à jour</button>
                 {{ form_end(formPseudo) }}
             
             <h2> Modifier mon Mot de passe: </h2>
                 {{ form_start(formPassword) }}
                     {{ form_widget(formPassword) }}
-                    <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                    <button type="submit">Mettre à jour</button>
                 {{ form_end(formPassword) }}
 
                 <form method="post" action="{{ path('delete_user') }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.');">
                     <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit" class="btn btn-danger">Supprimer mon compte</button>
+                    <button type="submit" >Supprimer mon compte</button>
                 </form>
         {% endif %}
 
