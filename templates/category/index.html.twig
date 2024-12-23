@@ -7,13 +7,18 @@
     Catégories : 
     {% for categorie in categories %} <br>
     <a href="{{ path('show_category', {id: categorie.id}) }}">{{ categorie }}</a>
-        <form method="post" action="{{ path('delete_category', {id: categorie.id}) }}";
-            <input type="hidden" name="_method" value="DELETE">
-            <button type="submit">Supprimer</button>
-        </form>   <br>
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <form method="post" action="{{ path('delete_category', {id: categorie.id}) }}";
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit">Supprimer</button>
+            </form> 
+        {% endif %}  
+        <br>
     {% endfor %}
 
     Ajouter une catégorie :
-
-    {{ form(formCategory)}}
+    {% if is_granted('ROLE_ADMIN')  %}
+        {{ form(formCategory)}}
+    {% endif %}
 {% endblock %}

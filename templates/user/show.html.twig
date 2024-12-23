@@ -39,7 +39,7 @@
             {% endif %} 
             {{review.reviewContent}}
             {{review.reviewRating}}/5
-            {% if review.reviewer == app.user %}
+            {% if app.user == review.reviewer or is_granted('ROLE_ADMIN')  %}
                 <a href="{{ path('delete_review', {'id': review.id}) }}">Supprimer</a>
             {% endif %}
         {% endfor %}
@@ -48,7 +48,7 @@
             <h2>Dîtes à {{user}} ce que vous en avez pensé !</h2>
             {{ form_start(formReview) }}
                 {{ form_widget(formReview) }}
-                <button type="submit" class="btn btn-primary">Envoyer</button>
+                <button type="submit">Envoyer</button>
             {{ form_end(formReview) }}
         {% endif %}
         

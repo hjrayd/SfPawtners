@@ -15,10 +15,13 @@
         {% endif %} 
             le {{ post.datePost }} à {{ post.hourPost}} <br>
 
-        <form method="post" action="{{ path('delete_post', {id: post.id}) }}";
-            <input type="hidden" name="_method" value="DELETE">
-            <button type="submit">Supprimer</button>
-        </form>   <br>
+            {% if app.user == post.user or is_granted('ROLE_ADMIN')  %}
+                <form method="post" action="{{ path('delete_post', {id: post.id}) }}";
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit">Supprimer</button>
+                </form>  
+            {% endif %}
+         <br>
     {% endfor %}
 
     Ajouter un post :

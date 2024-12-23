@@ -9,25 +9,33 @@
     Topics : <br>
     {% for topic in topics %} <br>
 
-    {# Bouton de suppression #}
-    <a href="{{ path('show_topic', {id: topic.id}) }}">{{ topic }} par 
-        {% if topic.user %}
-            {{ topic.user}}
-        {% else %}
-            Utilisateur supprimé
-        {% endif %} 
-         le {{ topic.dateTopic }} à {{ topic.hourTopic }}</a>
-        <form method="post" action="{{ path('delete_topic', {id: topic.id}) }}";
-            <input type="hidden" name="_method" value="DELETE">
-            <button type="submit">Supprimer</button>
-        </form>   <br>
+        {# Bouton de suppression #}
+        <a href="{{ path('show_topic', {id: topic.id}) }}">{{ topic }} par 
+            {% if topic.user %}
+                {{ topic.user}}
+            {% else %}
+                Utilisateur supprimé
+            {% endif %} 
+            le {{ topic.dateTopic }} à {{ topic.hourTopic }}</a>
 
-    {# Bouton de Verrouillage/Déverouillage #}
-    <form method="post" action="{{ path(topic.locked ? 'unlock_topic' : 'lock_topic', {id: topic.id}) }}">  {# On vérifie le statut du champ "Locked" dans l'entité topic pour l'affichage du bouton #} 
-        <button type="submit">
-            {{ topic.locked ? 'Déverrouiller' : 'Verrouiller' }} 
-        </button>
-    </form> <br>
+            {% if app.user == topic.user or is_granted('ROLE_ADMIN')  %}
+                <form method="post" action="{{ path('delete_topic', {id: topic.id}) }}";
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit">Supprimer</button>
+                </form>   
+            {% endif %}
+                <br>
+
+        {# Bouton de Verrouillage/Déverouillage #}
+        {% if app.user == topic.user or is_granted('ROLE_ADMIN')  %}
+            <form method="post" action="{{ path(topic.locked ? 'unlock_topic' : 'lock_topic', {id: topic.id}) }}">  {# On vérifie le statut du champ "Locked" dans l'entité topic pour l'affichage du bouton #} 
+                <button type="submit">
+                    {{ topic.locked ? 'Déverrouiller' : 'Verrouiller' }} 
+                </button>
+            </form> 
+        {% endif %}
+        <br>
+        
     {% endfor %}
 
     Ajouter un topic :
