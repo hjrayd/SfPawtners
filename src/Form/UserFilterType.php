@@ -17,7 +17,9 @@ class UserFilterType extends AbstractType
                 'label' => 'Rechercher',
                 'required' => false
             ])
-            ->add('Valider', SubmitType::class)
+            ->add('Valider', SubmitType::class, [
+                'label' => 'Rechercher'
+            ])
 
         ;
     }
