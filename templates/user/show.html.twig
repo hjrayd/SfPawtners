@@ -31,7 +31,8 @@
         {% endfor %}
 
         <h2> Avis </h2>
-        {% for review in reviews %}
+        {% if reviews %}
+            {% for review in reviews %}
             {% if review.reviewer %}
                 {{ review.reviewer}}
             {% else %}
@@ -42,7 +43,12 @@
             {% if app.user == review.reviewer or is_granted('ROLE_ADMIN')  %}
                 <a href="{{ path('delete_review', {'id': review.id}) }}">Supprimer</a>
             {% endif %}
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+            Aucun avis pour l'instant.
+        {% endif %}
+        <br>
+        
 
         {% if canPostReview %}
             <h2>Dîtes à {{user}} ce que vous en avez pensé !</h2>
@@ -55,11 +61,7 @@
        
 
         {%  if app.user == user %}
-       
-        <li><a href="{{ path('update_user') }}">Changer mes informations</a></li>
-
- 
-
+        <button> <a href="{{ path('update_user') }}">Changer mes informations</a> </button> <br>
                 <form method="post" action="{{ path('delete_user') }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.');">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" >Supprimer mon compte</button>

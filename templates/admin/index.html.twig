@@ -5,8 +5,13 @@
         {% block body %}
 
             {% if is_granted('ROLE_ADMIN') %}  
-
-            
+                    <!-- Formulaire de recherche -->
+                    {{ form_start(form) }}
+                        {{ form_row(form.pseudo) }}
+                        {{ form_row(form.Valider) }}
+                    {{ form_end(form) }}
+                    <button> <a href="{{ path('app_admin')}}"> Réinitialiser </a> </button>
+                            
                 {% for user in users %}
 
                     {# On affiche seulement les pseudos des personnes ayant le rôle 'ROLE_USER' #}
