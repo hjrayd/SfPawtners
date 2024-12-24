@@ -5,9 +5,15 @@
 {% block body %}
 
     <h1> Mes matchs : </h1>
-        {% for userMatches in userMatches %}
-            {{ userMatches.catOne }} et {{ userMatches.catTwo }} le 
-            {{ userMatches.matchDate }}
+        {% for match in userMatches %}
+            {{ match.catOne }} et {{ match.catTwo }} le 
+            {{ match.matchDate }}
+            {% if match.catOne.user == app.user %}
+            <a href="{{ path('new_message', {'id': match.catTwo.user.id}) }}">Envoyer un message</a>
+            {% else %}
+            <a href="{{ path('new_message', {'id': match.catOne.user.id}) }}">Envoyer un message</a>
+            {% endif %}
+           
         {% endfor %}
 
 {% endblock %}

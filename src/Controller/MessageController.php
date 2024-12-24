@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Message;
 use App\Form\MessageType;
+use App\Repository\UserRepository;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,14 +24,19 @@ class MessageController extends AbstractController
     }
     
     //On gère le formulaire d'envoie de message
-    #[Route('/message/new', name: 'new_message')]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/message/new/{id}', name: 'new_message')]
+    public function new(int $id, Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
+        $user = $this->getUser();
+
+        $receiver = $userRepository->find($id);
         //Instanciation d'un nouvel objet message
         $message = new Message();
 
         //On crée le formulaire
-        $form = $this->createForm(MessageType::class, $message);
+        $form = $this->createForm(MessageType::class, $message, [
+            'receiver' => $receiver
+        ]);
 
         //On associe les données de la requête au formulaire
         $form->handleRequest($request);
@@ -39,7 +45,8 @@ class MessageController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
 
             //On attribut à l'expediteur du message l'id du user connecté
-            $message->setSender($this->getUser());
+            $message->setSender($user);
+            $message->setReceiver($receiver);
 
             //On persiste et envoie les données en BDD
             $entityManager->persist($message);
@@ -47,7 +54,7 @@ class MessageController extends AbstractController
 
             //Message de succès
             $this->addFlash("message", "Votre message a bien été envoyé");
-            return $this->redirectToRoute("new_message");
+            return $this->redirectToRoute("show_message", ['id' => $id]);
         }
 
         //On retourne le resultat avec le formulaire dans la vue

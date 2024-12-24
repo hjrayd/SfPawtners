@@ -37,17 +37,7 @@ class MessageType extends AbstractType
                             "class" => "d-none"
                         ]
                     ]);
-            } else {
-
-                //Si il n'y a pas de destinataire par défaut on choisit un user
-                $builder
-                    ->add('receiver', EntityType::class, [
-                        'class' => User::class,
-                        'choice_label' => 'pseudo',
-                        'label' => 'Destinataire',
-                    ]);
-                }
-
+            }
                 $builder
                 ->add('Envoyer', SubmitType::class);
             
