@@ -15,26 +15,12 @@ class AdminController extends AbstractController
     #[Route('/admin', name: 'app_admin')]
     public function index(UserRepository $userRepository, Request $request): Response
     {
-    
-        $form = $this->createForm(UserFilterType::class);
-        $form->handleRequest($request);
-
-        $filter = [];
-        if ($form->isSubmitted() && $form->isValid()) {
-            $filter = $form->getData();
-           
-        }
-
-        // Appliquer le filtre de recherche sur les utilisateurs
-        if (!empty($filter['pseudo'])) {
-            $users = $userRepository->findUserPseudo($filter['pseudo']);
-        } else {
             $users = $userRepository->findBy([], ['pseudo' => 'ASC']);
-        }
+        
 
         return $this->render('admin/index.html.twig', [
             'users' => $users,
-            'form' => $form->createView(),
+
         ]);
     
     }

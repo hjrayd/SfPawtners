@@ -33,21 +33,5 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
-    public function findUserPseudo(string $pseudo) {
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder('u'); 
-    
-        $qb->select('u') //on sélectionne les utilisateurs
-            ->from('App\Entity\User', 'u'); 
 
-            if (!empty($filter['pseudo'])) {
-                $qb->andwhere('u.pseudo LIKE :pseudo')
-                ->setParameter('pseudo', '%' . $filter['pseudo'] . '%');
-            }
-    
-        $query = $qb->getQuery();
-
-        return $query->getResult(); 
-
-    }
 }

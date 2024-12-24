@@ -28,14 +28,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class UserController extends AbstractController
 {
-    #[Route('/user', name: 'app_user')]
-    public function index(UserRepository $userRepository): Response
-    {
-        $users = $userRepository ->findBy([], ["pseudo" => "ASC"]);
-        return $this->render('user/index.html.twig', [
-            'users' => $users
-        ]);
-    }
+  
 
     #[Route('/user/delete', name: 'delete_user')]
     public function delete( 
@@ -149,43 +142,56 @@ class UserController extends AbstractController
 
 
 
+    
+    #[Route('/user/update', name: 'update_user')]
+    public function update( Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository): Response {
+
+        $user = $this->getUser();
+        
+        $formPseudo = $this->createForm(EditPseudoType::class, $user);
+        $formPseudo->handleRequest($request);
+        
+        if($formPseudo->isSubmitted() && $formPseudo->isValid()) {
+            $newPseudo = $formPseudo->get('pseudo')->getData();
+            if($newPseudo) {
+                $user->setPseudo($newPseudo);
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $this->addFlash('message', 'Votre pseudo a bien été modifier');
+            }
+            return $this->redirectToRoute('update_user');
+        }
+        
+        $formPassword = $this->createForm(EditPasswordType::class, $user);
+        $formPassword->handleRequest($request);
+        
+        if($formPassword->isSubmitted() && $formPassword->isValid()) {
+            $newPassword = $formPassword->get('plainPassword')->getData();
+            if($newPassword) {
+                $hashedPassword = $passwordHasher->hashPassword($user, $newPassword);
+                $user->setPassword($hashedPassword);
+                $entityManager->persist($user);
+                $entityManager->flush();
+                $this->addFlash('message', 'Votre mot de passe a bien été modifier');
+            }
+            return $this->redirectToRoute('update_user');
+        }
+        
+        return $this->render('user/update.html.twig', [
+            'user'=>$user,
+            'formPassword'=>$formPassword->createView(),
+            'formPseudo'=>$formPseudo->createView(),
+            
+        ]);
+    }
+
     #[Route('/user/{id}', name: 'show_user')]
-    public function show(int $id, User $user, CatRepository $catRepository, MessageRepository $messageRepository, ReviewRepository $reviewRepository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository): Response {
+    public function show(int $id, User $user = null, CatRepository $catRepository, MessageRepository $messageRepository, ReviewRepository $reviewRepository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository): Response {
 
         if(!$user) {
             return $this->redirectToRoute('app_register');
         }
 
-        //Formulaire de modification de pseudo
-        $formPseudo = $this->createForm(EditPseudoType::class, $user);
-        $formPseudo->handleRequest($request);
-
-        if($formPseudo->isSubmitted() && $formPseudo->isValid()) {
-            $newPseudo = $formPseudo->get('pseudo')->getData();
-            if($newPseudo) {
-                $user->setPseudo($newPseudo);
-               $entityManager->persist($user);
-               $entityManager->flush();
-               $this->addFlash('message', 'Votre pseudo a bien été modifier');
-            }
-            return $this->redirectToRoute('show_user', ['id'=>$user->getId()]);
-        }
-
-        //Formulaire de modification de mot de passe
-        $formPassword = $this->createForm(EditPasswordType::class, $user);
-        $formPassword->handleRequest($request);
-
-        if($formPassword->isSubmitted() && $formPassword->isValid()) {
-            $newPassword = $formPassword->get('plainPassword')->getData();
-            if($newPassword) {
-              $hashedPassword = $passwordHasher->hashPassword($user, $newPassword);
-              $user->setPassword($hashedPassword);
-              $entityManager->persist($user);
-              $entityManager->flush();
-              $this->addFlash('message', 'Votre mot de passe a bien été modifier');
-            }
-            return $this->redirectToRoute('show_user', ['id'=>$user->getId()]);
-        }
 
         //Formulaire d'ajout d'avis
         $reviewee = $userRepository->find($id);
@@ -222,8 +228,6 @@ class UserController extends AbstractController
                 'user' => $user,
                 'cats' => $cats, 
                 'review' => $review,
-                'formPassword'=>$formPassword->createView(),
-                'formPseudo'=>$formPseudo->createView(),
                 'formReview' => $formReview->createView(),
                 'reviews' => $reviews,
                 'canPostReview' => $canPostReview

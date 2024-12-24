@@ -4,14 +4,8 @@
 
         {% block body %}
 
-        <form method="get" action="{{ path('app_admin') }}">
-
             {% if is_granted('ROLE_ADMIN') %}  
-            <form method="get" action="{{ path('app_admin') }}">
-                {{ form(form) }}
-            </form>
-              
-            
+
             
                 {% for user in users %}
 

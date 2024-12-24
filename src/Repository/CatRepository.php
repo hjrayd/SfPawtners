@@ -23,20 +23,22 @@ class CatRepository extends ServiceEntityRepository
         $qb->select('c')
             ->from('App\Entity\Cat', 'c');
 
-        if (!empty($filters['breeds'])) {
-            $qb->join('c.breeds', 'b') //On joint la table Breed avec la table Cat équivalent d'un INNER JOIN
-            ->andwhere('b.id IN (:breeds)')
+        // dd(count($filters['breeds']));
+
+        if (count($filters['breeds']) > 0) {
+            $qb->leftJoin('c.breeds', 'b') //On joint la table Breed avec la table Cat équivalent d'un INNER JOIN
+            ->andWhere('b.id IN (:breeds)')
             ->setParameter('breeds', $filters['breeds']);
         }
 
-        if (!empty($filters['coats'])) {
-            $qb->join('c.coats', 'co') //On joint la table Breed avec la table Cat équivalent d'un INNER JOIN
-            ->andwhere('co.id IN (:coats)')
+        if (count($filters['coats']) > 0) {
+            $qb->leftJoin('c.coats', 'co') //On joint la table Breed avec la table Cat équivalent d'un INNER JOIN
+            ->andWhere('co.id IN (:coats)')
             ->setParameter('coats', $filters['coats']);
         }
 
         if (!empty($filters['city'])) {
-            $qb->andwhere('c.city LIKE :city')
+            $qb->andWhere('c.city LIKE :city')
             ->setParameter('city', '%' . $filters['city'] . '%');
         }
 

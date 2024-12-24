@@ -14,7 +14,7 @@
         <img src="{{ asset(user.avatar) }}" >
     {% endif %}
     
-    <h2> {{ user.pseudo }}</h2>
+    <h2> {{ user }}</h2>
 
     <h2>Profil(s):</h2> <br>
 
@@ -55,22 +55,10 @@
        
 
         {%  if app.user == user %}
-            <h2> Mes informations: </h2>
-               Mon pseudo : {{user.pseudo}} <br>
-               Mon email : {{user.email}} <br>
-               Date d'inscription : {{user.registerDateFr}} <br>
+       
+        <li><a href="{{ path('update_user') }}">Changer mes informations</a></li>
 
-            <h2> Modifier mon Pseudo: </h2>
-                {{ form_start(formPseudo) }}
-                    {{ form_widget(formPseudo) }}
-                    <button type="submit">Mettre à jour</button>
-                {{ form_end(formPseudo) }}
-            
-            <h2> Modifier mon Mot de passe: </h2>
-                {{ form_start(formPassword) }}
-                    {{ form_widget(formPassword) }}
-                    <button type="submit">Mettre à jour</button>
-                {{ form_end(formPassword) }}
+ 
 
                 <form method="post" action="{{ path('delete_user') }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.');">
                     <input type="hidden" name="_method" value="DELETE">
