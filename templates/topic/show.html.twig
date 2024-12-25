@@ -24,7 +24,12 @@
          <br>
     {% endfor %}
 
-    Ajouter un post :
+    {% if app.user.ban %}
+        Vous ne pouvez pas ajouter de posts.
+    {% else %}
+        Ajouter un post :
 
-    {{ form(formPost)}}
+        {{ form(formPost)}}
+    {% endif %}
+   
 {% endblock %}

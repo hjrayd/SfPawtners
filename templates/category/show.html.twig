@@ -37,8 +37,13 @@
         <br>
         
     {% endfor %}
+    
+    {% if app.user.ban %}
+        Vous ne pouvez pas ajouter de topics.
+    {% else %}
+        Ajouter un topic :
 
-    Ajouter un topic :
-
-    {{ form(formTopic)}}
+        {{ form(formTopic)}}
+    {% endif %}
+  
 {% endblock %}

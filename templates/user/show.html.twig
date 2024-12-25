@@ -49,7 +49,9 @@
         {% endif %}
         <br>
         
-
+        {% if app.user.ban %}
+            Vous ne pouvez pas ajouter d'avis
+        {% else %}
         {% if canPostReview %}
             <h2>Dîtes à {{user}} ce que vous en avez pensé !</h2>
             {{ form_start(formReview) }}
@@ -57,6 +59,8 @@
                 <button type="submit">Envoyer</button>
             {{ form_end(formReview) }}
         {% endif %}
+        {% endif %}
+       
         
        
 

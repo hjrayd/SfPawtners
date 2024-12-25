@@ -16,10 +16,16 @@
     {% else %}
         <p>Aucun message.</p>
     {% endif %}
-    {{ form_start(formMessage) }}
-    {{ form_row(formMessage.messageContent) }}
-    {{ form_row(formMessage.Envoyer) }}
-    {{ form_end(formMessage) }}
+
+    {% if app.user.ban %}
+        Vous ne pouvez pas envoyer de message.
+    {% else %}
+        {{ form_start(formMessage) }}
+        {{ form_row(formMessage.messageContent) }}
+        {{ form_row(formMessage.Envoyer) }}
+        {{ form_end(formMessage) }}
+    {% endif %}
+    
 {% endblock %}
 
 

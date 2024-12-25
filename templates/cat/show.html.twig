@@ -30,10 +30,14 @@
                 </form>   
             {% endif %}
                      
-
-            {{ form_start(form, {'method': 'POST', 'action': path('show_cat', {'id': cat.id})}) }}
-        {{ form_row(form.catTwo) }}
-        <button type="submit" class="btn btn-primary">Liker ce chat</button>
-    {{ form_end(form) }}
+                {% if app.user.ban %}
+                    Vous ne pouvez pas liker ce chat.
+                {% else %}
+                    {{ form_start(form, {'method': 'POST', 'action': path('show_cat', {'id': cat.id})}) }}
+                    {{ form_row(form.catTwo) }}
+                        <button type="submit" class="btn btn-primary">Liker ce chat</button>
+                    {{ form_end(form) }}
+                {% endif %}
+        
 
 {% endblock %}

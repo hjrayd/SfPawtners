@@ -5,8 +5,12 @@
 {% block body %}
     <div class="row">
         <div class="col">
-            <h1>Envoyer un message</h1>
-            {{ form(formMessage) }}
+            {% if app.user.ban %}
+                Vous ne pouvez pas envoyer de message.
+            {% else %}
+                <h1>Envoyer un message</h1>
+                {{ form(formMessage) }}
+            {% endif %}
            
         </div>
     </div>

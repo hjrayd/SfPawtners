@@ -4,7 +4,11 @@
 
 {% block body %}
     <div class="form-cat">
-        <h1>Ajouter le profil de votre chat !</h1>
+        {% if app.user.ban %}
+            Vous ne pouvez pas ajouter de profils.
+        {% else %}
+            <h1>Ajouter le profil de votre chat !</h1>
             {{ form(formAddCat) }}
+        {% endif %}  
     </div>
 {% endblock %}
