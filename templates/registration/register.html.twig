@@ -28,7 +28,6 @@
      
         <div class="section-register">
             <h2> S'inscrire </h2>
-            <div class="form-register">
                 {{ form_errors(registrationForm) }}
 
                 {{ form_start(registrationForm) }}
@@ -37,12 +36,13 @@
                     {{ form_row(registrationForm.plainPassword, {
                         label: 'Password'
                     }) }}
+                    {{ form_row(registrationForm.image) }}
                     {{ form_row(registrationForm.agreeTerms) }}
+                    
                     <div class="btn-login">
                         <button type="submit" class="btn">S'inscrire</button>
                     </div>
                 {{ form_end(registrationForm) }}
-            </div>
         </div>  
     </div>
 {% endblock %}
