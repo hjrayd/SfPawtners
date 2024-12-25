@@ -169,94 +169,61 @@ footer {
 
  #wrapper-register {
     display: flex;
-    justify-content: center;
-    flex-direction: row;
+   justify-content: space-between;
     height: 100vh;
-    width: 100vw;
-
  }
 
  .section-presentation {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-height: 50vh;
-    max-width: 100vw;
-
+   display: flex;
+   flex: 2; /*Permet d'avoir une section deux fois plus grande que l'autre*/
+   flex-direction: column;
+   align-items: center;
  }
 
-
  .section-presentation h1 {
-    font-size: 50px;
-    margin-top: 20px;
+   font-size: 50px;
+   margin-top: 30px;
+   margin-bottom: 20px;
  }
 
  .section-presentation p {
-    font-size: 20px;
-    margin-top: 20px;
+   font-size: 20px;
+   margin-bottom: 20px;
  }
 
+ .underline-text {
+   text-decoration: underline;
+ }
 
+ .section-presentation i {
+   font-size: 15px;
+ }
+
+ .btn-register {
+   background-color: var(--nav-color);
+   border-radius: 20px;
+   padding-top: 10px;
+   padding-bottom: 10px;
+   padding-left: 30px;
+   padding-right: 30px;
+ }
 
  .section-presentation a {
-    color: var(--base-color);
+   color: var(--base-color);
  }
 
-
-
  .section-presentation img {
-    max-height: 60%;       
-    max-width: 60%; 
+    max-height: 40%;       
+    max-width: 40%; 
     filter: saturate(50%);
  }
 
- .btn-inscription {
-    background-color:var(--nav-color);
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 30px;
-    padding-right: 30px;
-    text-align: center;
-    border-radius: 20px;
-    margin-top: 20px;
-
- }
- .underline-text {
-    text-decoration: underline;
- }
-
-
  .section-register {
-    background-color: var(--section-color);
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    height: 70%;
-    max-height: 100%;
-    border-radius: 20px;
-    margin-left: 200px;
+   flex: 1;
+   background-color: var(--section-color);
+  
  }
 
- .form-register{
-    display: flex;
-   
- }
-
- .section-register form {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
- }
-
- .section-register label {
-    font-size: 20px;
- }
-
- .register-align {
-    display: flex;
-    align-items: center;
-
- }
 
  
 
