@@ -150,10 +150,7 @@ class CatController extends AbstractController
     public function delete($id, CatRepository $catRepository, EntityManagerInterface $entityManager, MatcheRepository $matcheRepository, LikeRepository $likeRepository): Response //On fait passer directement le repository
     {
         $cat = $catRepository->find($id);
-        $user = $this->getUser();
-
-        if ($cat->getUser() === $user ) 
-        {
+       
             $likes = $likeRepository->findBy([
                 'catOne' => $cat
             ]);
@@ -190,9 +187,7 @@ class CatController extends AbstractController
             $entityManager->remove($cat);
             $entityManager->flush();
             $this->addFlash('message', $cat.' a bien été supprimé');
-        } else {
-            throw $this->createAccessDeniedException('Vous n\avez pas les autorisations pour supprimer ce chat.');
-        }
+       
 
         return $this->redirectToRoute('app_home');
 

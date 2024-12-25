@@ -21,7 +21,7 @@
                 {% for cat in cats %}
                     {# First = filtre qui permet de récupèrer le premier élément d'un tableau #}
                     {% set firstImage = cat.images|first %}
-                    <img src="{{ asset(firstImage) }}" alt="{{ firstImage.imageAlt }}">
+                    <img src="{{ asset(firstImage) }}" alt="{{ firstImage.imageAlt }}"> <br>
                     Nom : {{ cat.name }} <br>
                     Age: {{ cat.ageFormatted }} <br>
                     Ville: {{ cat.city }} <br>
