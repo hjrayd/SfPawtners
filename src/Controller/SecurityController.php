@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Form\ResetPasswordType;
 use App\Repository\UserRepository;
 use App\Form\ResetPasswordRequestType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -34,7 +36,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/reset', name: 'app_reset')]
-    public function reset(Request $request, UserRepository $userRepository): Response 
+    public function reset(Request $request, SendEmailService $mail, UserRepository $userRepository, JWTService $jwt): Response 
     {
         $form = $this->createForm(ResetPasswordRequestType::class);
         $form->handleRequest($request);
@@ -46,13 +48,42 @@ class SecurityController extends AbstractController
 
             //On vérifie que l'email existe en BDD
 
-            if(!$user) //L'email n'existe pas
-             {
-               $this->addFlash('message', 'Un problème est survenu');
-               return $this->redirectToRoute('app_login');
+            if($user) //L'email existe 
+            {
+              $header = [
+                'typ' => 'JWT',
+                'alg' => 'HS256'
+              ];
+
+              $payload = [
+                'user_id' => $user->getId()
+              ];
+
+              //On génère le token
+              $token = $jwt->generate($header, $payload,
+              $this->getParameter('app.jwtsecret'));
+
+              //On génère l'url vers app_resetPassword
+              $url = $this->generateUrl('app_resetPassword', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
+
+              $mail->send(
+                'no-reply@pawtners.fr',
+                $user->getEmail(),
+                'Récuperation de mot de pase pour le site Pawtners',
+                'passwordReset',
+                compact('user', 'url') // Equivaut à ['user' => $user, 'url'=>$url]
+              );
+
+              $this->addFlash('message', 'L\'email à été envoyé à \'adresse fournie');
+              return $this->redirectToRoute('app_login');
+
+
+
+
             }
 
-            //L'email existe 
+            $this->addFlash('message', 'Un problème est survenu');
+            return $this->redirectToRoute('app_login');
             
         }
 
@@ -60,6 +91,45 @@ class SecurityController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    #[Route(path: '/resetPassword/{token}', name: 'app_resetPassword')]
+    public function resetPassword(UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, Request $request, UserRepository $userRepository, $token, JWTService $jwt): Response 
+    {
+
+        if($jwt->isValid($token) && !$jwt->isExpired($token) && $jwt->check($token, $this->getParameter('app.jwtsecret')))
+        {
+            $payload = $jwt->getPayload($token);
+
+            $user = $userRepository->find($payload['user_id']);
+
+            if($user){
+                $form = $this->createForm(ResetPasswordType::class);
+
+                $form->handleRequest($request);
+
+                if($form->isSubmitted() && $form->isValid())
+                {
+                    $user->setPassword(
+                        $passwordHasher->hashPassword($user, $form->get('plainPassword')->getData())
+                    );
+
+                    $entityManager->flush();
+
+                    $this->addFlash('message', 'Votre mot de passe à bien été modifier');
+                    return $this->redirectToRoute('app_login');
+                }
+                return $this->render('security/rsetPassword.html.twig', [
+                    'formPassword' => $form->createView()
+                ]);
+            }
+        }
+        $this->addFlash('message', 'Le token est invalide ou à expiré');
+        return $this->redirectToRoute('app_login');
+
+
+    }
+
+
 
 
 }
