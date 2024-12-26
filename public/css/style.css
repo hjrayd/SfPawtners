@@ -197,6 +197,17 @@ footer {
     margin-bottom: 50px;
  }
 
+ .reset-password {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  text-align: center;
+ }
+
+ .reset-password:hover {
+  text-decoration: underline;
+ }
+
 
 
    /* 
