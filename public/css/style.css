@@ -26,6 +26,14 @@
     padding-top: 15px;
     color: var(--base-color);
     background-color: var(--nav-color);
+    width: 100%;
+    height: 100%;
+
+}
+
+.nav-base nav {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .nav-base a:visited {
@@ -338,6 +346,26 @@ footer {
   padding-left: 5px;
  }
 
+     /* 
+=================================================================
+=========================HOME==================================
+=================================================================
+ */ 
+
+ #wrapper-home {
+  height: 100vh;
+  width: 100vw;
+ }
+ 
+ .cats-cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+ }
+
+ .cats-cards img {
+  max-width: 100%;
+ }
 
 
  
@@ -359,6 +387,18 @@ footer {
     flex-direction: column;
  }
 
+.section-presentation h1 {
+  margin: 0;
+  padding-bottom: 20px;
+  padding-left: 0%;
+
+}
+
+.section-presentation p {
+  margin: 0;
+  padding-left: 0%;
+  padding-bottom:  20px;
+}
 
  .section-register label {
   font-size: 20px;
@@ -366,6 +406,7 @@ footer {
  }
 
  .section-presentation {
+  justify-content: center;
   margin-bottom: 20px;
   text-align: center;
   padding-left: 20px;

@@ -3,31 +3,38 @@
 {% block title %} Accueil {% endblock %}
 
 {% block body %}
-    <h1> Accueil </h1>
-        <h3>Filtrer les chats</h3>
-            {{ form_start(form) }}
-                {{ form_row(form.breeds) }}
-                {{ form_row(form.ageMin) }}
-                {{ form_row(form.ageMax) }}
-                {{ form_row(form.coats) }}
-                {{ form_row(form.city) }}
-                <button type="submit">Filtrer</button>
-            {{ form_end(form) }}
-            <button>
-                <a href="{{ path('app_home')}}"> Réinitialiser </a>
-            </button>
-            <br>
-            <h2> Profils des chats </h2>
-                {% for cat in cats %}
-                    {# First = filtre qui permet de récupèrer le premier élément d'un tableau #}
-                    {% set firstImage = cat.images|first %}
-                    <img src="{{ asset(firstImage) }}" alt="{{ firstImage.imageAlt }}"> <br>
-                    Nom : {{ cat.name }} <br>
-                    Age: {{ cat.ageFormatted }} <br>
-                    Ville: {{ cat.city }} <br>
-                    <a href="{{ path('show_cat', {'id' : cat.id} )}}"> Détails </a> <br>
-                {% else %}
-                     <p> Aucun chats trouvés</p>
-                {% endfor %}
-</div>
+    <div id="wrapper-home">
+        <h1> Accueil </h1>
+        <div class="filter-cat">
+            <h3>Filtrer les chats</h3>
+                {{ form_start(form) }}
+                    {{ form_row(form.breeds) }}
+                    {{ form_row(form.ageMin) }}
+                    {{ form_row(form.ageMax) }}
+                    {{ form_row(form.coats) }}
+                    {{ form_row(form.city) }}
+                    <button type="submit">Filtrer</button>
+                {{ form_end(form) }}
+                <button>
+                    <a href="{{ path('app_home')}}"> Réinitialiser </a>
+                </button>
+        </div>
+                <br>
+                <h2> Profils des chats </h2>
+                <div class="cats-cards">
+                    {% for cat in cats %}
+                        {# First = filtre qui permet de récupèrer le premier élément d'un tableau #}
+                        {% set firstImage = cat.images|first %}
+                        <img src="{{ asset(firstImage) }}" alt="{{ firstImage.imageAlt }}"> <br>
+                        Nom : {{ cat.name }} <br>
+                        Age: {{ cat.ageFormatted }} <br>
+                        Ville: {{ cat.city }} <br>
+                        <a href="{{ path('show_cat', {'id' : cat.id} )}}"> Détails </a> <br>
+               
+                    {% else %}
+                        <p> Aucun chats trouvés</p>
+                    {% endfor %}
+                </div>
+                
+        </div>
 {% endblock %}
