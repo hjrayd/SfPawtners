@@ -69,7 +69,7 @@ a:visited {
  */
 
 footer {
-    padding-top: 30px;
+    padding-top: 70px;
     padding-bottom: 30px;
     background-color: var(--base-color);
 
@@ -185,6 +185,8 @@ footer {
     margin-bottom: 50px;
  }
 
+
+
    /* 
 =================================================================
 =========================INSCRIPTION==================================
@@ -242,9 +244,16 @@ footer {
  }
 
  .section-presentation img {
-    max-height: 40%;       
-    max-width: 40%; 
+    max-height: 100%;       
+    max-width: 100%; 
     filter: saturate(50%);
+   
+ }
+
+ .img-register {
+  display: flex;
+  align-items: center;
+  justify-content: baseline;
  }
 
  .section-register {
@@ -263,7 +272,7 @@ footer {
 
  .section-register label {
   display: inline-block;
-  margin-bottom: 100px;
+
   font-size: 20px;
   width: 270px;
  }
@@ -274,6 +283,7 @@ footer {
   width: 300px;
   height: 30px;
   padding-left: 20px;
+  margin-bottom: 100px;
  }
 
  .section-register form {
@@ -283,7 +293,7 @@ footer {
 
  .section-register h2 {
    font-size: 40px;
-   margin-top: 30px;
+   margin-top: 40px;
    margin-bottom: 50px;
   border-bottom: 1px solid #5E3636;
  }
@@ -291,6 +301,26 @@ footer {
  .btn-register {
   display: flex;
   justify-content: center;
+  padding-bottom: 30px;
+
+
+ }
+
+ .btn-register button {
+  border-radius: 20px;
+  border: none;
+  background-color: var(--nav-color);
+  color: var(--base-color);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  font-size: 20px;
+
+ }
+
+ .btn-register i {
+  padding-left: 5px;
  }
 
 

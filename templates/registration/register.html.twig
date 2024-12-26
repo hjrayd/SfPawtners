@@ -22,7 +22,9 @@
                 <a href="{{ path('app_login')}}"> Me connecter </a>
             </div>
 
-            <img src="\css\images\cat-8239223_1280-removebg-preview.png" alt="Coeur patte de chat">
+            <div class="img-register">
+                <img src="\css\images\cat-8239223_1280-removebg-preview.png" alt="Coeur patte de chat">
+            </div>
 
         </div>
      
@@ -38,11 +40,15 @@
                     {{ form_row(registrationForm.plainPassword, {
                         label: 'Password'
                     }) }}
-                    {{ form_row(registrationForm.image) }}
+
+                    <div class="btn-upload">
+                        {{ form_row(registrationForm.image) }}
+                    </div>
+                    
                     {{ form_row(registrationForm.agreeTerms) }}
                     
                     <div class="btn-register">
-                        <button type="submit" class="btn">S'inscrire</button>
+                        <button type="submit" class="btn">Trouver un pawtners <i class="fa-solid fa-paw"></i> </button>
                     </div>
                 {{ form_end(registrationForm) }}
   
