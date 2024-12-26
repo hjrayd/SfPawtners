@@ -18,7 +18,7 @@
 
             <p> Vous avez déjà un compte ?</p>
             
-            <div class="btn-register">
+            <div class="btn-presentation">
                 <a href="{{ path('app_login')}}"> Me connecter </a>
             </div>
 
@@ -27,7 +27,9 @@
         </div>
      
         <div class="section-register">
-            <h2> S'inscrire </h2>
+
+                <h2> S'inscrire </h2>
+          
                 {{ form_errors(registrationForm) }}
 
                 {{ form_start(registrationForm) }}
@@ -39,10 +41,11 @@
                     {{ form_row(registrationForm.image) }}
                     {{ form_row(registrationForm.agreeTerms) }}
                     
-                    <div class="btn-login">
+                    <div class="btn-register">
                         <button type="submit" class="btn">S'inscrire</button>
                     </div>
                 {{ form_end(registrationForm) }}
+  
         </div>  
     </div>
 {% endblock %}
