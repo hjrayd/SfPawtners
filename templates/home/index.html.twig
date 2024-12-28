@@ -4,15 +4,21 @@
 
 {% block body %}
     <div id="wrapper-home">
-        <h1> Accueil </h1>
-        <div class="filter-cat">
-            <h3>Filtrer les chats</h3>
+        <h3 id="filter-title"> <i class="fa-solid fa-filter"></i>Filtrer</h3>
+            <div class="filter-cat" id="filter-cat" >   
+                 
                 {{ form_start(form) }}
-                    {{ form_row(form.breeds) }}
-                    {{ form_row(form.ageMin) }}
-                    {{ form_row(form.ageMax) }}
-                    {{ form_row(form.coats) }}
-                    {{ form_row(form.city) }}
+                <i class="fa-solid fa-caret-down"></i> 
+                {{ form_row(form.breeds) }} 
+                <i class="fa-solid fa-caret-down"></i> 
+                {{ form_row(form.ageMin) }}
+                <i class="fa-solid fa-caret-down"></i> 
+                {{ form_row(form.ageMax) }}
+                <i class="fa-solid fa-caret-down"></i> 
+                {{ form_row(form.coats) }}
+                <i class="fa-solid fa-caret-down"></i> 
+                {{ form_row(form.city) }}
+
                     <button type="submit">Filtrer</button>
                 {{ form_end(form) }}
                 <button>
@@ -20,7 +26,7 @@
                 </button>
         </div>
                 <br>
-                <h2> Profils des chats </h2>
+                <h1> Profils des chats </h1>
                 <div class="cats-cards">
                     {% for cat in cats %}
                         <div class="cat-card">

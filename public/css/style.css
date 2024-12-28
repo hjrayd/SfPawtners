@@ -369,20 +369,38 @@ footer {
   min-height: 100vh;
   width: 100vw;
   display: flex;
-  align-items: center;
   flex-direction: column;
  }
- 
+
+ #wrapper-home h1 {
+  font-size: 40px;
+  margin-bottom: 30px; 
+  margin-top: 30px;
+  text-align: center;
+}
+
+#wrapper-home h3 {
+  text-align: center;
+  margin-left: 30px;
+  margin-top: 30px;
+  background-color: var(--section-color);
+  width: 200px;
+  border-radius: 20px;
+  padding: 5px;
+}
  .cats-cards {
   display: flex;
   flex-direction: row;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 100px;
+  gap: 80px;
+  margin-left: 200px;
+ 
+
 
  }
 
  .cat-card {
-
   margin-right: 20px;
   margin-top: 40px;
   height: 200px;
@@ -399,9 +417,11 @@ footer {
  
 
  .cat-card img{
+  object-fit: cover;
   max-width: 100%;
   max-height: 100%;
   width: 100%;
+  border-radius: 20px;
 
  }
 
@@ -418,9 +438,24 @@ footer {
   padding-left: 15px;
 
  }
- 
 
+ #filter-title {
+  cursor: pointer;
+ }
 
+ .filter-cat {
+  display: none;
+ }
+
+.filter-cat form {
+  display: flex;
+  flex-direction: row;
+}
+
+#wrapper-home i {
+  margin-right: 5px;
+  margin-left: 5px;
+}
  
 
  /* 
