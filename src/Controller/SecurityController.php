@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+
+use App\Service\JWTService;
 use App\Form\ResetPasswordType;
+use App\Service\SendEmailService;
 use App\Repository\UserRepository;
 use App\Form\ResetPasswordRequestType;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,7 +72,7 @@ class SecurityController extends AbstractController
               $mail->send(
                 'no-reply@pawtners.fr',
                 $user->getEmail(),
-                'Récuperation de mot de pase pour le site Pawtners',
+                'Récuperation de mot de passe pour le site Pawtners',
                 'passwordReset',
                 compact('user', 'url') // Equivaut à ['user' => $user, 'url'=>$url]
               );
