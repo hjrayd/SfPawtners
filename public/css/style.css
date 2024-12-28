@@ -295,9 +295,9 @@ footer {
    align-items: center;
    flex: 1;
    background-color: var(--section-color);
-   max-height: 100vh;
+   min-height: 100vh;
    height: 100%;
-   overflow: auto;
+
    border-radius: 20px;
  }
 
@@ -314,7 +314,7 @@ footer {
   width: 300px;
   height: 30px;
   padding-left: 20px;
-  margin-bottom: 100px;
+  margin-bottom: 90px;
  }
 
  .section-register form {
@@ -482,6 +482,10 @@ padding-left: 50px;
  .section-register input {
   width: 40%;
 padding: 0;
+ }
+
+ .section-register {
+  margin-top: 20Px;
  }
 
  .section-register label {
