@@ -39,13 +39,13 @@ class RegistrationFormType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new File([
-                        'maxSize' => '5M',
+                        'maxSize' => '200K',
                         'maxSizeMessage' => 'L\'image est trop volumineuse', //photo de profil donc plus légère qu'une image de base
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/jpg',
                             'image/png',
-                            'image/gif'
+                         
                         ],
                         'mimeTypesMessage' => 'Veuillez importer une image qui respecte les formats acceptés.',
                     ])

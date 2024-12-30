@@ -72,7 +72,7 @@ class CatType extends AbstractType
                 'label' => 'Race(s)',
             ])
             ->add('images', FileType::class, [
-                'label' => 'Vos images (JPG/JPEG/GIF/PNG)',
+                'label' => 'Vos images (JPG/JPEG/PNG)',
                 'mapped' => false, //ce champ n'existe pas dans notre entité donc unmapped
                 'required' => true,
                 'multiple' => true,
@@ -90,7 +90,7 @@ class CatType extends AbstractType
                             'image/jpeg',
                             'image/jpg',
                             'image/png',
-                            'image/gif'
+                          
                         ],
                         'mimeTypesMessage' => 'Veuillez importer une image qui respecte les formats acceptés',
                             ])
