@@ -372,6 +372,16 @@ footer {
   flex-direction: column;
  }
 
+ .header-home {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  justify-content: space-between;
+
+ }
+
  #wrapper-home h1 {
   font-size: 40px;
   margin-bottom: 30px; 
@@ -381,13 +391,13 @@ footer {
 
 #wrapper-home h3 {
   text-align: center;
-  margin-left: 30px;
-  margin-top: 30px;
   background-color: var(--section-color);
   width: 200px;
   border-radius: 20px;
   padding: 5px;
+
 }
+
  .cats-cards {
   display: flex;
   flex-direction: row;
@@ -449,13 +459,24 @@ footer {
 
 .filter-cat form {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+}
+
+.btn-add-cat {
+  text-align: center;
+  background-color: var(--section-color);
+  width: 200px;
+  border-radius: 20px;
+  padding: 5px;
+  font-size: 20px;
+  font-weight: 400;
 }
 
 #wrapper-home i {
   margin-right: 5px;
   margin-left: 5px;
 }
+
  
 
  /* 

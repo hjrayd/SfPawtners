@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\HomeType;
 use App\Form\FilterType;
 use App\Repository\CatRepository;
 use App\Repository\BreedRepository;
@@ -16,29 +17,36 @@ class HomeController extends AbstractController
     #[Route('/home', name: 'app_home')]
     public function index(Request $request, CatRepository $catRepository, BreedRepository $breedRepository): Response
     {
-        $breeds = $breedRepository->findAll();
-        
-        $form = $this->createForm(FilterType::class);
+      
+         $homeForm = $this->createForm(HomeType::class);
+         $filterForm = $this->createForm(FilterType::class);
 
-        $form->handleRequest($request);
+         $homeForm->handleRequest($request);
+         $cats = [];
+ 
+         if ($homeForm->isSubmitted() && $homeForm->isValid()) {
+             $filters = $homeForm->getData();
+             $name = $filters['name'];
+             $cats = $catRepository->findCatName($name);
+         } else {
+             $cats = $catRepository->findBy([], ["dateProfile" => "DESC"]);
+         }
+ 
+         $filterForm->handleRequest($request);
+         if ($filterForm->isSubmitted() && $filterForm->isValid()) {
+             $filters = $filterForm->getData();
+             $cats = $catRepository->findByFilters($filters);
+         }
 
-        $cats = [];
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $filters = $form->getData();
-
-            $cats = $catRepository->findByFilters($filters);
-        } else {
-
-             //On fait appel au catRepository afin de trouver tous les profils des chats et les afficher sur la page 'Home'
-            $cats = $catRepository->findBy([], ["dateProfile" => "DESC"]);
-        }
-
-        return $this->render('home/index.html.twig', [
-            'cats' => $cats,
-            'form' => $form->createView(),
-        ]);
-    }
+         $breeds = $breedRepository->findAll();
+ 
+         return $this->render('home/index.html.twig', [
+             'cats' => $cats,
+             'breeds' => $breeds,
+             'homeForm' => $homeForm->createView(),
+             'filterForm' => $filterForm->createView(),
+         ]);
+     }
 
 
     

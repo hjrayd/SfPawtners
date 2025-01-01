@@ -34,8 +34,8 @@ class CatType extends AbstractType
                 ])
             ->add('gender', ChoiceType::class, [
                     'choices' => [
-                        'Femelle' => 'femelle',
-                        'Mâle' => 'male',
+                        'Femelle' => 'Femelle',
+                        'Mâle' => 'Mâle',
                     ],
                     'multiple' => false,
                     'label' => 'Sexe'

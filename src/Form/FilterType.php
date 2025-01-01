@@ -30,11 +30,17 @@ class FilterType extends AbstractType
             ->add('ageMin', IntegerType::class, [
                 'required' => false,
                  'label' => 'Âge minimum',
-        
+                 'attr' => [
+                        'min' => 0, 
+                    ]
+                        
             ])
             ->add('ageMax', IntegerType::class, [
                 'required' => false,
-                'label' => 'Âge maximum'
+                'label' => 'Âge maximum',
+                'attr' => [
+                        'min' => 0, 
+                    ]
             ])
             ->add('coats', EntityType::class, [
                 'class' => Coat::class,

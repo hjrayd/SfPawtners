@@ -60,4 +60,18 @@ class CatRepository extends ServiceEntityRepository
         $query = $qb->getQuery();
         return $query->getResult();
     }
+
+    public function findCatName(string $name) {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('c'); 
+    
+        return $this->createQueryBuilder('c')
+        ->where('c.name LIKE :name')
+        ->setParameter('name', '%' . $name . '%')
+        ->getQuery()
+        ->getResult();
+
+    }
+
+
 }

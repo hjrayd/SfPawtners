@@ -8,3 +8,8 @@ filterTitle.addEventListener('click', function() {
         filterCat.style.display = "none"
     }
 });
+
+
+
+
+
