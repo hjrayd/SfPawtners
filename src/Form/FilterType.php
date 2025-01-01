@@ -27,12 +27,12 @@ class FilterType extends AbstractType
                 'expanded' => true
              
             ])
-            ->add('ageMin', NumberType::class, [
+            ->add('ageMin', IntegerType::class, [
                 'required' => false,
                  'label' => 'Âge minimum',
         
             ])
-            ->add('ageMax', NumberType::class, [
+            ->add('ageMax', IntegerType::class, [
                 'required' => false,
                 'label' => 'Âge maximum'
             ])

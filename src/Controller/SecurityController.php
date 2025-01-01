@@ -8,12 +8,14 @@ use App\Form\ResetPasswordType;
 use App\Service\SendEmailService;
 use App\Repository\UserRepository;
 use App\Form\ResetPasswordRequestType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
 {
@@ -53,11 +55,14 @@ class SecurityController extends AbstractController
 
             if($user) //L'email existe 
             {
+
+            //Création du header
               $header = [
                 'typ' => 'JWT',
                 'alg' => 'HS256'
               ];
 
+              //Création du contenu (payload)
               $payload = [
                 'user_id' => $user->getId()
               ];
@@ -90,8 +95,8 @@ class SecurityController extends AbstractController
             
         }
 
-        return $this->render('security/reset.html.twig', [
-            'form' => $form->createView()
+        return $this->render('security/passwordResetRequest.html.twig', [
+            'formRequest' => $form->createView()
         ]);
     }
 
@@ -121,7 +126,7 @@ class SecurityController extends AbstractController
                     $this->addFlash('message', 'Votre mot de passe à bien été modifier');
                     return $this->redirectToRoute('app_login');
                 }
-                return $this->render('security/rsetPassword.html.twig', [
+                return $this->render('security/passwordReset.html.twig', [
                     'formPassword' => $form->createView()
                 ]);
             }
