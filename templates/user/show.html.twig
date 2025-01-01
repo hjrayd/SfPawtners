@@ -3,73 +3,77 @@
 {% block title %}Profil{% endblock %}
 
 {% block body %}
-
-    {%  if app.user == user %}
-        <h1 >Votre profil </h1>
-    {% else %}
-        <h1> Profil de {{user}}</h1>
-    {% endif %}
-
-    {% if user.avatar %} {# Si le user a un avatar ALORS on l'affiche sinon bug #}
-        <img src="{{ asset(user.avatar) }}" >
-    {% endif %}
-    
-    <h2> {{ user }}</h2>
-
-    <h2>Profil(s):</h2> <br>
-
-        {% for cat in user.cats %}
-            <div class="cats-user">
-                <div class="cat-user">
-
-                    {# First = filtre qui permet de récupèrer le premier élément d'un tableau #}
-                    {% set firstImage = cat.images|first %}
-                        <img src="{{ asset(firstImage) }}" alt="{{ firstImage.imageAlt }}">
-                <h3>{{cat}}</h3> <br>
-                </div>
-            </div>
-        {% endfor %}
-
-        <h2> Avis </h2>
-        {% if reviews %}
-            {% for review in reviews %}
-            {% if review.reviewer %}
-                {{ review.reviewer}}
-            {% else %}
-                Utilisateur supprimé
-            {% endif %} 
-            {{review.reviewContent}}
-            {{review.reviewRating}}/5
-            {% if app.user == review.reviewer or is_granted('ROLE_ADMIN')  %}
-                <a href="{{ path('delete_review', {'id': review.id}) }}">Supprimer</a>
-            {% endif %}
-            {% endfor %}
-        {% else %}
-            Aucun avis pour l'instant.
-        {% endif %}
-        <br>
-        
-        {% if app.user.ban %}
-            Vous ne pouvez pas ajouter d'avis
-        {% else %}
-        {% if canPostReview %}
-            <h2>Dîtes à {{user}} ce que vous en avez pensé !</h2>
-            {{ form_start(formReview) }}
-                {{ form_widget(formReview) }}
-                <button type="submit">Envoyer</button>
-            {{ form_end(formReview) }}
-        {% endif %}
-        {% endif %}
-       
-        
-       
+    <div id="wrapper-user">
 
         {%  if app.user == user %}
-        <button> <a href="{{ path('update_user') }}">Changer mes informations</a> </button> <br>
-                <form method="post" action="{{ path('delete_user') }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.');">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit" >Supprimer mon compte</button>
-                </form>
+            <h1 >Votre profil </h1>
+        {% else %}
+            <h1> Profil de {{user}}</h1>
         {% endif %}
+
+   
+        {% if user.avatar %} {# Si le user a un avatar ALORS on l'affiche sinon bug #}
+            <img src="{{ asset(user.avatar) }}" class="user-avatar" >
+        {% endif %}
+    
+        
+        <h2> @{{ user }}</h2>
+
+        <h2>  <i id="arrow" class="fa-solid fa-caret-down"></i> Profil(s):</h2> <br>
+            {% for cat in user.cats %}
+                <div id="cats-user" class="cats-user">
+                    <div class="cat-user">
+
+                        {# First = filtre qui permet de récupèrer le premier élément d'un tableau #}
+                        {% set firstImage = cat.images|first %}
+                            <img src="{{ asset(firstImage) }}" alt="{{ firstImage.imageAlt }}">
+                    <h3>{{cat}}</h3> <br>
+                    
+                    </div>
+                </div>
+            {% endfor %}
+
+            <h2> Avis </h2>
+            {% if reviews %}
+                {% for review in reviews %}
+                {% if review.reviewer %}
+                    {{ review.reviewer}}
+                {% else %}
+                    Utilisateur supprimé
+                {% endif %} 
+                {{review.reviewContent}}
+                {{review.reviewRating}}/5
+                {% if app.user == review.reviewer or is_granted('ROLE_ADMIN')  %}
+                    <a href="{{ path('delete_review', {'id': review.id}) }}">Supprimer</a>
+                {% endif %}
+                {% endfor %}
+            {% else %}
+                Aucun avis pour l'instant.
+            {% endif %}
+            <br>
+            
+            {% if app.user.ban %}
+                Vous ne pouvez pas ajouter d'avis
+            {% else %}
+            {% if canPostReview %}
+                <h2>Dîtes à {{user}} ce que vous en avez pensé !</h2>
+                {{ form_start(formReview) }}
+                    {{ form_widget(formReview) }}
+                    <button type="submit">Envoyer</button>
+                {{ form_end(formReview) }}
+            {% endif %}
+            {% endif %}
+        
+            
+        
+
+            {%  if app.user == user %}
+            <button> <a href="{{ path('update_user') }}">Changer mes informations</a> </button> <br>
+                    <form method="post" action="{{ path('delete_user') }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" >Supprimer mon compte</button>
+                    </form>
+            {% endif %}
+    </div>
 
 {% endblock %}

@@ -3,42 +3,50 @@
 {% block title %} Détail de {{ cat }} {% endblock %}
 
 {% block body %}
-    <h1> Détail de {{ cat }} </h1>
-    
-    {% for image in cat.images %}
-        <li>
-            <img src="{{ asset(image) }}" alt="{{ image.imageAlt }}">
-        </li>
-    {% endfor %}
-            Nom : {{ cat.name }} <br>
-            Sexe : {{ cat.gender }} <br>
-            Age: {{ cat.ageFormatted }} <br>
-            Ville: {{ cat.city }} <br>
-            Description: {{ cat.description }} <br> 
-            Propriétaire : <a href="{{ path('show_user', {'id':cat.user.id})}}"> {{ cat.user }} </a> <br>
-            Portée(s) : {{ cat.litterStatut }} <br>
-            Vacciné : {{ cat.vaccinatedStatut }} <br>
-            Race(s) : 
+    <div id="wrapper-cat">
 
-            {% for breed in cat.breeds %}
-                {{ breed.breedName }} <br>
-            {% endfor %}
-
-            {% if app.user == cat.user or is_granted('ROLE_ADMIN')  %}
-                <form method="post" action="{{ path('delete_cat', {id: cat.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce chat ?');">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit">Supprimer</button>
-                </form>   
-            {% endif %}
-                     
-                {% if app.user.ban %}
-                    Vous ne pouvez pas liker ce chat.
-                {% else %}
-                    {{ form_start(form, {'method': 'POST', 'action': path('show_cat', {'id': cat.id})}) }}
-                    {{ form_row(form.catTwo) }}
-                        <button type="submit" class="btn btn-primary">Liker ce chat</button>
-                    {{ form_end(form) }}
-                {% endif %}
+        <h1> Détail de {{ cat }} </h1>
         
+        <div class="cat-images">
+            {% for image in cat.images %}
+                    <div class="cat-img">
+                        <img src="{{ asset(image) }}" alt="{{ image.imageAlt }}">
+                    </div>
+            {% endfor %}
+        </div>
+        <div class="cat-text">
+                <p>Nom : {{ cat.name }}</p>
+                <p>Sexe : {{ cat.gender }} </p> 
+                <p>Age: {{ cat.ageFormatted }} </p>
+                <p>Ville: {{ cat.city }} </p>
+                <p>Description: {{ cat.description }} </p>
+                <p>Propriétaire : <a href="{{ path('show_user', {'id':cat.user.id})}}"> {{ cat.user }} </a> </p>
+                <p>Portée(s) : {{ cat.litterStatut }} </p>
+                <p>Vacciné : {{ cat.vaccinatedStatut }} </p>
+                <p>Race(s) : 
+
+                    {% for breed in cat.breeds %}
+                        {{ breed.breedName }} 
+                    {% endfor %}
+                </p>
+
+                {% if app.user == cat.user or is_granted('ROLE_ADMIN')  %}
+                    <form method="post" action="{{ path('delete_cat', {id: cat.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce chat ?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit">Supprimer</button>
+                    </form>   
+                {% endif %}
+                        
+                    {% if app.user.ban %}
+                        Vous ne pouvez pas liker ce chat.
+                    {% else %}
+                        {{ form_start(form, {'method': 'POST', 'action': path('show_cat', {'id': cat.id})}) }}
+                        {{ form_row(form.catTwo) }}
+                            <button type="submit" class="btn btn-primary">Liker ce chat</button>
+                        {{ form_end(form) }}
+                    {% endif %}
+        </div>
+    </div>
+            
 
 {% endblock %}
