@@ -4,7 +4,7 @@
 
 {% block body %}
 <h1> Conversation avec {{ receiver.pseudo}} </h1>
-    <a href="{{path("received_message")}}">Retour à la messagerie -></a>
+    <a href="{{path("app_message")}}">Retour à la messagerie -></a>
     {% if messages is not empty %}
         <ul>
             {% for message in messages %}

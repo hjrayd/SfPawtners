@@ -82,7 +82,7 @@ class SecurityController extends AbstractController
                 compact('user', 'url') // Equivaut à ['user' => $user, 'url'=>$url]
               );
 
-              $this->addFlash('message', 'L\'email à été envoyé à \'adresse fournie');
+              $this->addFlash('message', 'L\'email à été envoyé à l\'adresse fournie');
               return $this->redirectToRoute('app_login');
 
 

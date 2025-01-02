@@ -15,11 +15,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MessageController extends AbstractController
 {
+    //Affichage des pseudo avec qui on a échangé
     #[Route('/message', name: 'app_message')]
-    public function index(EntityManagerInterface $entityManager, MessageRepository $messageRepository ): Response
+    public function index(EntityManagerInterface $entityManager, MessageRepository $messageRepository): Response
     {
+         //On récupère le user connecté et on le stocke
+         $user = $this->getUser();
+
+         //On utilise notre requête DQL pour trouver les correspondants du user
+         $correspondents = $messageRepository->findCorrespondents($user);
+
+         //On retourne le résultat avec les correspondants
         return $this->render('message/index.html.twig', [
-            'controller_name' => 'MessageController',
+            'correspondents' => $correspondents,
         ]);
     }
     
@@ -60,22 +68,6 @@ class MessageController extends AbstractController
         //On retourne le resultat avec le formulaire dans la vue
         return $this->render("message/new.html.twig", [
             "formMessage" => $form->createView()
-        ]);
-    }
-
-    //On affiche les pseudos des gens a qui on a envoyé/reçu un message
-    #[Route('/message/received', name: 'received_message')]
-    public function received(EntityManagerInterface $entityManager, MessageRepository $messageRepository): Response
-    {
-        //On récupère le user connecté et on le stocke
-        $user = $this->getUser();
-
-         //On utilise notre requête DQL pour trouver les correspondants du user
-         $correspondents = $messageRepository->findCorrespondents($user);
-
-         //On retourne le résultat avec les correspondants
-        return $this->render('message/received.html.twig', [
-            'correspondents' => $correspondents,
         ]);
     }
 
