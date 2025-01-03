@@ -19,6 +19,9 @@ class LikeController extends AbstractController
     public function index(LikeRepository $likeRepository): Response
     {
         $user = $this->getUser();
+        if(!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
 
         $catsUser = $user->getCats()->toArray();
 
@@ -32,23 +35,27 @@ class LikeController extends AbstractController
     #[Route('/like/delete/{id}', name: 'delete_like')]
     public function delete($id, LikeRepository $likeRepository, MatcheRepository $matcheRepository, EntityManagerInterface $entityManager): Response
    {
-    $like = $likeRepository->find($id);
+        $userLogin = $this->getUser();
+        if(!$userLogin) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+        $like = $likeRepository->find($id);
 
-    $match = $matcheRepository-> findOneBy ([
-        'catOne' => $like->getCatOne(),
-        'catTwo' => $like->getCatTwo()
-    ]);
+        $match = $matcheRepository-> findOneBy ([
+            'catOne' => $like->getCatOne(),
+            'catTwo' => $like->getCatTwo()
+        ]);
 
-    if($match) {
-        $entityManager->remove($match);
-    };
+        if($match) {
+            $entityManager->remove($match);
+        };
 
-    $entityManager->remove($like);
-    $entityManager->flush();
+        $entityManager->remove($like);
+        $entityManager->flush();
 
-    $this->addFlash('message', 'Le like a été supprimé.');
+        $this->addFlash('message', 'Le like a été supprimé.');
 
-    return $this->redirectToRoute('app_like');
+        return $this->redirectToRoute('app_like');
    }
 
 

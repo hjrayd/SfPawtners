@@ -18,6 +18,11 @@ class TopicController extends AbstractController
     #[Route('/topic', name: 'app_topic')]
     public function index(TopicRepository $topicRepository): Response //On fait passer directement le repository
     {
+        $userLogin = $this->getUser();
+        if(!$userLogin) 
+        {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
         $topics = $topicRepository->findBy([], ["topicDate" => "ASC"]);
         
         return $this->render('topic/index.html.twig', [
@@ -26,10 +31,15 @@ class TopicController extends AbstractController
     }
     #[Route('/topic/show/{id}', name: 'show_topic')]
     public function show(int $id , TopicRepository $topicRepository, PostRepository $postRepository, Request $request, EntityManagerInterface $entityManager): Response //On fait passer directement le repository
-    {
-        $topic = $topicRepository->find($id);
+    {   
         $user = $this->getUser();
+        if(!$user) 
+        {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
 
+        $topic = $topicRepository->find($id);
+      
         $post = new Post();
         $post->setTopic($topic);
         $post->setUser($user);
@@ -60,6 +70,12 @@ class TopicController extends AbstractController
     #[Route('/topic/lock/{id}', name: 'lock_topic')]
     public function lock($id , TopicRepository $topicRepository, EntityManagerInterface $entityManager): Response
     {
+        $userLogin = $this->getUser();
+        if(!$userLogin) 
+        {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
         $topic = $topicRepository -> find($id);
         $categoryId = $topic->getCategory()->getId();
 
@@ -74,7 +90,12 @@ class TopicController extends AbstractController
 
     #[Route('/topic/unlock/{id}', name: 'unlock_topic')]
     public function unlock($id , TopicRepository $topicRepository, EntityManagerInterface $entityManager): Response
-    {
+    {   
+        $userLogin = $this->getUser();
+        if(!$userLogin) 
+        {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
         $topic = $topicRepository -> find($id);
         $categoryId = $topic->getCategory()->getId();
 
@@ -90,6 +111,11 @@ class TopicController extends AbstractController
     #[Route('/topic/delete/{id}', name: 'delete_topic')]
     public function delete($id , TopicRepository $topicRepository, EntityManagerInterface $entityManager, PostRepository $postRepository): Response
     {
+        $userLogin = $this->getUser();
+        if(!$userLogin) 
+        {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
         $topic = $topicRepository -> find($id);
 
         if(!$topic) {

@@ -17,7 +17,11 @@ class HomeController extends AbstractController
     #[Route('/home', name: 'app_home')]
     public function index(Request $request, CatRepository $catRepository, BreedRepository $breedRepository): Response
     {
-      
+        $userLogin = $this->getUser();
+        if(!$userLogin) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+        
          $homeForm = $this->createForm(HomeType::class);
          $filterForm = $this->createForm(FilterType::class);
 

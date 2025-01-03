@@ -13,6 +13,12 @@ class PostController extends AbstractController
     #[Route('/post', name: 'app_post')]
     public function index(PostRepository $postRepository): Response //On fait passer directement le repository
     {
+
+        $userLogin=$this->getUser();
+        if(!$userLogin) 
+        {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
         $posts = $postRepository->findBy([], ["postDate" => "ASC"]);
         
         return $this->render('post/index.html.twig', [
@@ -23,6 +29,13 @@ class PostController extends AbstractController
     #[Route('/post/delete/{id}', name: 'delete_post')]
     public function delete($id , PostRepository $postRepository, EntityManagerInterface $entityManager): Response //On fait passer directement le repository
     {
+
+        $userLogin=$this->getUser();
+        if(!$userLogin) 
+        {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
         $post = $postRepository -> find($id);
 
         $topicId = $post->getTopic()->getId();

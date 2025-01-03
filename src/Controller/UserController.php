@@ -36,7 +36,7 @@ class UserController extends AbstractController
     CatRepository $catRepository, LikeRepository $likeRepository, MatcheRepository $matcheRepository, MessageRepository $messageRepository, 
     PostRepository $postRepository, CategoryRepository $categoryRepository, TopicRepository $topicRepository, ReviewRepository $reviewRepository): Response 
     {
-        $user = $security->getUser();
+       $user = $this->getUser();
 
         if($user) {
 
@@ -147,6 +147,10 @@ class UserController extends AbstractController
     public function update( Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository): Response {
 
         $user = $this->getUser();
+        if(!$user) 
+        {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
         
         $formPseudo = $this->createForm(EditPseudoType::class, $user);
         $formPseudo->handleRequest($request);
@@ -187,15 +191,17 @@ class UserController extends AbstractController
 
     #[Route('/user/{id}', name: 'show_user')]
     public function show(int $id, User $user = null, CatRepository $catRepository, MessageRepository $messageRepository, ReviewRepository $reviewRepository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository): Response {
-
-        if(!$user) {
-            return $this->redirectToRoute('app_register');
-        }
-
+   
 
         //Formulaire d'ajout d'avis
         $reviewee = $userRepository->find($id);
+        
         $reviewer = $this->getUser();
+        if(!$reviewer) 
+        {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
         $canPostReview = $messageRepository->findIfMessageExchanged($reviewee, $reviewer);
         $alreadyReviewed = $reviewRepository->findBy([
             "reviewer" => $reviewer,

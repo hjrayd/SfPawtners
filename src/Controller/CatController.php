@@ -6,9 +6,10 @@ use App\Entity\Cat;
 use App\Entity\Like;
 use App\Entity\Image;
 use App\Form\CatType;
-use App\Form\LikeType;
 use App\Entity\Matche;
+use App\Form\LikeType;
 use App\Repository\CatRepository;
+use App\Service\SendEmailService;
 use App\Repository\LikeRepository;
 use App\Repository\BreedRepository;
 use App\Repository\ImageRepository;
@@ -19,6 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  
 class CatController extends AbstractController
@@ -27,6 +29,11 @@ class CatController extends AbstractController
     #[Route('/cat', name: 'app_cat')]
     public function index(CatRepository $catRepository): Response //On fait passer directement le repository
     {
+         $userLogin = $this->getUser();
+        if(!$userLogin) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
         $cats = $catRepository->findBy([], ["dateProfile" => "DESC"]);
  
         //Redirection qui redirige l'utilisateur
@@ -45,14 +52,17 @@ class CatController extends AbstractController
         BreedRepository $breedRepository,
         ImageRepository $imageRepository
     ): Response {
- 
+
+        //On récupère le User connecté pour ne pas avoir à le renseigner
+        $user = $this->getUser();
+        if(!$user){
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
         //Instanciation d'un objet Cat
         $cat = new Cat();
  
-        // $breeds = $breedRepository->findBy([], ['breedName' => 'ASC']);
- 
-        //On récupère le User connecté pour ne pas avoir à le renseigner
-        $user = $this->getUser();
+      
  
         //On attribut le user connecté à l'objet Cat
         $cat->setUser($user);
@@ -149,6 +159,11 @@ class CatController extends AbstractController
     #[Route('/cat/delete/{id}', name: 'delete_cat')]
     public function delete($id, CatRepository $catRepository, EntityManagerInterface $entityManager, MatcheRepository $matcheRepository, LikeRepository $likeRepository): Response //On fait passer directement le repository
     {
+        $userLogin = $this->getUser();
+        if(!$userLogin) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
         $cat = $catRepository->find($id);
        
             $likes = $likeRepository->findBy([
@@ -196,11 +211,15 @@ class CatController extends AbstractController
  
  
     #[Route('/cat/{id}', name: 'show_cat')]
-    public function show(Cat $cat, LikeRepository $likeRepository, EntityManagerInterface $entityManager, CatRepository $catRepository, MatcheRepository $matcheRepository, Request $request): Response
+    public function show(Cat $cat, LikeRepository $likeRepository, SendEmailService $mail,EntityManagerInterface $entityManager, CatRepository $catRepository, MatcheRepository $matcheRepository, Request $request): Response
     {
 
             // On récupère le user connecté
             $user = $this->getUser();
+
+            if(!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
 
             // On récupère tous les chats du user à l'aide du repository
             $cats = $user->getCats();
@@ -254,6 +273,38 @@ class CatController extends AbstractController
 
                         $entityManager->persist($match); //On persist l'objet et on le stocke en BDD
                         $entityManager->flush();
+
+                        $userOne = $cat->getUser(); //Propriétaire du catOne
+                        $userTwo = $catTwo->getUser(); //Propriétaire du catTwo
+                        $loginUrl = $this->generateUrl('app_login', [], UrlGeneratorInterface::ABSOLUTE_URL);
+
+                        // Envoi d'une notification par email au pemier propriétaire
+                        $mail->send(
+                        'no-reply@pawtners.fr',
+                        $userOne->getEmail(), 
+                        'Nouveau match !', 
+                        'new_match', 
+                        [
+                            'user' => $userOne,
+                            'catOne' => $cat,
+                            'catTwo' => $catTwo,
+                            'loginUrl' => $loginUrl
+                        ] 
+                    );
+
+                    // Envoi d'une notification par email au deuxième propriétaire
+                    $mail->send(
+                        'no-reply@pawtners.fr',
+                        $userTwo->getEmail(), 
+                        'Nouveau match !', 
+                        'new_match', 
+                        [
+                            'user' => $userTwo,
+                            'catOne' => $cat,
+                            'catTwo' => $catTwo,
+                            'loginUrl' => $loginUrl
+                        ] 
+                    );
                         // Message de succès
                         $this->addFlash('message', 'Félicitations ! ' . $catTwo . ' a matché avec ' . $cat . ' !');
                         } else {

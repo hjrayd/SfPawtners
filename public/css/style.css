@@ -550,9 +550,10 @@ footer {
 
 .user-avatar {
   border-radius: 50%;
-  height: 400px;
-  width: 400px;
+  height: 200px;
+  width: 200px;
   margin-bottom: 30px;
+  object-fit: cover;
  
  }
 

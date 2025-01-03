@@ -21,10 +21,15 @@ class ReviewController extends AbstractController
     #[Route('/review/delete/{id}', name: 'delete_review')]
     public function delete(int $id, ReviewRepository $reviewRepository, EntityManagerInterface $entityManager): Response
     {
-        $review = $reviewRepository->find($id);
 
         $user = $this->getUser();
+        if(!$user) 
+        {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
 
+        $review = $reviewRepository->find($id);
+        
         if($review->getReviewer() !== $user ) {
             $this->addFlash('message', 'Vous ne pouvez pas supprimé cet avis');
             return $this->redirectToRoute('show_user', ['id' => $review->getReviewee()->getId()]);

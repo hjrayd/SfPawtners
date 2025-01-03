@@ -23,6 +23,11 @@ class ImageController extends AbstractController
         EntityManagerInterface $entityManager
     ): Response
     {
+        $userLogin = $this->getUser();
+        if(!$userLogin) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+        
         $form = $this->createForm(ImageType::class);
         $form->handleRequest($request);
 

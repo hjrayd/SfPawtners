@@ -15,6 +15,11 @@ class AdminController extends AbstractController
     #[Route('/admin', name: 'app_admin')]
     public function index(UserRepository $userRepository, Request $request): Response
     {
+        $userLogin = $this->getUser();
+        if(!$userLogin) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+        
         $form = $this->createForm(UserFilterType::class);
 
         $form->handleRequest($request);
@@ -39,6 +44,11 @@ class AdminController extends AbstractController
     #[Route('/admin/ban/{id}', name: 'ban_admin')]
     public function ban(int $id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
+        $userLogin = $this->getUser();
+        if(!$userLogin) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
         $user = $userRepository->find($id);
 
         if(!$user) {
@@ -58,6 +68,11 @@ class AdminController extends AbstractController
     #[Route('/admin/unban/{id}', name: 'unban_admin')]
     public function unban(int $id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
+        $userLogin = $this->getUser();
+        if(!$userLogin) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+        
         $user = $userRepository->find($id);
 
         if(!$user) {

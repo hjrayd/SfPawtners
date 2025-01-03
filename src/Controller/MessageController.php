@@ -21,6 +21,10 @@ class MessageController extends AbstractController
     {
          //On récupère le user connecté et on le stocke
          $user = $this->getUser();
+         if(!$user) 
+         {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
 
          //On utilise notre requête DQL pour trouver les correspondants du user
          $correspondents = $messageRepository->findCorrespondents($user);
@@ -36,6 +40,10 @@ class MessageController extends AbstractController
     public function new(int $id, Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
         $user = $this->getUser();
+        if(!$user) 
+        {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
 
         $receiver = $userRepository->find($id);
         //Instanciation d'un nouvel objet message
@@ -75,12 +83,17 @@ class MessageController extends AbstractController
     #[Route('/message/show/{id}', name: 'show_message')]
     public function show($id, EntityManagerInterface $entityManager, MessageRepository $messageRepository, Request $request): Response
     {
+        //On stocke le user connecté dans la variable $user
+        $user=$this->getUser();
+        if(!$user) 
+        {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
 
         //On interroge la BDD pour associer le paramètre receiver à $id
         $receiver = $entityManager->getRepository(User::class)->find($id);
 
-        //On stocke le user connecté dans la variable $user
-        $user=$this->getUser();
+     
 
         //On utilise notre requête DQL pour afficher tous les messages entre deux userss
         $messages = $messageRepository->findAllMessages($user, $receiver);
@@ -99,7 +112,7 @@ class MessageController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
 
             //On attribut à l'expediteur du message l'id du user connecté
-            $message->setSender($this->getUser());
+            $message->setSender($user);
 
             //On attribue au receiver le user passé en paramètre de la fonction 
             $message->setReceiver($receiver);

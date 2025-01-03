@@ -20,6 +20,11 @@ class CategoryController extends AbstractController
     #[Route('/category', name: 'app_category')]
     public function index(CategoryRepository $categoryRepository, Request $request, EntityManagerInterface $entityManager): Response //On fait passer directement le repository
     {
+        $userLogin = $this->getUser();
+        if(!$userLogin) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
         $categories = $categoryRepository->findBy([], ["categoryName" => "ASC"]);
         
         $category = new Category();
@@ -46,9 +51,14 @@ class CategoryController extends AbstractController
 
     #[Route('/category/show/{id}', name: 'show_category')]
     public function show(int $id , CategoryRepository $categoryRepository, TopicRepository $topicRepository, Request $request, EntityManagerInterface $entityManager): Response //On fait passer directement le repository
-    {
-        $category = $categoryRepository->find($id);
+    {  
         $user = $this->getUser();
+        if(!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
+        $category = $categoryRepository->find($id);
+      
 
         $topic = new Topic();
         $topic->setCategory($category);
@@ -80,6 +90,11 @@ class CategoryController extends AbstractController
     #[Route('/category/delete/{id}', name: 'delete_category')]
     public function delete($id , CategoryRepository $categoryRepository, EntityManagerInterface $entityManager, TopicRepository $topicRepository, PostRepository $postRepository): Response //On fait passer directement le repository
     {
+        $userLogin = $this->getUser();
+        if(!$userLogin) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+        
         $category = $categoryRepository -> find($id);
         $topics = $topicRepository -> findBy([
             "category" => $category

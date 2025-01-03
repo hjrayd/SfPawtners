@@ -13,6 +13,9 @@ class MatcheController extends AbstractController
     public function index(MatcheRepository $matcheRepository): Response
     {
         $user = $this->getUser();
+        if(!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
 
         $userCats = $user->getCats()->toArray();
 
