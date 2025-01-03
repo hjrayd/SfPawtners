@@ -297,28 +297,30 @@ footer {
    background-color: var(--section-color);
    min-height: 100vh;
    height: 100%;
-
    border-radius: 20px;
  }
 
  .section-register label {
   display: inline-block;
-
   font-size: 20px;
-  width: 270px;
+  width: 400px;
+  margin-bottom: 5px;
  }
 
  .section-register input {
   border-radius: 20px;
   border: none;
-  width: 300px;
+  width: 400px;
   height: 30px;
   padding-left: 20px;
-  margin-bottom: 90px;
+  margin-bottom: 70px;
  }
 
  .section-register form {
   max-height: 100%; 
+  display: flex;
+  text-align: center;
+  flex-direction: column;
  }
 
 
@@ -602,16 +604,16 @@ footer {
 }
 
  .section-register label {
+  margin-top: 15px;
+  width: 200px;
   font-size: 20px;
-  margin-top: 10px;
+
  }
 
  .section-presentation {
   justify-content: center;
   margin-bottom: 20px;
   text-align: center;
-  padding-left: 20px;
-  padding-right: 20px;
   margin-bottom: 0;
  }
 
@@ -623,28 +625,15 @@ footer {
   display: none;
  }
 
-.section-register form{
-padding-left: 50px;
-
-}
  .section-register input {
-  width: 40%;
-padding: 0;
+  width: 80%;
+
  }
 
  .section-register {
   margin-top: 20Px;
  }
 
- .section-register label {
- font-size: 15px;
-  width: 80px;
- }
-
-.btn-register {
-  padding-right: 60px;
-  padding-bottom: 30px;
-}
 
 
 }

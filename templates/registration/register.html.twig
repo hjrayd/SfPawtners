@@ -31,26 +31,25 @@
         <div class="section-register">
 
                 <h2> S'inscrire </h2>
-          
-                {{ form_errors(registrationForm) }}
+                    {{ form_errors(registrationForm) }}
 
-                {{ form_start(registrationForm) }}
-                {{ form_row(registrationForm.pseudo) }}
-                    {{ form_row(registrationForm.email) }}
-                    {{ form_row(registrationForm.plainPassword, {
-                        label: 'Password'
-                    }) }}
+                    {{ form_start(registrationForm) }}
+                    {{ form_row(registrationForm.pseudo) }}
+                        {{ form_row(registrationForm.email) }}
+                        {{ form_row(registrationForm.plainPassword, {
+                            label: 'Password'
+                        }) }}
 
-                    <div class="btn-upload">
-                        {{ form_row(registrationForm.image) }}
-                    </div>
-                    
-                    {{ form_row(registrationForm.agreeTerms) }}
-                    
-                    <div class="btn-register">
-                        <button type="submit" class="btn">Trouver un pawtners <i class="fa-solid fa-paw"></i> </button>
-                    </div>
-                {{ form_end(registrationForm) }}
+                        <div class="btn-upload">
+                            {{ form_row(registrationForm.image) }}
+                        </div>
+                        
+                        {{ form_row(registrationForm.agreeTerms) }}
+                        
+                        <div class="btn-register">
+                            <button type="submit" class="btn">Trouver un pawtners <i class="fa-solid fa-paw"></i> </button>
+                        </div>
+                    {{ form_end(registrationForm) }}
   
         </div>  
     </div>
