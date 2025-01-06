@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -51,10 +52,22 @@ class FilterType extends AbstractType
                 'expanded' => true
              
             ])
+
+            ->add('gender', ChoiceType::class, [
+                'choices' => [
+                    'Femelle' => 'Femelle',
+                    'Mâle' => 'Mâle',
+                ],
+                'multiple' => false,
+                'label' => 'Sexe'
+                ])
+                
             ->add('city', TextType::class, [
                 'required' => false,
                 'label'=> 'Ville',
             ]);
+
+          
     }
 
     public function configureOptions(OptionsResolver $resolver): void

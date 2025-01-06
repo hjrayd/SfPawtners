@@ -23,6 +23,7 @@
                 <div class="nav-base">
                     <nav>
                         <ul>
+                         
                             <li><a href="{{ path('app_logout')}}"> Se déconnecter </a> <br></li>
                             <li><a href="{{ path('app_home')}}"> Accueil </a> <br></li>
                             <li><a href="{{path("app_message")}}"> Messagerie </a> <br></li>
@@ -43,6 +44,13 @@
                             <div class="nav-base">
                                 <nav>
                                     <ul>
+                                        <div class="logo">
+                                            <li>
+                                                <a href="{{ path('app_home')}}">
+                                                    <img src="css\images\pawtners.png" alt="Logo de Pawtners">
+                                                </a>
+                                            </li>
+                                        </div>
                                         <li><a href="{{ path('app_login')}}"> Se connecter </a> <br></li>
                                         <li><a href="{{ path('app_register')}}"> S'inscrire </a> <br></li>
                                     </ul>

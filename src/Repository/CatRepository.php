@@ -42,6 +42,10 @@ class CatRepository extends ServiceEntityRepository
             ->setParameter('city', '%' . $filters['city'] . '%');
         }
 
+        if (!empty($filters['gender'])) {
+            $qb->andWhere('c.gender LIKE :gender')
+            ->setParameter('gender', '%' . $filters['gender'] . '%');
+        }
             
         if (isset($filters['ageMin'])) {
             $ageMinDate = (new \DateTime())->modify('-' . $filters['ageMin'] . ' years'); //On utilise la méthode modify pour plus de précision (mois et années)

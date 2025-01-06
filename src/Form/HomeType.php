@@ -14,7 +14,15 @@ class HomeType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
+              'attr' => [
+                    'placeholder' => 'Rechercher...',
+                   
+                ],
                 'label' => 'Rechercher',
+                'label_attr' => [
+                    'class' => 'd-none', 
+                ],
+                
                 'required' => false
             ])
             ->add('Valider', SubmitType::class, [

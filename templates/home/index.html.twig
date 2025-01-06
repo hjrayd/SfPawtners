@@ -4,8 +4,6 @@
 
 {% block body %}
     <div id="wrapper-home">
-
-        <div class="header-home">
         {# Formulaire multiFiltre #}
             <h3 id="filter-title"> <i class="fa-solid fa-filter"></i>Filtrer</h3>
                 <div class="filter-cat" id="filter-cat" >   
@@ -18,6 +16,8 @@
                     {{ form_row(filterForm.ageMin) }}
             
                     {{ form_row(filterForm.ageMax) }}
+
+                    {{ form_row(filterForm.gender) }}
 
                     <i class="fa-solid fa-caret-down"></i> 
                     {{ form_row(filterForm.coats) }}
@@ -33,11 +33,13 @@
             {# Formulaire multiFiltre #}
             
             {# Barre de recherche #}
+            <div class="search-cat">
                 {{ form_start(homeForm) }}
                 {{ form_row(homeForm.name) }}
                 {{ form_row(homeForm.Valider) }}
                 {{ form_end(homeForm) }}
                 <button> <a href="{{ path('app_home')}}"> Réinitialiser </a> </button>
+            </div>
             {# Barre de recherche #}
             
             {# Bouton ajout d'un chat #}
@@ -45,8 +47,7 @@
                 <a href="{{ path('new_cat')}}"> Ajouter un chat</a>
             </div>
             {# Bouton ajout d'un chat #}
-            
-        </div>
+
 
                 <h1> Profils des chats </h1>
                 <div class="cats-cards">
