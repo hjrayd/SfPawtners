@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Accueil {% endblock %}
+
+{% block body %}
+    <div id="wrapper-home">
+        {# Formulaire multiFiltre #}
+        <div class="header-home">
+            <h3 id="filter-title"> <i class="ph ph-funnel"></i> Filtrer</h3>
+                <div class="filter-cat" id="filter-cat" >   
+                    
+                    {{ form_start(filterForm) }}
+
+                   
+                     {{ form_row(filterForm.breeds) }}   
+
+                    {{ form_row(filterForm.ageMin) }}
+            
+                    {{ form_row(filterForm.ageMax) }}
+
+                    {{ form_row(filterForm.gender) }}
+
+                    
+                    {{ form_row(filterForm.coats) }}
+                
+            
+                    {{ form_row(filterForm.city) }}
+
+                        <button type="submit">Filtrer</button>
+                    {{ form_end(filterForm) }}
+                    <button>
+                        <a href="{{ path('app_cat')}}"> Réinitialiser </a>
+                    </button>
+                </div>
+            {# Formulaire multiFiltre #}
+            
+    
+                {# Barre de recherche #}
+                <div class="search-cat">
+                    {{ form_start(homeForm) }}
+                    {{ form_row(homeForm.name) }}
+                    <div class="search-buttons">
+                        {{ form_row(homeForm.Valider) }}
+                        <button> <a href="{{ path('app_cat')}}"> Réinitialiser </a> </button>
+                    </div>
+                    {{ form_end(homeForm) }}
+                   
+                </div>
+                {# Barre de recherche #}
+                
+                {# Bouton ajout d'un chat #}
+                <div class="btn-add-cat">
+                    <a href="{{ path('new_cat')}}"> Ajouter un chat</a>
+                </div>
+                {# Bouton ajout d'un chat #}
+            </div>
+
+
+                <h1> Profils des chats </h1>
+                <div class="cats-cards">
+                    {% for cat in cats %}
+                        <div class="cat-card">
+                            {# First = filtre qui permet de récupèrer le premier élément d'un tableau #}
+                            {% set firstImage = cat.images|first %}
+                            <img src="{{ asset(firstImage) }}" alt="{{ firstImage.imageAlt }}">
+                                 <div class="cat-card-text">
+                                    <p> Nom : {{ cat.name }} </p>
+                                    <p> Ville: {{ cat.city }} </p>
+                                </div>
+                                <div class="btn-detail">
+                                    <a href="{{ path('show_cat', {'id' : cat.id} )}}"> Détails + </a>
+                                </div>
+                        </div>
+               
+                    {% else %}
+                        <p> Aucun chats trouvés</p>
+                    {% endfor %}
+                </div>
+                
+        </div>
+{% endblock %}

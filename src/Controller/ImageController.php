@@ -87,7 +87,7 @@ class ImageController extends AbstractController
                 $entityManager->flush();
 
                 // Si tout à fonctionné on est redirigé versla page "home" 
-                return $this->redirectToRoute('app_home');
+                return $this->redirectToRoute('app_cat');
             } else {
                 // si aucune image n'a été séléctionné 
                 $this->addFlash('error', 'Aucune image n\'a été sélectionnée pour l\'upload.');

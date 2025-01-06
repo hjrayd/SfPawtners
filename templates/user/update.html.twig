@@ -8,16 +8,22 @@
     Mon email : {{user.email}} <br>
     Date d'inscription : {{user.registerDateFr}} <br>
 
-    <h2> Modifier mon Pseudo: </h2>
+    <h2> Modifier mon pseudo </h2>
     {{ form_start(formPseudo) }}
     {{ form_widget(formPseudo) }}
     <button type="submit">Mettre à jour</button>
     {{ form_end(formPseudo) }} 
                 
-    <h2> Modifier mon Mot de passe: </h2>
+    <h2> Modifier mon mot de passe </h2>
     {{ form_start(formPassword) }}
     {{ form_widget(formPassword) }}
     <button type="submit">Mettre à jour</button>
     {{ form_end(formPassword) }}
+
+    <h2> Modifier mon avatar </h2>
+    {{ form_start(formAvatar) }}
+    {{ form_widget(formAvatar) }}
+    <button type="submit">Mettre à jour</button>
+    {{ form_end(formAvatar) }}
                 
 {% endblock %}

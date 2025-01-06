@@ -7,7 +7,9 @@ use App\Entity\Like;
 use App\Entity\Image;
 use App\Form\CatType;
 use App\Entity\Matche;
+use App\Form\HomeType;
 use App\Form\LikeType;
+use App\Form\FilterType;
 use App\Repository\CatRepository;
 use App\Service\SendEmailService;
 use App\Repository\LikeRepository;
@@ -27,20 +29,47 @@ class CatController extends AbstractController
 {
     //Le routage remplace le lien du controller + méthode + id qu'on appelait avant dans l'url du site
     #[Route('/cat', name: 'app_cat')]
-    public function index(CatRepository $catRepository): Response //On fait passer directement le repository
+    public function index(CatRepository $catRepository, Request $request): Response //On fait passer directement le repository
     {
-         $userLogin = $this->getUser();
-        if(!$userLogin) {
-            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
-        }
-
-        $cats = $catRepository->findBy([], ["dateProfile" => "DESC"]);
- 
-        //Redirection qui redirige l'utilisateur
-        //render permet de faire le lien entre le controller et la vue
-        return $this->render('cat/index.html.twig', [
-            'cats' => $cats,
-        ]);
+            //On récupère l'utilisateur connecté
+            $userLogin = $this->getUser();
+    
+            // On autorise l'accès à la page uniquement si l'utilisateur est connecté
+            if(!$userLogin) {
+                throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+            }
+            
+            //Création du formulaire (barre de recherche)
+             $homeForm = $this->createForm(HomeType::class);
+             $homeForm->handleRequest($request);
+             $cats = []; //$cats est un tableau vide au début
+     
+             //Si le formulaire est valide et est soumis -> on appelle notre méthode "findCatName" qui permet de trouver le chat correspondant
+             if ($homeForm->isSubmitted() && $homeForm->isValid()) {
+                 $filters = $homeForm->getData();
+                 $name = $filters['name'];
+                 $cats = $catRepository->findCatName($name);
+             } else {
+                //Si le formulaire n'est pas soumis, on affiche tous les chats, du plus récent au plus ancien
+                 $cats = $catRepository->findBy([], ["dateProfile" => "DESC"]);
+             }
+             
+             //Création du formulaire (multifiltre)
+             $filterForm = $this->createForm(FilterType::class);
+             $filterForm->handleRequest($request);
+    
+             //Si le formulaire est soumis on utilsie notre méthode findByFilters pour afficher les chats en fonction des critères
+             if ($filterForm->isSubmitted() && $filterForm->isValid()) {
+                 $filters = $filterForm->getData();
+                 $cats = $catRepository->findByFilters($filters);
+             }
+    
+             return $this->render('cat/index.html.twig', [
+                 'cats' => $cats,
+                 'homeForm' => $homeForm->createView(),
+                 'filterForm' => $filterForm->createView(),
+             ]);
+         
     }
  
     #[Route('/cat/new', name: 'new_cat')]
@@ -146,7 +175,7 @@ class CatController extends AbstractController
             } catch (\Exception $e) {
                 $this->addFlash('error', 'Erreur lors de l\'enregistrement : ' . $e->getMessage());
             }
-            return $this->redirectToRoute('app_home'); // Redirection si succès
+            return $this->redirectToRoute('app_cat'); // Redirection si succès
         } else {
  
             // Si le formulaire n'est pas soumis ou valide, on renvoie la vue du formulaire
@@ -204,7 +233,7 @@ class CatController extends AbstractController
             $this->addFlash('message', $cat.' a bien été supprimé');
        
 
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('app_cat');
 
         
     }

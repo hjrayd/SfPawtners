@@ -10,6 +10,9 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/phosphor-icons@1.4.2/src/css/icons.min.css">
+
+
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% endblock %}
@@ -25,7 +28,7 @@
                         <ul>
                          
                             <li><a href="{{ path('app_logout')}}"> Se déconnecter </a> <br></li>
-                            <li><a href="{{ path('app_home')}}"> Accueil </a> <br></li>
+                            <li><a href="{{ path('app_cat')}}"> Les chats </a> <br></li>
                             <li><a href="{{path("app_message")}}"> Messagerie </a> <br></li>
                             <li><a href="{{path("app_category")}}"> Forum </a> <br></li>
                             <li><a href="{{path("app_like")}}"> Mes likes </a> <br></li>
@@ -46,7 +49,7 @@
                                     <ul>
                                         <div class="logo">
                                             <li>
-                                                <a href="{{ path('app_home')}}">
+                                                <a href="{{ path('app_cat')}}">
                                                     <img src="css\images\pawtners.png" alt="Logo de Pawtners">
                                                 </a>
                                             </li>

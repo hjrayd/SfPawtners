@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Review;
 use App\Form\ReviewType;
+use App\Form\EditAvatarType;
 use App\Form\EditPseudoType;
 use App\Form\EditPasswordType;
 use App\Repository\CatRepository;
@@ -21,9 +22,12 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class UserController extends AbstractController
@@ -143,51 +147,88 @@ class UserController extends AbstractController
 
 
     
-    #[Route('/user/update', name: 'update_user')]
-    public function update( Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository): Response {
+        #[Route('/user/update', name: 'update_user')]
+        public function update(
+        Request $request, 
+        EntityManagerInterface $entityManager, 
+        UserPasswordHasherInterface $passwordHasher, 
+        UserRepository $userRepository,
+        SluggerInterface $slugger,
+        #[Autowire('%avatars_directory%')] string $avatarsDirectory
+    ): Response {
 
         $user = $this->getUser();
-        if(!$user) 
-        {
+        if (!$user) {
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
-        
+
+        // Formulaire pour le pseudo
         $formPseudo = $this->createForm(EditPseudoType::class, $user);
         $formPseudo->handleRequest($request);
-        
-        if($formPseudo->isSubmitted() && $formPseudo->isValid()) {
+
+        if ($formPseudo->isSubmitted() && $formPseudo->isValid()) {
             $newPseudo = $formPseudo->get('pseudo')->getData();
-            if($newPseudo) {
+            if ($newPseudo) {
                 $user->setPseudo($newPseudo);
-            $entityManager->persist($user);
-            $entityManager->flush();
-            $this->addFlash('message', 'Votre pseudo a bien été modifier');
+                $entityManager->persist($user);
+                $entityManager->flush();
+                $this->addFlash('message', 'Votre pseudo a bien été modifié');
             }
             return $this->redirectToRoute('update_user');
         }
-        
+
+        // Formulaire pour le mot de passe
         $formPassword = $this->createForm(EditPasswordType::class, $user);
         $formPassword->handleRequest($request);
-        
-        if($formPassword->isSubmitted() && $formPassword->isValid()) {
+
+        if ($formPassword->isSubmitted() && $formPassword->isValid()) {
             $newPassword = $formPassword->get('plainPassword')->getData();
-            if($newPassword) {
+            if ($newPassword) {
                 $hashedPassword = $passwordHasher->hashPassword($user, $newPassword);
                 $user->setPassword($hashedPassword);
                 $entityManager->persist($user);
                 $entityManager->flush();
-                $this->addFlash('message', 'Votre mot de passe a bien été modifier');
+                $this->addFlash('message', 'Votre mot de passe a bien été modifié');
             }
             return $this->redirectToRoute('update_user');
         }
-        
+
+        // Formulaire pour l'avatar
+        $formAvatar = $this->createForm(EditAvatarType::class, $user);
+        $formAvatar->handleRequest($request);
+
+
+        $avatar = $formAvatar->get('image')->getData(); 
+
+        if ($avatar) {
+            // Traitement de l'image
+            $originalFilename = pathinfo($avatar->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename.'-'.uniqid().'.'.$avatar->guessExtension();
+
+            try {
+                $avatar->move($avatarsDirectory, $newFilename); 
+            } catch (FileException $e) {
+                // En cas d'erreur, on affiche un message et redirige
+                $this->addFlash('error', 'Erreur lors de l\'upload de l\'image : ' . $e->getMessage());
+                return $this->redirectToRoute('update_user');
+            }
+
+            $user->setAvatar('/uploads/avatars/' . $newFilename);
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $this->addFlash('message', 'Votre avatar a bien été mis à jour.');
+        }
+
+        // Redirection finale après tous les traitements
         return $this->render('user/update.html.twig', [
-            'user'=>$user,
-            'formPassword'=>$formPassword->createView(),
-            'formPseudo'=>$formPseudo->createView(),
-            
+            'user' => $user,
+            'formPassword' => $formPassword->createView(),
+            'formPseudo' => $formPseudo->createView(),
+            'formAvatar' => $formAvatar->createView(),
         ]);
     }
+
 
     #[Route('/user/{id}', name: 'show_user')]
     public function show(int $id, User $user = null, CatRepository $catRepository, MessageRepository $messageRepository, ReviewRepository $reviewRepository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository): Response {
