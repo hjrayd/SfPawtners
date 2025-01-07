@@ -1,10 +1,42 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="https://cdn.jsdelivr.net/npm/tarteaucitronjs@1.9.3/tarteaucitron.js"></script>
+        <script>
+            tarteaucitron.init({
+                "privacyUrl": "", // URL of your privacy policy
+                "hashtag": "#tarteaucitron", // Open the panel with this hashtag
+                "cookieName": "tarteaucitron", // Cookie name
+                "orientation": "bottom", // Banner position (top - bottom - middle - popup)
+                "groupServices": false, // Group services by category
+                "showAlertSmall": false, // Show the small banner on bottom right
+                "cookieslist": false, // Show the cookie list
+                "showIcon": true, // Show cookie icon to manage cookies
+                "iconPosition": "BottomLeft", // Position of the icon between BottomRight, BottomLeft, TopRight and TopLeft
+                "adblocker": false, // Show a Warning if an adblocker is detected
+                "DenyAllCta": true, // Show the deny all button
+                "AcceptAllCta": true, // Show the accept all button
+                "highPrivacy": true, // HIGHLY RECOMMENDED Disable auto consent
+                "handleBrowserDNTRequest": false, // If Do Not Track == 1, disallow all
+                "removeCredit": false, // Remove credit link
+                "moreInfoLink": true, // Show more info link
+                "useExternalCss": false, // If false, the tarteaucitron.css file will be loaded
+                "useExternalJs": false, // If false, the tarteaucitron.js file will be loaded
+                "readmoreLink": "", // Change the default readmore link pointing to tarteaucitron.io
+                "mandatory": true // Show a message about mandatory cookies
+            });
+        </script>
+        <script type="text/javascript">
+    
+                tarteaucitron.user.recaptchaapi = 'XXXXX';
+                (tarteaucitron.job = tarteaucitron.job || []).push('recaptcha');        
+        </script>
+
         <meta charset="UTF-8">
         <meta name="description" content="Bienvenue sur Pawtners, le site de rencontre pour chats !">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{% block title %}Bienvenue sur pawtners !{% endblock %}</title>
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -31,15 +63,16 @@
                                         <img src="css\images\pawtners.png" alt="Logo de Pawtners">
                                     </a>
                                 </li>
+                            </div>
                             {# Si le user est connecté #}
                             {% if app.user is not null %}
                          
                                 <li><a href="{{ path('app_logout')}}"> Se déconnecter </a> <br></li>
                                 <li><a href="{{ path('app_cat')}}"> Les chats </a> <br></li>
-                                <li><a href="{{path("app_message")}}"> Messagerie </a> <br></li>
-                                <li><a href="{{path("app_category")}}"> Forum </a> <br></li>
-                                <li><a href="{{path("app_like")}}"> Mes likes </a> <br></li>
-                                <li><a href="{{path("app_matche")}}"> Mes match </a> <br></li>
+                                <li><a href="{{path('app_message')}}"> Messagerie </a> <br></li>
+                                <li><a href="{{path('app_category')}}"> Forum </a> <br></li>
+                                <li><a href="{{path('app_like')}}"> Mes likes </a> <br></li>
+                                <li><a href="{{path('app_matche')}}"> Mes match </a> <br></li>
                                 <li><a href="{{ path('show_user', {'id': app.user.id}) }}">Mon profil</a></li>
                     
                             {# Si le user a le rôle Admin #}

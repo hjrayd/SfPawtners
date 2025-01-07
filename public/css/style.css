@@ -38,11 +38,12 @@
 .logo {
   display: flex;
   align-items: center;
+  height: 100%;
 }
 
 .logo img {
-  height: 50px; /* Ajustez la taille du logo selon vos besoins */
-  width: auto;
+  height: 50px; 
+
 }
 
 .nav-base nav {
