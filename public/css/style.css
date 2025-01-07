@@ -375,13 +375,13 @@ footer {
 
      /* 
 =================================================================
-=========================HOME==================================
+=========================CATS==================================
 =================================================================
  */ 
 
  #wrapper-home {
   min-height: 100vh;
-  width: 100vw;
+
   display: flex;
   flex-direction: column;
  }
@@ -501,7 +501,13 @@ footer {
   flex-direction: column; 
   align-items: center;
   width: 100%; 
+}
 
+.search-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 10px;
 }
 
 
@@ -524,6 +530,7 @@ footer {
   height: 20%;
   font-size: 20px;
   font-weight: 400;
+  max-width: 100%;
 }
 
 .header-home {
@@ -535,14 +542,10 @@ footer {
   justify-content: space-between;
   gap: 20px;
   margin-top: 30px;
+  max-width: 100%;
 
 }
 
-.search-buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
 
 #wrapper-home i {
   margin-left: 5px;

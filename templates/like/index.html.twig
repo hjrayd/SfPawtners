@@ -7,7 +7,8 @@
         {% for userLike in userLikes %}
 
         <div class="cat-like">
-            {{ userLike.catOne.name }}
+            {{ userLike.catOne.name }} avec
+            {{ userLike.catTwo.name}}
             {{ userLike.likeDate}}
             <a href="{{ path('delete_like', {'id': userLike.id}) }}" 
             class="btn btn-danger" 

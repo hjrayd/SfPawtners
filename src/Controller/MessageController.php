@@ -35,49 +35,7 @@ class MessageController extends AbstractController
         ]);
     }
     
-    //On gère le formulaire d'envoie de message
-    #[Route('/message/new/{id}', name: 'new_message')]
-    public function new(int $id, Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
-    {
-        $user = $this->getUser();
-        if(!$user) 
-        {
-            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
-        }
 
-        $receiver = $userRepository->find($id);
-        //Instanciation d'un nouvel objet message
-        $message = new Message();
-
-        //On crée le formulaire
-        $form = $this->createForm(MessageType::class, $message, [
-            'receiver' => $receiver
-        ]);
-
-        //On associe les données de la requête au formulaire
-        $form->handleRequest($request);
-
-        //Si le formulaire et soumis et valide
-        if($form->isSubmitted() && $form->isValid()) {
-
-            //On attribut à l'expediteur du message l'id du user connecté
-            $message->setSender($user);
-            $message->setReceiver($receiver);
-
-            //On persiste et envoie les données en BDD
-            $entityManager->persist($message);
-            $entityManager->flush();
-
-            //Message de succès
-            $this->addFlash("message", "Votre message a bien été envoyé");
-            return $this->redirectToRoute("show_message", ['id' => $id]);
-        }
-
-        //On retourne le resultat avec le formulaire dans la vue
-        return $this->render("message/new.html.twig", [
-            "formMessage" => $form->createView()
-        ]);
-    }
 
     //Lorsque l'on clique sur un pseudo, on peut voir les messages envoyé par ce user
     #[Route('/message/show/{id}', name: 'show_message')]

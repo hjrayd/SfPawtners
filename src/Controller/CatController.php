@@ -38,6 +38,8 @@ class CatController extends AbstractController
             if(!$userLogin) {
                 throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
             }
+
+            //$catsUser = $user->getCats();
             
             //Création du formulaire (barre de recherche)
              $homeForm = $this->createForm(HomeType::class);
