@@ -17,6 +17,7 @@ use App\Repository\BreedRepository;
 use App\Repository\ImageRepository;
 use App\Repository\MatcheRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -29,7 +30,7 @@ class CatController extends AbstractController
 {
     //Le routage remplace le lien du controller + méthode + id qu'on appelait avant dans l'url du site
     #[Route('/cat', name: 'app_cat')]
-    public function index(CatRepository $catRepository, Request $request): Response //On fait passer directement le repository
+    public function index(CatRepository $catRepository, Request $request, PaginatorInterface $paginatorInterface): Response //On fait passer directement le repository
     {
             //On récupère l'utilisateur connecté
             $userLogin = $this->getUser();
@@ -50,10 +51,10 @@ class CatController extends AbstractController
              if ($homeForm->isSubmitted() && $homeForm->isValid()) {
                  $filters = $homeForm->getData();
                  $name = $filters['name'];
-                 $cats = $catRepository->findCatName($name);
+                 $data = $catRepository->findCatName($name);
              } else {
                 //Si le formulaire n'est pas soumis, on affiche tous les chats, du plus récent au plus ancien
-                 $cats = $catRepository->findBy([], ["dateProfile" => "DESC"]);
+                 $data = $catRepository->findBy([], ["dateProfile" => "DESC"]);
              }
              
              //Création du formulaire (multifiltre)
@@ -63,11 +64,19 @@ class CatController extends AbstractController
              //Si le formulaire est soumis on utilsie notre méthode findByFilters pour afficher les chats en fonction des critères
              if ($filterForm->isSubmitted() && $filterForm->isValid()) {
                  $filters = $filterForm->getData();
-                 $cats = $catRepository->findByFilters($filters);
+                 $data = $catRepository->findByFilters($filters);
              }
-    
+
+             $cats = $paginatorInterface->paginate(
+                $data,
+                $request->query->getInt('page', 1),
+                12
+             );
+
+           
+
              return $this->render('cat/index.html.twig', [
-                 'cats' => $cats,
+                'cats' => $cats,
                  'homeForm' => $homeForm->createView(),
                  'filterForm' => $filterForm->createView(),
              ]);
