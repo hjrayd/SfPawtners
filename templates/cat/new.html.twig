@@ -9,7 +9,33 @@
             Vous ne pouvez pas ajouter de profils.
         {% else %}
             <h1>Ajouter le profil de votre chat !</h1>
-            {{ form(formAddCat) }}
+            {{ form_start(formAddCat) }}
+            <div class="formCat-rows">
+                {{ form_row(formAddCat.name) }}
+                {{ form_row(formAddCat.gender) }}
+            </div>
+            {{ form_row(formAddCat.dateBirth) }}
+            
+            <div class="formCat-rows">
+                {{ form_row(formAddCat.description) }}
+                {{ form_row(formAddCat.city) }}
+            </div>
+            <div class="formCat-rows">
+                {{ form_row(formAddCat.litter) }}
+                {{ form_row(formAddCat.vaccinated) }}
+            </div>
+            <div class="formCat-rows">
+                {{ form_row(formAddCat.breeds) }}
+                {{ form_row(formAddCat.coats) }}
+            </div>
+            <div class="add-cat-img">
+                {{ form_row(formAddCat.images) }}
+            </div>
+
+                {{ form_row(formAddCat.Valider)}} 
+
+            {{ form_end(formAddCat) }}
+
         {% endif %}  
     </div>
 </div>

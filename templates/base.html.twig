@@ -21,20 +21,27 @@
         <div id="wrapper-base">
             <header>
 
-                {# Si le user est connecté #}
-                {% if app.user is not null %}
+               
                 <div class="nav-base">
                     <nav>
                         <ul>
+                            <div class="logo">
+                                <li>
+                                    <a href="{{ path('app_cat')}}">
+                                        <img src="css\images\pawtners.png" alt="Logo de Pawtners">
+                                    </a>
+                                </li>
+                            {# Si le user est connecté #}
+                            {% if app.user is not null %}
                          
-                            <li><a href="{{ path('app_logout')}}"> Se déconnecter </a> <br></li>
-                            <li><a href="{{ path('app_cat')}}"> Les chats </a> <br></li>
-                            <li><a href="{{path("app_message")}}"> Messagerie </a> <br></li>
-                            <li><a href="{{path("app_category")}}"> Forum </a> <br></li>
-                            <li><a href="{{path("app_like")}}"> Mes likes </a> <br></li>
-                            <li><a href="{{path("app_matche")}}"> Mes match </a> <br></li>
-                            <li><a href="{{ path('show_user', {'id': app.user.id}) }}">Mon profil</a></li>
-                 
+                                <li><a href="{{ path('app_logout')}}"> Se déconnecter </a> <br></li>
+                                <li><a href="{{ path('app_cat')}}"> Les chats </a> <br></li>
+                                <li><a href="{{path("app_message")}}"> Messagerie </a> <br></li>
+                                <li><a href="{{path("app_category")}}"> Forum </a> <br></li>
+                                <li><a href="{{path("app_like")}}"> Mes likes </a> <br></li>
+                                <li><a href="{{path("app_matche")}}"> Mes match </a> <br></li>
+                                <li><a href="{{ path('show_user', {'id': app.user.id}) }}">Mon profil</a></li>
+                    
                             {# Si le user a le rôle Admin #}
                             {% if is_granted('ROLE_ADMIN') %}
                                         <li><a href="{{ path('app_admin')}}"> Dashboard Admin </a> <br></li>
@@ -47,13 +54,6 @@
                             <div class="nav-base">
                                 <nav>
                                     <ul>
-                                        <div class="logo">
-                                            <li>
-                                                <a href="{{ path('app_cat')}}">
-                                                    <img src="css\images\pawtners.png" alt="Logo de Pawtners">
-                                                </a>
-                                            </li>
-                                        </div>
                                         <li><a href="{{ path('app_login')}}"> Se connecter </a> <br></li>
                                         <li><a href="{{ path('app_register')}}"> S'inscrire </a> <br></li>
                                     </ul>

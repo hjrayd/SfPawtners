@@ -19,7 +19,7 @@
         
         <h2> @{{ user }}</h2>
 
-        <h2>  <i id="arrow" class="fa-solid fa-caret-down"></i> Profil(s):</h2> <br>
+        <h3>   Mes chats <i id="arrow" class="fa-solid fa-caret-down"></i> </h3> <br>
             {% for cat in user.cats %}
                 <div id="cats-user" class="cats-user">
                     <div class="cat-user">
@@ -33,7 +33,7 @@
                 </div>
             {% endfor %}
 
-            <h2> Avis </h2>
+            <h3> Avis <i id="arrow" class="fa-solid fa-caret-down"></i> </h3>
             {% if reviews %}
                 {% for review in reviews %}
                 {% if review.reviewer %}
@@ -68,7 +68,10 @@
         
 
             {%  if app.user == user %}
-            <button> <a href="{{ path('update_user') }}">Changer mes informations</a> </button> <br>
+                <h3> Avis postés <i id="arrow" class="fa-solid fa-caret-down"></i> </h3>
+                    <button> 
+                        <a href="{{ path('update_user') }}">Changer mes informations</a> 
+                    </button>
                     <form method="post" action="{{ path('delete_user') }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.');">
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" >Supprimer mon compte</button>

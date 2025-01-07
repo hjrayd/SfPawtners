@@ -99,7 +99,9 @@ class CatType extends AbstractType
                     ])
                 ]
             ])
-            ->add('Valider', SubmitType::class)
+            ->add('Valider', SubmitType::class, [
+                'label' => 'Ajouter'
+            ])
         ;
     }
 
