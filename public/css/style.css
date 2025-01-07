@@ -418,6 +418,13 @@ footer {
 
 }
 
+.pagination {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 .formCat-rows {
   display: flex;
   flex-direction: row;
