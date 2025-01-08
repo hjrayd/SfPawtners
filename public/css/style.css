@@ -495,7 +495,6 @@ footer {
   display: none;
   flex-direction: column;
   margin-top: 20px;
-
  }
 
  .filter-cat label {
@@ -509,7 +508,6 @@ footer {
   background-color: var(--section-color);
   border-radius: 20px;
   padding: 20px;
-
 }
 
 .filter-cat select {
@@ -533,6 +531,7 @@ footer {
   border-radius: 20px;
   border: none;
   margin: 5px;
+
 }
 
 

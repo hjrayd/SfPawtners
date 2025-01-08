@@ -106,6 +106,10 @@ class CatController extends AbstractController
 
         //On récupère le User connecté pour ne pas avoir à le renseigner
         $user = $this->getUser();
+
+        if (!$user->isVerified()) {
+            throw $this->createAccessDeniedException('Votre compte n\'est pas vérifié.');
+        }
         if(!$user){
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
