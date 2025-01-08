@@ -271,6 +271,7 @@ class UserController extends AbstractController
             "reviewee" => $reviewee
         ]);
             $cats = $user->getCats();
+            
             return $this->render('user/show.html.twig', [
                 'user' => $user,
                 'cats' => $cats, 

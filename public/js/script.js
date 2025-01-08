@@ -9,18 +9,7 @@ filterTitle.addEventListener('click', function() {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    const arrow = document.getElementById('arrow');
-    const cats = document.getElementById('cats-user');
 
-    arrow.addEventListener('click', function () {
-        if (cats.style.display === "none") {
-            cats.style.display = "flex";
-        } else {
-            cats.style.display = "none";
-        }
-    });
-})
 
 
 

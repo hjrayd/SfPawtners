@@ -19,7 +19,7 @@
         
         <h2> @{{ user }}</h2>
 
-        <h3>   Mes chats <i id="arrow" class="fa-solid fa-caret-down"></i> </h3> <br>
+        <h3>   Mes chats </h3> <br>
             {% for cat in user.cats %}
                 <div id="cats-user" class="cats-user">
                     <div class="cat-user">
@@ -27,8 +27,7 @@
                         {# First = filtre qui permet de récupèrer le premier élément d'un tableau #}
                         {% set firstImage = cat.images|first %}
                             <img src="{{ asset(firstImage) }}" alt="{{ firstImage.imageAlt }}">
-                    <h3>{{cat}}</h3> <br>
-                    
+                             <a href="{{path("show_cat", {id:cat.id}) }}"> {{cat}} </a>
                     </div>
                 </div>
             {% endfor %}

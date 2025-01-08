@@ -55,6 +55,17 @@ class CatController extends AbstractController
              } else {
                 //Si le formulaire n'est pas soumis, on affiche tous les chats, du plus récent au plus ancien
                  $data = $catRepository->findBy([], ["dateProfile" => "DESC"]);
+
+                 // On récupère les chats de l'utilisateur connecté
+                 $catsUser = $userLogin->getCats(); 
+
+                 //On filtre les chats à l'aide du array_filter qui exclue les chats de l'utilisateur connecté
+                 $data = array_filter($data, function ($cat) use ($catsUser) {
+                    
+                    //Si l'objet $cat est contenu dans le tableau $catsUser -> cela retourne true est il est exclu
+                    return !$catsUser->contains($cat);
+                });
+            
              }
              
              //Création du formulaire (multifiltre)
