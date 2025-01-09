@@ -32,7 +32,11 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         $user = $this->getUser();
-        
+        //Si l'utilisateur n'as pas confirmer son adresse mail on renvoie vers une page d'erreur
+        if($user && !$user->isVerified()){
+            $this->render('user/verified.html.twig');
+        }
+            
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,

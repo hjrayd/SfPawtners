@@ -275,12 +275,8 @@ class CatController extends AbstractController
             // On récupère le user connecté
             $user = $this->getUser();
 
-            if(!$user) {
-            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
-        }
-
             // On récupère tous les chats du user à l'aide du repository
-            $cats = $user->getCats();
+            $cats = $user ? $user->getCats() : null;
 
             $like = new Like(); //On crée un nouvel objet like
             

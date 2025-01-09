@@ -64,25 +64,25 @@ class RegistrationController extends AbstractController
                     $user->setAvatar('/uploads/avatars/' . $newFilename);
                 }
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+                $entityManager->persist($user);
+                $entityManager->flush();
 
-            // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('pawtners@email.com', 'Pawtners'))
-                    ->to((string) $user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
-            // do anything else you need here, like send an email
+                // generate a signed url and email it to the user
+                $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                    (new TemplatedEmail())
+                        ->from(new Address('pawtners@email.com', 'Pawtners'))
+                        ->to((string) $user->getEmail())
+                        ->subject('Please Confirm your Email')
+                        ->htmlTemplate('registration/confirmation_email.html.twig')
+                );
+                // do anything else you need here, like send an email
 
-            return $security->login($user, 'form_login', 'main');
-        }
-        //Si l'utilisateur n'as pas confirmer son adresse mail on renvoie vers une page d'erreur
-        if($user && !$user->isVerified()){
-        $this->render('user/verified.html.twig');
-     }
+                return $security->login($user, 'form_login', 'main');
+            }
+                //Si l'utilisateur n'as pas confirmer son adresse mail on renvoie vers une page d'erreur
+                if($user && !$user->isVerified()){
+                $this->render('user/verified.html.twig');
+            }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
