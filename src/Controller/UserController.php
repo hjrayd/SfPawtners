@@ -53,38 +53,39 @@ class UserController extends AbstractController
                     $likeCatOne = $likeRepository->findBy([
                         'catOne' => $cat
                     ]);
+
+                    foreach($likeCatOne as $like) {
+                        $entityManager->remove($like);
+                    }
     
                     $likeCatTwo = $likeRepository->findBy([
                         'catTwo' => $cat
                     ]);
+
+                    foreach($likeCatTwo as $like) {
+                        $entityManager->remove($like);
+                    }
                 }
-    
-                foreach($likeCatOne as $like) {
-                    $entityManager->remove($like);
-                }
-    
-                foreach($likeCatTwo as $like) {
-                    $entityManager->remove($like);
-                }
-    
     
                 foreach($cats as $cat) {
                     $matchCatOne = $matcheRepository->findBy([
                         'catOne' => $cat
                     ]);
+
+                    foreach($matchCatOne as $match) {
+                        $entityManager->remove($match);
+                    }
+        
     
                     $matchCatTwo = $matcheRepository->findBy([
                         'catTwo' => $cat
                     ]);
+
+                    foreach($matchCatTwo as $match) {
+                        $entityManager->remove($match);
+                    }
                 }
-    
-                foreach($matchCatOne as $match) {
-                    $entityManager->remove($match);
-                }
-    
-                foreach($matchCatTwo as $match) {
-                    $entityManager->remove($match);
-                }
+ 
             }
 
             $messages = $messageRepository->findBy([
@@ -131,6 +132,16 @@ class UserController extends AbstractController
             if($reviews) {
                 foreach($reviews as $review) {
                     $review->setReviewer(null);
+                }
+            }
+
+            $reviewsReviewee = $reviewRepository->findBy([
+                "reviewee" => $user
+            ]);
+
+            if($reviewsReviewee) {
+                foreach($reviewsReviewee as $reviewReviewee) {
+                    $entityManager->remove($reviewReviewee);
                 }
             }
 

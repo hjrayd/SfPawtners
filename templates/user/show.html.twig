@@ -71,10 +71,7 @@
                     <button> 
                         <a href="{{ path('update_user') }}">Changer mes informations</a> 
                     </button>
-                    <form method="post" action="{{ path('delete_user') }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.');">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" >Supprimer mon compte</button>
-                    </form>
+                    
             {% endif %}
     </div>
 

@@ -62,11 +62,12 @@
                                     </a>
                                 </li>
                             </div>
+                            <li><a href="{{ path('app_cat')}}"> Les chats </a> <br></li>
+                            <li><a href="{{ path('app_home')}}"> Accueil </a> <br></li>
                             {# Si le user est connecté #}
                             {% if app.user is not null %}
                          
                                 <li><a href="{{ path('app_logout')}}"> Se déconnecter </a> <br></li>
-                                <li><a href="{{ path('app_cat')}}"> Les chats </a> <br></li>
                                 <li><a href="{{path('app_message')}}"> Messagerie </a> <br></li>
                                 <li><a href="{{path('app_category')}}"> Forum </a> <br></li>
                                 <li><a href="{{path('app_like')}}"> Mes likes </a> <br></li>

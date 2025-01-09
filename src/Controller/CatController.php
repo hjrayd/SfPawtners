@@ -34,13 +34,6 @@ class CatController extends AbstractController
     {
             //On récupère l'utilisateur connecté
             $userLogin = $this->getUser();
-    
-            // On autorise l'accès à la page uniquement si l'utilisateur est connecté
-            if(!$userLogin) {
-                throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
-            }
-
-            //$catsUser = $user->getCats();
             
             //Création du formulaire (barre de recherche)
              $homeForm = $this->createForm(HomeType::class);
@@ -48,43 +41,52 @@ class CatController extends AbstractController
              $cats = []; //$cats est un tableau vide au début
      
              //Si le formulaire est valide et est soumis -> on appelle notre méthode "findCatName" qui permet de trouver le chat correspondant
-             if ($homeForm->isSubmitted() && $homeForm->isValid()) {
+             if ($homeForm->isSubmitted() && $homeForm->isValid()) 
+
+             {
+                //On récupère les critères qui ont été ajouté depuis le formulaire
                  $filters = $homeForm->getData();
+
+                 //On stocke la donnée 'name' dans une variable $name
                  $name = $filters['name'];
+
+                 //On recherche les chats qui ont un nom similaire à la valeur que contient la variable
                  $data = $catRepository->findCatName($name);
              } else {
                 //Si le formulaire n'est pas soumis, on affiche tous les chats, du plus récent au plus ancien
                  $data = $catRepository->findBy([], ["dateProfile" => "DESC"]);
 
                  // On récupère les chats de l'utilisateur connecté
-                 $catsUser = $userLogin->getCats(); 
+                 if($userLogin) {
+                    $catsUser = $userLogin->getCats(); 
 
-                 //On filtre les chats à l'aide du array_filter qui exclue les chats de l'utilisateur connecté
-                 $data = array_filter($data, function ($cat) use ($catsUser) {
-                    
+                    //On filtre les chats à l'aide du array_filter qui exclue les chats de l'utilisateur connecté
+                    $data = array_filter($data, function ($cat) use ($catsUser) {
+                       
                     //Si l'objet $cat est contenu dans le tableau $catsUser -> cela retourne true est il est exclu
                     return !$catsUser->contains($cat);
-                });
+                   });
+                 }
+                
             
-             }
+            }
              
              //Création du formulaire (multifiltre)
              $filterForm = $this->createForm(FilterType::class);
              $filterForm->handleRequest($request);
     
-             //Si le formulaire est soumis on utilsie notre méthode findByFilters pour afficher les chats en fonction des critères
+             //Si le formulaire est soumis on utilise notre méthode findByFilters pour afficher les chats en fonction des critères
              if ($filterForm->isSubmitted() && $filterForm->isValid()) {
-                 $filters = $filterForm->getData();
+                 $filters = $filterForm->getData(); //On récupère les données du formulaire
                  $data = $catRepository->findByFilters($filters);
              }
 
+             //Pagination des chats à l'aide de KNB Paginator
              $cats = $paginatorInterface->paginate(
                 $data,
                 $request->query->getInt('page', 1),
-                12
+                12 //On affiche 12 chats par pages
              );
-
-           
 
              return $this->render('cat/index.html.twig', [
                 'cats' => $cats,
@@ -107,18 +109,19 @@ class CatController extends AbstractController
         //On récupère le User connecté pour ne pas avoir à le renseigner
         $user = $this->getUser();
 
-        if (!$user->isVerified()) {
-            throw $this->createAccessDeniedException('Votre compte n\'est pas vérifié.');
-        }
+        //Si l'utilisateur n'est pas connecté on renvoie un message d'erreur
         if(!$user){
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
 
+        //Si l'utilisateur n'as pas confirmer son adresse mail on renvoie vers une page d'erreur
+        if (!$user->isVerified()) {
+            return $this->render('user/verified.html.twig');
+         }
+
         //Instanciation d'un objet Cat
         $cat = new Cat();
- 
-      
- 
+  
         //On attribut le user connecté à l'objet Cat
         $cat->setUser($user);
  

@@ -36,7 +36,8 @@
                         <button type="submit">Supprimer</button>
                     </form>   
                 {% endif %}
-                        
+                    
+
                     {% if app.user.ban %}
                         Vous ne pouvez pas liker ce chat.
                     {% elseif app.user != cat.user %}

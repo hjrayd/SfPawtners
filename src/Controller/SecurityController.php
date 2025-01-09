@@ -23,13 +23,16 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils, Security $security): Response
     {
-     
+
+ 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        $user = $this->getUser();
+        
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
@@ -86,9 +89,6 @@ class SecurityController extends AbstractController
 
               $this->addFlash('message', 'L\'email à été envoyé à l\'adresse fournie');
               return $this->redirectToRoute('app_login');
-
-
-
 
             }
 

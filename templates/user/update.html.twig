@@ -25,5 +25,10 @@
     {{ form_widget(formAvatar) }}
     <button type="submit">Mettre à jour</button>
     {{ form_end(formAvatar) }}
+
+    <form method="post" action="{{ path('delete_user') }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.');">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" >Supprimer mon compte</button>
+    </form>
                 
 {% endblock %}
