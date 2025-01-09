@@ -48,7 +48,8 @@ class MessageController extends AbstractController
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
 
-        //On interroge la BDD pour associer le paramètre receiver à $id
+        if(!$user->isVerified()) {
+              //On interroge la BDD pour associer le paramètre receiver à $id
         $receiver = $entityManager->getRepository(User::class)->find($id);
 
      
@@ -85,6 +86,9 @@ class MessageController extends AbstractController
         }
 
 
+        }
+
+      
         //On affiche le résultat dans notre vue show
         //On retourne les messages et le destinataire
         return $this->render('message/show.html.twig', [
