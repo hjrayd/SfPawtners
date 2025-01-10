@@ -2,6 +2,12 @@
 
 {% block title %}Ajouter un chat{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- On charge le CSS de Select2à l'aide d'une librairie CDN-->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+
 {% block body %}
 <div id="wrapper-add-cat">
     <div class="form-cat">
@@ -32,7 +38,7 @@
                 {{ form_row(formAddCat.images) }}
             </div>
 
-                {{ form_row(formAddCat.Valider)}} 
+            {{ form_row(formAddCat.Valider) }} 
 
             {{ form_end(formAddCat) }}
 
@@ -40,3 +46,16 @@
     </div>
 </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Permet d'inclure et de charger la librairie JQuery depuis un CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Permet d'inclure et de charger la librairie Select2 depuis un CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- Notre fichier JS qui contient le script-->
+    <script src="{{ asset('js/select2.js') }}"></script>
+{% endblock %}
+

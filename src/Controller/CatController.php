@@ -21,6 +21,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -30,7 +31,7 @@ class CatController extends AbstractController
 {
     //Le routage remplace le lien du controller + méthode + id qu'on appelait avant dans l'url du site
     #[Route('/cat', name: 'app_cat')]
-    public function index(CatRepository $catRepository, Request $request, PaginatorInterface $paginatorInterface): Response //On fait passer directement le repository
+    public function index(HttpClientInterface $httpClient, CatRepository $catRepository, Request $request, PaginatorInterface $paginatorInterface): Response //On fait passer directement le repository
     {
             //On récupère l'utilisateur connecté
             $userLogin = $this->getUser();
@@ -39,6 +40,9 @@ class CatController extends AbstractController
              $homeForm = $this->createForm(HomeType::class);
              $homeForm->handleRequest($request);
              $cats = []; //$cats est un tableau vide au début
+
+             //On intialise la variable cityName ocomme étant null pouvoir lui attribuer une valeur
+            $cityName = null;
      
              //Si le formulaire est valide et est soumis -> on appelle notre méthode "findCatName" qui permet de trouver le chat correspondant
              if ($homeForm->isSubmitted() && $homeForm->isValid()) 
@@ -67,8 +71,6 @@ class CatController extends AbstractController
                     return !$catsUser->contains($cat);
                    });
                  }
-                
-            
             }
              
              //Création du formulaire (multifiltre)
@@ -88,10 +90,19 @@ class CatController extends AbstractController
                 12 //On affiche 12 chats par pages
              );
 
+             //Pour chaque chat, on récupère le nom de leur ville pour pouvoir l'afficher
+             foreach ($cats as $cat) {
+                    $response = $httpClient->request('GET', 'https://geo.api.gouv.fr/communes/' . $cat->getCity()); //Requête à l'API
+                    $responseContent = $response->getContent();
+                    $cityData = json_decode($responseContent, true); // On convertit la réponse JSON en tableau
+                        $cat->cityName = $cityData['nom']; // On attribue le nom de la ville à notre variable $cityName
+            }
+
              return $this->render('cat/index.html.twig', [
                 'cats' => $cats,
                  'homeForm' => $homeForm->createView(),
                  'filterForm' => $filterForm->createView(),
+                 'cityName' => $cityName
              ]);
          
     }
@@ -269,7 +280,7 @@ class CatController extends AbstractController
  
  
     #[Route('/cat/{id}', name: 'show_cat')]
-    public function show(Cat $cat, LikeRepository $likeRepository, SendEmailService $mail,EntityManagerInterface $entityManager, CatRepository $catRepository, MatcheRepository $matcheRepository, Request $request): Response
+    public function show(HttpClientInterface $httpClient, Cat $cat, LikeRepository $likeRepository, SendEmailService $mail,EntityManagerInterface $entityManager, CatRepository $catRepository, MatcheRepository $matcheRepository, Request $request): Response
     {
 
             // On récupère le user connecté
@@ -288,6 +299,19 @@ class CatController extends AbstractController
 
             // On traite le formulaire
             $form->handleRequest($request);
+
+            //On intialise la variable cityName ocomme étant null pouvoir lui attribuer une valeur
+            $cityName = null;
+
+            // On fait une requête à l'API pour récuperer la ville via le code INSEE
+            $response = $httpClient->request('GET', 'https://geo.api.gouv.fr/communes/' . $cat->getCity());
+                
+            // On récupère le contenu de la réponse
+            $responseContent = $response->getContent();
+            $cityData = json_decode($responseContent, true);  // On convertit la réponse JSON en tableau
+
+            // On récupère le nom de la ville à partir des données et on l'attribue à notre variable pour l'afficher
+            $cityName = $cityData['nom'];  // nom = nom de la ville
 
             //Si il est soumit et valide
             if ($form->isSubmitted() && $form->isValid()) {
@@ -372,6 +396,7 @@ class CatController extends AbstractController
                     return $this->render('cat/show.html.twig', [
                         'cat' => $cat,
                         'form' => $form->createView(),
+                        'cityName' => $cityName
                         
                     ]);
     }   

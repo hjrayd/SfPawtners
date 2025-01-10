@@ -18,7 +18,7 @@
                 <p>Nom : {{ cat.name }}</p>
                 <p>Sexe : {{ cat.gender }} </p> 
                 <p>Age: {{ cat.ageFormatted }} </p>
-                <p>Ville: {{ cat.city }} </p>
+                <p>Ville: {{ cat.cityName }} </p>
                 <p>Description: {{ cat.description }} </p>
                 <p>Propriétaire : <a href="{{ path('show_user', {'id':cat.user.id})}}"> {{ cat.user }} </a> </p>
                 <p>Portée(s) : {{ cat.litterStatut }} </p>

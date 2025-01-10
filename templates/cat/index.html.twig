@@ -72,7 +72,7 @@
             <img src="{{ asset(firstImage) }}" alt="{{ firstImage.imageAlt }}">
             <div class="cat-card-text">
                 <p> Nom : {{ cat.name }} </p>
-                <p> Ville: {{ cat.city }} </p>
+                <p> Ville: {{ cat.cityName }} </p>
             </div>
             <div class="btn-detail">
                 <a href="{{ path('show_cat', {'id' : cat.id} )}}"> Détails + </a>
