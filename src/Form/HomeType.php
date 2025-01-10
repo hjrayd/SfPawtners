@@ -15,10 +15,7 @@ class HomeType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'constraints' => 
-                    new NotBlank([
-                        'message' => 'Le nom du chat est requis.',
-                    ]),
+              
               'attr' => [
                     'placeholder' => 'Rechercher...',
                    

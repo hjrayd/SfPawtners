@@ -580,6 +580,17 @@ footer {
 
 }
 
+
+
+.search-buttons {
+  display: flex;
+  flex-direction: row; /* Les boutons sont organisés verticalement */
+  justify-content: space-between; /* Répartir l'espace entre les boutons */
+  align-items: stretch; /* Permet aux éléments enfants de s'étirer verticalement */
+  height: 100%; /* S'assure que la div prend toute la hauteur disponible */
+}
+
+
 .btn-add-cat {
   text-align: center;
   background-color: var(--section-color);
@@ -602,9 +613,6 @@ footer {
 .pagination a {
   margin-right: 10px;
 }
-
-
-
 
 #wrapper-home i {
   margin-left: 5px;
