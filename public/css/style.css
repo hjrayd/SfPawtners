@@ -592,6 +592,17 @@ footer {
   max-width: 100%;
 }
 
+.current {
+  background-color: var(--nav-color);
+  color: var(--base-color);
+  border-radius: 80%;
+  padding: 15px;
+}
+
+.pagination a {
+  margin-right: 10px;
+}
+
 
 
 
