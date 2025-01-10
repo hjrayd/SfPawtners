@@ -16,27 +16,27 @@ class CityController extends AbstractController
     $url = 'https://geo.api.gouv.fr/communes?nom=';
 
     // Paramètre 'q' pour la recherche dans l'URL
-    $query = $_GET['q'] ?? '';  // Récupère le terme de recherche depuis la requête
+    $query = $_GET['q'] ?? '';  // On récupère la donnée qui a été transmise depuis la recherche
 
-    // Faire la requête GET à l'API Geo Gouv
+    // Requête à l'API pour récuperer les communes
     $response = $httpClient->request('GET', $url . $query, [
         'headers' => [
-            'Accept' => 'application/json',
+            'Accept' => 'application/json', //On précise qu'on souhaite récupérere le résultat sous un format JSON
         ],
     ]);
 
-    // Décoder la réponse JSON
+    // On convertit la réponse JSON en un tableau
     $data = $response->toArray();
 
-    // Formater les résultats pour Select2
+    // On formate les résultats pour Select2
     $results = array_map(function ($city) {
         return [
-            'id' => $city['code'], // code postal comme ID
-            'text' => $city['nom'] // nom de la ville comme texte affiché
+            'id' => $city['code'], // code INSEE pour l'ID
+            'text' => $city['nom'] // nom de la ville pour l'affichage
         ];
     }, $data);
 
-    // Retourner les données sous format JSON
+    // On retourne le résultat sous format JSON car la partie Front attend ce format
     return new JsonResponse($results);
     }
 }
