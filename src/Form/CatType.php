@@ -54,7 +54,7 @@ class CatType extends AbstractType
             ])
             ->add('description', TextareaType::class)
 
-            ->add('city', ChoiceType::class, [
+            ->add('city', TextType::class, [
                 'label' => 'Ville',
                 'attr' => ['id' => 'cat_city'] 
             ])

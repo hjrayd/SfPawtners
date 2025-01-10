@@ -37,31 +37,30 @@ class CatController extends AbstractController
             $userLogin = $this->getUser();
             
             //Création du formulaire (barre de recherche)
-             $homeForm = $this->createForm(HomeType::class);
-             $homeForm->handleRequest($request);
-             $cats = []; //$cats est un tableau vide au début
+            $homeForm = $this->createForm(HomeType::class);
+            $homeForm->handleRequest($request);
+            $cats = []; //$cats est un tableau vide au début
 
              //On intialise la variable cityName ocomme étant null pouvoir lui attribuer une valeur
             $cityName = null;
      
              //Si le formulaire est valide et est soumis -> on appelle notre méthode "findCatName" qui permet de trouver le chat correspondant
-             if ($homeForm->isSubmitted() && $homeForm->isValid()) 
-
-             {
+            if ($homeForm->isSubmitted() && $homeForm->isValid()) 
+            {
                 //On récupère les critères qui ont été ajouté depuis le formulaire
-                 $filters = $homeForm->getData();
+                $filters = $homeForm->getData();
 
                  //On stocke la donnée 'name' dans une variable $name
-                 $name = $filters['name'];
+                $name = $filters['name'];
 
                  //On recherche les chats qui ont un nom similaire à la valeur que contient la variable
-                 $data = $catRepository->findCatName($name);
+                $data = $catRepository->findCatName($name);
              } else {
                 //Si le formulaire n'est pas soumis, on affiche tous les chats, du plus récent au plus ancien
-                 $data = $catRepository->findBy([], ["dateProfile" => "DESC"]);
+                $data = $catRepository->findBy([], ["dateProfile" => "DESC"]);
 
                  // On récupère les chats de l'utilisateur connecté
-                 if($userLogin) {
+                if($userLogin) {
                     $catsUser = $userLogin->getCats(); 
 
                     //On filtre les chats à l'aide du array_filter qui exclue les chats de l'utilisateur connecté
@@ -74,14 +73,15 @@ class CatController extends AbstractController
             }
              
              //Création du formulaire (multifiltre)
-             $filterForm = $this->createForm(FilterType::class);
-             $filterForm->handleRequest($request);
+            $filterForm = $this->createForm(FilterType::class);
+            $filterForm->handleRequest($request);
     
              //Si le formulaire est soumis on utilise notre méthode findByFilters pour afficher les chats en fonction des critères
-             if ($filterForm->isSubmitted() && $filterForm->isValid()) {
+            if ($filterForm->isSubmitted() && $filterForm->isValid()) 
+            {
                  $filters = $filterForm->getData(); //On récupère les données du formulaire
                  $data = $catRepository->findByFilters($filters);
-             }
+            }
 
              //Pagination des chats à l'aide de KNB Paginator
              $cats = $paginatorInterface->paginate(
@@ -90,14 +90,21 @@ class CatController extends AbstractController
                 12 //On affiche 12 chats par pages
              );
 
-             //Pour chaque chat, on récupère le nom de leur ville pour pouvoir l'afficher
-             foreach ($cats as $cat) {
-                    $response = $httpClient->request('GET', 'https://geo.api.gouv.fr/communes/' . $cat->getCity()); //Requête à l'API
+              // Pour chaque chat, on fait une requête API pour récupérer le nom de la ville
+            foreach ($cats as $cat) {
+                if ($cat->getCity()) 
+                {
+                    $response = $httpClient->request('GET', 'https://geo.api.gouv.fr/communes/' . $cat->getCity());
                     $responseContent = $response->getContent();
                     $cityData = json_decode($responseContent, true); // On convertit la réponse JSON en tableau
-                        $cat->cityName = $cityData['nom']; // On attribue le nom de la ville à notre variable $cityName
-            }
 
+                    if (!empty($cityData)) {
+                        $cat->cityName = $cityData['nom']; // On attribue le nom de la ville à une propriété 'cityName'
+                    } else {
+                        $cat->cityName = 'Inconnu'; // Si la ville est introuvable, on met 'Inconnu'
+                    }
+                }
+            }
              return $this->render('cat/index.html.twig', [
                 'cats' => $cats,
                  'homeForm' => $homeForm->createView(),
@@ -150,6 +157,7 @@ class CatController extends AbstractController
  
             //On récupère les races des chats depuis le formulaire et on les attributs chacune au chat
             $breedsCat = $form->get('breeds')->getData();
+
             foreach ($breedsCat as $breed) {
                 $cat->addBreed($breed);
                 $breed->addCat($cat);
@@ -207,12 +215,15 @@ class CatController extends AbstractController
                     }
                 }
             }
+
             try {
                 // On persist le chat et les images associés
                 $entityManager->persist($cat);
                 //On envoie les données dans la base de données
                 $entityManager->flush();
-            } catch (\Exception $e) {
+            } catch (\Exception $e) 
+            
+            {
                 $this->addFlash('error', 'Erreur lors de l\'enregistrement : ' . $e->getMessage());
             }
             return $this->redirectToRoute('app_cat'); // Redirection si succès
@@ -300,18 +311,25 @@ class CatController extends AbstractController
             // On traite le formulaire
             $form->handleRequest($request);
 
-            //On intialise la variable cityName ocomme étant null pouvoir lui attribuer une valeur
             $cityName = null;
-
-            // On fait une requête à l'API pour récuperer la ville via le code INSEE
-            $response = $httpClient->request('GET', 'https://geo.api.gouv.fr/communes/' . $cat->getCity());
+            if ($cat->getCity()) {
+                // Requête à l'API pour récupérer les informations de la ville par code INSEE
+                $response = $httpClient->request('GET', 'https://geo.api.gouv.fr/communes/' . $cat->getCity());
                 
-            // On récupère le contenu de la réponse
-            $responseContent = $response->getContent();
-            $cityData = json_decode($responseContent, true);  // On convertit la réponse JSON en tableau
-
-            // On récupère le nom de la ville à partir des données et on l'attribue à notre variable pour l'afficher
-            $cityName = $cityData['nom'];  // nom = nom de la ville
+                // Récupérer le contenu brut de la réponse
+                $responseContent = $response->getContent();
+                $cityData = json_decode($responseContent, true);  // Convertir la réponse JSON en tableau
+            
+                // Vérifier si des données sont renvoyées
+                if (!empty($cityData)) {
+                    // Extraire le nom de la ville à partir des données
+                    $cityName = $cityData['nom'];  // Nom de la ville (la clé 'nom' contient la ville)
+                } else {
+                    $cityName = 'Inconnu';  // Si aucun résultat n'est trouvé
+                }
+            } else {
+                $cityName = 'Inconnu';  // Si aucune ville n'est présente
+            }
 
             //Si il est soumit et valide
             if ($form->isSubmitted() && $form->isValid()) {

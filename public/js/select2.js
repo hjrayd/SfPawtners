@@ -1,7 +1,7 @@
 
 //Permet de garantir que le script ne sera executé que si la page est entièrement chargée
 $(document).ready(function() {
-    $('#cat_city').select2({
+    $('#cat_city, #filter_city').select2({
         ajax: { //La requête AJAX permet d'afficher les villes dans le select sans avoir à recharger la page
             url: '/api/cities',  // URL de l'API
             dataType: 'json',
