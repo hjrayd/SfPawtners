@@ -23,24 +23,22 @@
 
                             {% elseif app.user != cat.user %} {# Ce bouton n'apparait pas si l'utilisateur connecté est le propriétaire de ce chat #}
                                 {{ form_start(form, {'method': 'POST', 'action': path('show_cat', {'id': cat.id})}) }} {# On utilise notre méthode show_cat pour liker le chat #}
+                                {{ form_row(form.catTwo) }}  
+                                    <button class="form-catTwo" type="submit">
+                                        Liker ce chat 
+                                    </button>
+                                {{ form_end(form) }}
 
-                                <div class="btn-like">
-                                    {{ form_row(form.catTwo) }} {# Listes des chats du user connecté #}
-                                        <button type="submit">
-                                            {% if alreadyLike %}
-                                                <a href="{{ path('delete_like', {'id': alreadyLike.id}) }}" 
+                                <div class="btn-like" id ="btn-like">
+                                            {% if userLike %}
+                                                <a href="{{ path('delete_like', {'id': userLike.id}) }}" 
                                                     <i class="fa-solid fa-heart"></i>
                                                </a>
                                                
-                                            {% else %}
+                                                {% else %}
                                                 <i class="fa-regular fa-heart"> </i> 
-                                            {% endif %}
-                                                
-                                           
-                                        </button> 
-                                    {{ form_end(form) }}
+                                            {% endif %}    
                                 </div>
-
                         {% endif %}
                     {% endif %}
                     <img src="{{ asset(cat.images[0].getImageLink()) }}" alt="{{ cat.images[0].getImageAlt() }}">

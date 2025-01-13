@@ -296,6 +296,8 @@ class CatController extends AbstractController
             
             $alreadyLike = null;
 
+            $userLike = null;
+
             // On récupère tous les chats du user à l'aide du repository
             $cats = $user ? $user->getCats() : null;
 
@@ -356,6 +358,12 @@ class CatController extends AbstractController
                     $entityManager->persist($like); //On persist l'objet et on le stocke en BDD
                     $entityManager->flush();
 
+                    //On vérifie que l'utilisateur n'a pas déjà liké ce chat
+                $userLike = $likeRepository -> findOneBy([
+                    'catOne' => $cat, //Chat qu"on like
+                    'catTwo' => $catTwo //Chat choisit via le formulaire
+                ]);
+
                     $reverseLike = $likeRepository -> findOneBy ([
                         'catOne' => $catTwo,
                         'catTwo' => $cat
@@ -414,6 +422,7 @@ class CatController extends AbstractController
                         'form' => $form->createView(),
                         'cityName' => $cityName,
                         'alreadyLike' => $alreadyLike,
+                        'userLike' => $userLike
 
 
                         
