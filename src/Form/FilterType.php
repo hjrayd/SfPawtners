@@ -64,7 +64,8 @@ class FilterType extends AbstractType
                 
                 ->add('city', TextType::class, [
                     'label' => 'Ville',
-                    'attr' => ['id' => 'filter_city'] 
+                    'attr' => ['id' => 'filter_city'] ,
+                    'required' => false
                 ]);
 
           

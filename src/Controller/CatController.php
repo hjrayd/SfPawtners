@@ -328,10 +328,8 @@ class CatController extends AbstractController
                 } else {
                     $cityName = 'Inconnu';  // Si aucun résultat n'est trouvé
                 }
-            } else {
-                $cityName = 'Inconnu';  // Si aucune ville n'est présente
             }
-
+            
             //Si il est soumit et valide
             if ($form->isSubmitted() && $form->isValid()) {
                 $like->setCatOne($cat); // On attribue au $catOne dans Like le chat qu'on like

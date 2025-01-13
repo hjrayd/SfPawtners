@@ -23,12 +23,14 @@
 
                             {% elseif app.user != cat.user %} {# Ce bouton n'apparait pas si l'utilisateur connecté est le propriétaire de ce chat #}
                                 {{ form_start(form, {'method': 'POST', 'action': path('show_cat', {'id': cat.id})}) }} {# On utilise notre méthode show_cat pour liker le chat #}
+
                                 <div id="form-like">
                                     {{ form_row(form.catTwo) }}  
                                         <button class="form-catTwo" type="submit">
                                             Liker ce chat 
                                         </button>
                                     {{ form_end(form) }}
+                                    
                                 </div>
 
                                 <div class="btn-like" id ="btn-like">
