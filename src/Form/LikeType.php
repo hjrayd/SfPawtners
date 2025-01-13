@@ -32,6 +32,12 @@ class LikeType extends AbstractType
                 'class' => Cat::class,
                 'choices' => $cats,
                 'choice_label' => 'name',
+                "attr" => [
+                    "class" => "like-catTwo"
+                ],
+                "label_attr" => [
+                    "class" => "like-catTwo"
+                ]
             ])
         ;
     }

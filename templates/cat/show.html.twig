@@ -7,20 +7,62 @@
 
         <h1> Détail de {{ cat }} </h1>
         
-        <div class="cat-images">
-            {% for image in cat.images %}
-                    <div class="cat-img">
-                        <img src="{{ asset(image) }}" alt="{{ image.imageAlt }}">
-                    </div>
-            {% endfor %}
-        </div>
+
+            <div class="cat-images">
+
+                <aside>
+                    <p>Propriétaire : <a href="{{ path('show_user', {'id':cat.user.id})}}"> {{ cat.user }} </a> </p>
+                </aside>
+    
+                {# On récupère la première image uploadé pour la mettre dans une div à part #}
+                <div class="main-cat-img">
+                    {% if app.user %} {# Si l'utilisateur est connecté #}
+
+                        {% if app.user.ban %} {# Si l'utilisateur conneté est ban -> restriction #}
+                            Vous ne pouvez pas liker ce chat.
+
+                            {% elseif app.user != cat.user %} {# Ce bouton n'apparait pas si l'utilisateur connecté est le propriétaire de ce chat #}
+                                {{ form_start(form, {'method': 'POST', 'action': path('show_cat', {'id': cat.id})}) }} {# On utilise notre méthode show_cat pour liker le chat #}
+
+                                <div class="btn-like">
+                                    {{ form_row(form.catTwo) }} {# Listes des chats du user connecté #}
+                                        <button type="submit">
+                                            {% if alreadyLike %}
+                                                <a href="{{ path('delete_like', {'id': alreadyLike.id}) }}" 
+                                                    <i class="fa-solid fa-heart"></i>
+                                               </a>
+                                               
+                                            {% else %}
+                                                <i class="fa-regular fa-heart"> </i> 
+                                            {% endif %}
+                                                
+                                           
+                                        </button> 
+                                    {{ form_end(form) }}
+                                </div>
+
+                        {% endif %}
+                    {% endif %}
+                    <img src="{{ asset(cat.images[0].getImageLink()) }}" alt="{{ cat.images[0].getImageAlt() }}">
+                </div>
+            
+                {# On affiche les images restantes #}
+                <div class="small-cat-images">
+                    {% for image in cat.images[1:] %}
+                        <div class="cat-img">
+                            <img src="{{ asset(image.getImageLink()) }}" alt="{{ image.getImageAlt() }}">
+                        </div>
+                    {% endfor %}
+                </div>
+                   
+            </div>
+
         <div class="cat-text">
                 <p>Nom : {{ cat.name }}</p>
                 <p>Sexe : {{ cat.gender }} </p> 
                 <p>Age: {{ cat.ageFormatted }} </p>
                 <p>Ville: {{ cityName }} </p>
                 <p>Description: {{ cat.description }} </p>
-                <p>Propriétaire : <a href="{{ path('show_user', {'id':cat.user.id})}}"> {{ cat.user }} </a> </p>
                 <p>Portée(s) : {{ cat.litterStatut }} </p>
                 <p>Vacciné : {{ cat.vaccinatedStatut }} </p>
                 <p>Race(s) : 
@@ -37,16 +79,7 @@
                     </form>   
                 {% endif %}
                     
-                {% if app.user %}
-                    {% if app.user.ban %}
-                        Vous ne pouvez pas liker ce chat.
-                        {% elseif app.user != cat.user %}
-                            {{ form_start(form, {'method': 'POST', 'action': path('show_cat', {'id': cat.id})}) }}
-                            {{ form_row(form.catTwo) }}
-                                <button type="submit" class="btn btn-primary">Liker ce chat</button>
-                            {{ form_end(form) }}
-                    {% endif %}
-                {% endif %}
+                
                    
         </div>
     </div>

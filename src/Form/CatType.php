@@ -68,11 +68,17 @@ class CatType extends AbstractType
                 'required' => false
             ])
             ->add('breeds', EntityType::class, [
+                'constraints' => [
+                    new Count([
+                        'max' => 2, // On limite le nombre de races à 2
+                        'maxMessage' => 'Vous ne pouvez pas choisir plus de 2 races par chat.',
+                    ])],
                 'class' => Breed::class,
                 'choice_label' => 'breedName',
                 'multiple' => true,
                 'expanded' => false,
                 'label' => 'Race(s)',
+               
             ])
             ->add('images', FileType::class, [
                 'label' => 'Vos images (JPG/JPEG/PNG)',
@@ -81,8 +87,8 @@ class CatType extends AbstractType
                 'multiple' => true,
                 'constraints' => [
                     new Count([
-                        'max' => 5, // On limite le nombre de fichiers à 5
-                        'maxMessage' => 'Vous ne pouvez pas uploader plus de 5 fichiers par chat.',
+                        'max' => 4, // On limite le nombre de fichiers à 4
+                        'maxMessage' => 'Vous ne pouvez pas uploader plus de 4 images par chat.',
                     ]),
                     new All([
                         'constraints' => [ //on utilise un tableau donc pour éviter que le formulaire attende une valeur de type "string" on encapsule les contraintes pour qu'elles s'appliquent à chaque fichier

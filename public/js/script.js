@@ -6,6 +6,19 @@ filterTitle.addEventListener('click', function() {
     $(filterCat).slideToggle();
 });
 
+// const btnLike = document.getElementById('btnLike');
+// const formLike = document.getElementById('like-catTwo');
+
+// btnLike.addEventListener('click', function(){
+   
+//     if (formLike.style.display === 'flex') {
+//         formLike.style.display = 'none';  
+//     } else {
+//         formLike.style.display = 'flex';  
+//     }
+// });
+
+
 
 
 

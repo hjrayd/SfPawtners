@@ -35,19 +35,30 @@ class LikeController extends AbstractController
     #[Route('/like/delete/{id}', name: 'delete_like')]
     public function delete($id, LikeRepository $likeRepository, MatcheRepository $matcheRepository, EntityManagerInterface $entityManager): Response
    {
-        $userLogin = $this->getUser();
+        $userLogin = $this->getUser(); //On récupère l'utilisateur connecté
         if(!$userLogin) {
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
-        $like = $likeRepository->find($id);
+
+        $like = $likeRepository->find($id); //On recherche l'id du like passé dans l'URL
+
 
         $match = $matcheRepository-> findOneBy ([
             'catOne' => $like->getCatOne(),
             'catTwo' => $like->getCatTwo()
         ]);
 
+        $matchOne = $matcheRepository -> findOneBy ([
+            'catOne' => $like->getCatTwo(),
+            'catTwo' => $like->getCatOne()
+        ]);
+
         if($match) {
             $entityManager->remove($match);
+        };
+
+        if($matchOne) {
+            $entityManager->remove($matchOne);
         };
 
         $entityManager->remove($like);
@@ -55,7 +66,7 @@ class LikeController extends AbstractController
 
         $this->addFlash('message', 'Le like a été supprimé.');
 
-        return $this->redirectToRoute('app_like');
+        return $this->redirectToRoute('app_cat');
    }
 
 

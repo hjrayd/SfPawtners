@@ -132,10 +132,7 @@ class CatController extends AbstractController
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
 
-        //Si l'utilisateur n'as pas confirmer son adresse mail on renvoie vers une page d'erreur
-        if (!$user->isVerified()) {
-            return $this->render('user/verified.html.twig');
-         }
+  
 
         //Instanciation d'un objet Cat
         $cat = new Cat();
@@ -296,6 +293,8 @@ class CatController extends AbstractController
 
             // On récupère le user connecté
             $user = $this->getUser();
+            
+            $alreadyLike = null;
 
             // On récupère tous les chats du user à l'aide du repository
             $cats = $user ? $user->getCats() : null;
@@ -339,7 +338,7 @@ class CatController extends AbstractController
 
                 
                 //On vérifie que l'utilisateur n'a pas déjà liké ce chat
-                $alreadyLike = $likeRepository -> findBy([
+                $alreadyLike = $likeRepository -> findOneBy([
                     'catOne' => $cat, //Chat qu"on like
                     'catTwo' => $catTwo //Chat choisit via le formulaire
                 ]);
@@ -409,12 +408,14 @@ class CatController extends AbstractController
                         }
                     }
                 }
-
                     //On rend le formulaire dans la vue et le chat dont l'id est passé dans l'URL
                     return $this->render('cat/show.html.twig', [
                         'cat' => $cat,
                         'form' => $form->createView(),
-                        'cityName' => $cityName
+                        'cityName' => $cityName,
+                        'alreadyLike' => $alreadyLike,
+
+
                         
                     ]);
     }   
