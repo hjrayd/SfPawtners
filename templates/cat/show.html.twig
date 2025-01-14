@@ -11,8 +11,16 @@
             <div class="cat-images">
 
                 <aside>
-                    <p>Propriétaire : <a href="{{ path('show_user', {'id':cat.user.id})}}"> {{ cat.user }} </a> </p>
+                    <p>Propriétaire : <a href="{{ path('show_user', {'id':cat.user.id})}}"> {{ cat.user }} </a> </p> 
+                    {% if app.user == cat.user or is_granted('ROLE_ADMIN')  %}
+                        <form method="post" action="{{ path('delete_cat', {id: cat.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce chat ?');">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit">Supprimer</button>
+                        </form>   
+                    {% endif %}   
                 </aside>
+                         
+          
     
                 {# On récupère la première image uploadé pour la mettre dans une div à part #}
                 <div class="main-cat-img">
@@ -23,24 +31,23 @@
 
                             {% elseif app.user != cat.user %} {# Ce bouton n'apparait pas si l'utilisateur connecté est le propriétaire de ce chat #}
                                 {{ form_start(form, {'method': 'POST', 'action': path('show_cat', {'id': cat.id})}) }} {# On utilise notre méthode show_cat pour liker le chat #}
-
                                 <div id="form-like">
                                     {{ form_row(form.catTwo) }}  
                                         <button class="form-catTwo" type="submit">
                                             Liker ce chat 
                                         </button>
+                                </div>
                                     {{ form_end(form) }}
                                     
-                                </div>
 
-                                <div class="btn-like" id ="btn-like">
+                                <div class="btn-like" >
                                             {% if userLike %}
                                                 <a href="{{ path('delete_like', {'id': userLike.id}) }}" 
                                                     <i class="fa-solid fa-heart"></i>
                                                </a>
                                                
                                                 {% else %}
-                                                <i class="fa-regular fa-heart"> </i> 
+                                                <i class="fa-regular fa-heart"  id ="btn-heart"> </i> 
                                             {% endif %}    
                                 </div>
                         {% endif %}
@@ -60,29 +67,23 @@
             </div>
 
         <div class="cat-text">
-                <p>Nom : {{ cat.name }}</p>
-                <p>Sexe : {{ cat.gender }} </p> 
-                <p>Age: {{ cat.ageFormatted }} </p>
-                <p>Ville: {{ cityName }} </p>
-                <p>Description: {{ cat.description }} </p>
-                <p>Portée(s) : {{ cat.litterStatut }} </p>
-                <p>Vacciné : {{ cat.vaccinatedStatut }} </p>
-                <p>Race(s) : 
+            <div class="row-text">
+                <p> <span> Âge : </span> {{ cat.ageFormatted }} </p>
+                <p> <span> Ville : </span> {{ cityName }} </p>
+                <p> <span> Description : </span> {{ cat.description }} </p>
+               
+            </div>
+            <div class="row-text">
+                <p> <span> Sexe : </span>{{ cat.gender }} </p> 
+                <p> <span> Portée(s) : </span> {{ cat.litterStatut }} </p>
+                <p> <span> Vacciné : </span>{{ cat.vaccinatedStatut }} </p>
+                <p> <span> Race(s) : </span>
 
                     {% for breed in cat.breeds %}
-                        {{ breed.breedName }} 
+                        <li> {{ breed.breedName }} </li>
                     {% endfor %}
                 </p>
-
-                {% if app.user == cat.user or is_granted('ROLE_ADMIN')  %}
-                    <form method="post" action="{{ path('delete_cat', {id: cat.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce chat ?');">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit">Supprimer</button>
-                    </form>   
-                {% endif %}
-                    
-                
-                   
+            </div>
         </div>
     </div>
             

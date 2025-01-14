@@ -676,18 +676,54 @@ footer {
 
  .cat-text {
   display: flex;
-  padding: 20px;
   font-size: 20px;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   background-color: var(--section-color);
   width: 100%;
+  gap: 200px;
   border-radius: 20px;
+  flex-grow: 1; 
+
+ }
+
+
+ .cat-images aside button {
+  background-color: var(--nav-color);
+  color: var(--base-color);
+  border-radius: 20px;
+  padding: 5px 20px;
+  font-size: 20px;
+  border: none;
+  margin-top: 20px;
+
+ }
+
+ .cat-images aside {
+  display: flex;
+  flex-direction: column;
+ }
+
+ .cat-text span {
+  font-weight: 600;
+  font-size: 20px;
  }
 
  .cat-text p {
-  margin-bottom: 5px;
+  margin-bottom: 20px;
+  word-wrap: break-word; /* Permet de couper les mots longs pour les faire tenir dans le conteneur */
+  white-space: normal; /* Permet l'enroulement du texte sur plusieurs lignes */
+  overflow-wrap: break-word; /* Assure que les longs mots qui débordent seront coupés */
+  max-width: 100%; 
  }
+
+ .row-text {
+  display: flex;
+  flex-direction: column;
+  max-width: 45%;
+}
 
  .cat-images aside {
   margin-left: 50px;
@@ -705,18 +741,14 @@ footer {
   padding: 30px;
   cursor: pointer;
   color: var(--nav-color);
- }
-
- .btn-like {
   position: absolute;
   right: -30px;
   top: -30px;
  }
 
 
-
 #form-like {
-  display: none;
+display: none;
   position: fixed;
   z-index: 1;
   flex-direction: column;
@@ -727,12 +759,20 @@ footer {
   padding: 20px;
   height: 20%;
   width: 20%;
+  top: 10%;
+  right: 10%;
+  border: 1px solid #5E3636;
+}
+
+#form-like label {
+  font-size: 20Px;
 }
 
 #form-like button {
   background-color: var(--text-color);
   color: var(--base-color);
   border-radius: 20px;
+  font-size: 15px;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
@@ -745,12 +785,18 @@ footer {
 #form-like select {
   border-radius: 20px;
   margin-left: 5px;
+  font-size: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .form-catTwo {
-  margin-bottom: 30px;
   display: none;
+  margin-bottom: 30px;
+
 }
+
+
 
 
 

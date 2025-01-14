@@ -2,10 +2,10 @@ when@dev:
     _errors:
         resource: '@FrameworkBundle/Resources/config/routing/errors.xml'
         prefix: /_error
-php_errors:
-    log: true
+# php_errors:
+#     log: true
 
-http_client:
-    thecat_api:
-        jph:
-            base_uri: 'https://api.thecatapi.com/v1/breeds/search?api_key=
+# http_client:
+#     thecat_api:
+#         jph:
+#             base_uri: 'https://api.thecatapi.com/v1/breeds/search?api_key=

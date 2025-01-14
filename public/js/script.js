@@ -16,22 +16,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Fonction qui fait apparaître le formulaire lorsque l'on clique sur le bouton en forme de coeur
     function formLikeCat() {
-        const btnLike = document.getElementById('btn-like');
-        const formEl = document.querySelectorAll('.form-catTwo'); 
+        const btnLike = document.getElementById('btn-heart');
+        const formEl = document.querySelectorAll('.form-catTwo');
         const formLike = document.getElementById('form-like');
 
-        if (btnLike && formLike && formEl.length > 0) { // on vérifie que les éléments existent bien
+        // On vérifie que les éléments existent bien 
+        if (btnLike && formLike && formEl.length > 0) {
+
+            // On cahce le formulaire et ses éléments 
+            formLike.style.display = 'none';  
+            formEl.forEach(function(form) {
+                $(form).hide();  
+            });
+
+            // Lorsque l'on clique sur le bouton cela fait apparaitre ou disparaitre le formulaire
             btnLike.addEventListener('click', function() {
+  
                 if (formLike.style.display === 'flex') {
                     formLike.style.display = 'none';  
                 } else {
                     formLike.style.display = 'flex';  
                 }
-                formEl.forEach(function(form) { // pour tous les éléments qui ont la classe .form-catTwo on applique la fonction formLike
-                        $(form).slideToggle();
-                                
-                    });
+
+                // Effet de glissement sur les éléments du formulaire
+                formEl.forEach(function(form) {
+                    $(form).slideToggle(); 
+                });
             });
+
         } else {
             console.log('Le bouton btnLike ou les éléments avec la classe .form-catTwo sont manquants');
         }
