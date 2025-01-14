@@ -641,10 +641,14 @@ footer {
   height: 500px;
   margin-bottom: 30px;
   position: relative;
+
  }
 
  .small-cat-images img {
   margin-bottom: 10px;
+  width: 200px;     
+  height: 150px;    
+  object-fit: cover;
  }
 
  .small-cat-images {
@@ -717,10 +721,7 @@ footer {
 
  .cat-text p {
   margin-bottom: 20px;
-  word-wrap: break-word; /* Permet de couper les mots longs pour les faire tenir dans le conteneur */
-  white-space: normal; /* Permet l'enroulement du texte sur plusieurs lignes */
-  overflow-wrap: break-word; /* Assure que les longs mots qui débordent seront coupés */
-  max-width: 100%; 
+
  }
 
  .row-text {

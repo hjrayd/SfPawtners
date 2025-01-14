@@ -9,6 +9,7 @@
         
 
             <div class="cat-images">
+               
 
                 <aside>
                     <p>Propriétaire : <a href="{{ path('show_user', {'id':cat.user.id})}}"> {{ cat.user }} </a> </p> 
@@ -52,8 +53,11 @@
                                 </div>
                         {% endif %}
                     {% endif %}
+
                     <img src="{{ asset(cat.images[0].getImageLink()) }}" alt="{{ cat.images[0].getImageAlt() }}">
                 </div>
+
+       
             
                 {# On affiche les images restantes #}
                 <div class="small-cat-images">
@@ -65,6 +69,9 @@
                 </div>
                    
             </div>
+
+            
+            <h3> Retour -> </h3>
 
         <div class="cat-text">
             <div class="row-text">
