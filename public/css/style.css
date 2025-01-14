@@ -537,9 +537,9 @@ footer {
 
 
 .search-cat input {
-  padding: 5px;
+  padding: 15px;
   width: 100%;
-  padding: 10px;
+  padding: 16+4px;
   border-radius: 20px;
   border: none;
 }
@@ -594,11 +594,11 @@ footer {
 .btn-add-cat {
   text-align: center;
   background-color: var(--section-color);
-  width: 200px;
+  width: 15%;
   border-radius: 20px;
   padding: 5px;
   height: 20%;
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 400;
   max-width: 100%;
 }
@@ -687,6 +687,10 @@ footer {
   border-radius: 20px;
   flex-grow: 1; 
 
+ }
+
+ aside a:hover {
+  text-decoration: underline;
  }
 
 
