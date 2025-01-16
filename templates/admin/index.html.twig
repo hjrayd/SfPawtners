@@ -24,8 +24,8 @@
                                     <a href="{{ path('ban_admin', {'id': user.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir bannir cet utilisateur ?');">Bannir</a>
                                 {% else %}
                                     <a href="{{ path('unban_admin', {'id': user.id}) }}"  onclick="return confirm('Êtes-vous sûr de vouloir débannir cet utilisateur ?');">Débannir</a>
-                                {% endif %}
                         {% endif %}
+                    {% endif %}
                 {% endfor %}
                 
             {% endif %}
