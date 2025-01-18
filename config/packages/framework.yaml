@@ -9,6 +9,11 @@ framework:
     #esi: true
     #fragments: true
 
+    http_client:
+        scoped_clients:
+            httpc:
+                base_uri: https://api.thecatapi.com
+
 when@test:
     framework:
         test: true
