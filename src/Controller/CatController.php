@@ -1,7 +1,7 @@
 <?php
- 
+
 namespace App\Controller;
- 
+
 use App\Entity\Cat;
 use App\Entity\Like;
 use App\Entity\Image;
@@ -26,7 +26,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
- 
+
 class CatController extends AbstractController
 {
     //Le routage remplace le lien du controller + méthode + id qu'on appelait avant dans l'url du site
@@ -43,7 +43,6 @@ class CatController extends AbstractController
 
              //On intialise la variable cityName ocomme étant null pouvoir lui attribuer une valeur
             $cityName = null;
-     
              //Si le formulaire est valide et est soumis -> on appelle notre méthode "findCatName" qui permet de trouver le chat correspondant
             if ($homeForm->isSubmitted() && $homeForm->isValid()) 
             {
@@ -55,7 +54,7 @@ class CatController extends AbstractController
 
                  //On recherche les chats qui ont un nom similaire à la valeur que contient la variable
                 $data = $catRepository->findCatName($name);
-             } else {
+                } else {
                 //Si le formulaire n'est pas soumis, on affiche tous les chats, du plus récent au plus ancien
                 $data = $catRepository->findBy([], ["dateProfile" => "DESC"]);
 
@@ -65,13 +64,13 @@ class CatController extends AbstractController
 
                     //On filtre les chats à l'aide du array_filter qui exclue les chats de l'utilisateur connecté
                     $data = array_filter($data, function ($cat) use ($catsUser) {
-                       
+                    
                     //Si l'objet $cat est contenu dans le tableau $catsUser -> cela retourne true est il est exclu
                     return !$catsUser->contains($cat);
-                   });
-                 }
+                    });
+                    }
             }
-             
+            
              //Création du formulaire (multifiltre)
             $filterForm = $this->createForm(FilterType::class);
             $filterForm->handleRequest($request);
@@ -80,15 +79,16 @@ class CatController extends AbstractController
             if ($filterForm->isSubmitted() && $filterForm->isValid()) 
             {
                  $filters = $filterForm->getData(); //On récupère les données du formulaire
-                 $data = $catRepository->findByFilters($filters);
+                $data = $catRepository->findByFilters($filters);
             }
 
              //Pagination des chats à l'aide de KNB Paginator
-             $cats = $paginatorInterface->paginate(
+                $cats = $paginatorInterface->paginate
+                (
                 $data,
                 $request->query->getInt('page', 1),
                 12 //On affiche 12 chats par pages
-             );
+                );
 
               // Pour chaque chat, on fait une requête API pour récupérer le nom de la ville
             foreach ($cats as $cat) {
@@ -105,15 +105,15 @@ class CatController extends AbstractController
                     }
                 }
             }
-             return $this->render('cat/index.html.twig', [
+            return $this->render('cat/index.html.twig', [
                 'cats' => $cats,
-                 'homeForm' => $homeForm->createView(),
-                 'filterForm' => $filterForm->createView(),
-                 'cityName' => $cityName
-             ]);
-         
+                'homeForm' => $homeForm->createView(),
+                'filterForm' => $filterForm->createView(),
+                'cityName' => $cityName
+            ]);
+        
     }
- 
+
     #[Route('/cat/new', name: 'new_cat')]
     public function new(
         Request $request,
@@ -132,26 +132,25 @@ class CatController extends AbstractController
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
 
-  
 
         //Instanciation d'un objet Cat
         $cat = new Cat();
-  
+
         //On attribut le user connecté à l'objet Cat
         $cat->setUser($user);
- 
+
         //On crée une instance de formulaire basé sur l'entité Cat
         $form = $this->createForm(CatType::class, $cat);
- 
+
         //Gestion de la soumission du formulaire
         $form->handleRequest($request);
- 
+
         // On vérifie que le formulaire a bien été soumis et est valide
         if ($form->isSubmitted() && $form->isValid()) {
-       
+
             //On récupère les données du formulaire
             $cat = $form->getData();
- 
+
             //On récupère les races des chats depuis le formulaire et on les attributs chacune au chat
             $breedsCat = $form->get('breeds')->getData();
 
@@ -172,7 +171,7 @@ class CatController extends AbstractController
             
             //on vérifie que l'on récupère bien un tableau et que les images ont bien été uploadé
             if (!empty($pictures) && is_array($pictures)) {
- 
+
                 //on parcourt chaque image
                 foreach ($pictures as $picture) {
                     if ($picture) {
@@ -202,7 +201,7 @@ class CatController extends AbstractController
                             //Et on redirige vers le formulaire
                             return $this->redirectToRoute('new_cat');
                         }
- 
+
                         //On définit le chemin de l'image
                         $image->setImageLink('/uploads/pictures/' . $newFilename);
                         
@@ -225,7 +224,7 @@ class CatController extends AbstractController
             }
             return $this->redirectToRoute('app_cat'); // Redirection si succès
         } else {
- 
+
             // Si le formulaire n'est pas soumis ou valide, on renvoie la vue du formulaire
             return $this->render('cat/new.html.twig', [
                 'formAddCat' => $form->createView(),
@@ -242,7 +241,7 @@ class CatController extends AbstractController
         }
 
         $cat = $catRepository->find($id);
-       
+
             $likes = $likeRepository->findBy([
                 'catOne' => $cat
             ]);
@@ -279,14 +278,14 @@ class CatController extends AbstractController
             $entityManager->remove($cat);
             $entityManager->flush();
             $this->addFlash('message', $cat.' a bien été supprimé');
-       
+
 
         return $this->redirectToRoute('app_cat');
 
         
     }
- 
- 
+
+
     #[Route('/cat/{id}', name: 'show_cat')]
     public function show(HttpClientInterface $httpClient, Cat $cat, LikeRepository $likeRepository, SendEmailService $mail,EntityManagerInterface $entityManager, CatRepository $catRepository, MatcheRepository $matcheRepository, Request $request): Response
     {
@@ -317,7 +316,7 @@ class CatController extends AbstractController
                 // Requête à l'API pour récupérer les informations de la ville par code INSEE
                 $response = $httpClient->request('GET', 'https://geo.api.gouv.fr/communes/' . $cat->getCity());
                 
-                // Récupérer le contenu brut de la réponse
+                // Récupérer le contenu de la réponse de l'API
                 $responseContent = $response->getContent();
                 $cityData = json_decode($responseContent, true);  // Convertir la réponse JSON en tableau
             
@@ -427,4 +426,4 @@ class CatController extends AbstractController
                     ]);
     }   
 }
- 
+

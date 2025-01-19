@@ -47,19 +47,19 @@ class RegistrationController extends AbstractController
     
                 if ($avatar) {
                     $originalFilename = pathinfo($avatar->getClientOriginalName(), PATHINFO_FILENAME);
-         
+
                     $safeFilename = $slugger->slug($originalFilename);
                     $newFilename = $safeFilename.'-'.uniqid().'.'.$avatar->guessExtension();
     
-                   
+
                     try {
                         $avatar->move($avatarsDirectory, $newFilename);
                     } catch (FileException $e) {
                       // Si l'upload rencontre un problème on affiche un message d'erreur
-                      $this->addFlash('error', 'Erreur lors de l\'upload de l\'image : ' . $e->getMessage());
+                    $this->addFlash('error', 'Erreur lors de l\'upload de l\'image : ' . $e->getMessage());
                             
                       //Et on redirige vers le formulaire
-                      return $this->redirectToRoute('app_register');
+                    return $this->redirectToRoute('app_register');
                     }
                     $user->setAvatar('/uploads/avatars/' . $newFilename);
                 }

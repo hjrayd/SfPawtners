@@ -31,7 +31,7 @@
     color: var(--base-color);
     background-color: var(--nav-color);
     width: 100%;
-    height: 100%;
+    height: 60px;
 
 }
 
@@ -42,10 +42,10 @@
 }
 
 .logo img {
-  height: 50px; 
-
+  height: 40px; 
+  width: 200px;
+  object-fit: contain;
 }
-
 .nav-base nav {
   max-width: 100%;
   max-height: 100%;
@@ -287,17 +287,19 @@ footer {
    color: var(--base-color);
  }
 
- .section-presentation img {
-    max-height: 100%;       
-    max-width: 100%; 
-    filter: saturate(50%);
-   
+
+
+ .img-register img {
+  flex-grow: 1;    max-height: 100%;       
+  max-width: 100%; 
+  filter: saturate(50%);
  }
 
  .img-register {
   display: flex;
   align-items: center;
   justify-content: baseline;
+  flex-grow: 1;
  }
 
  .section-register {
@@ -580,16 +582,12 @@ footer {
 
 }
 
-
-
 .search-buttons {
   display: flex;
-  flex-direction: row; /* Les boutons sont organisés verticalement */
-  justify-content: space-between; /* Répartir l'espace entre les boutons */
-  align-items: stretch; /* Permet aux éléments enfants de s'étirer verticalement */
-  height: 100%; /* S'assure que la div prend toute la hauteur disponible */
+  flex-direction: row; 
+  justify-content: space-between; 
+  height: 100%; 
 }
-
 
 .btn-add-cat {
   text-align: center;
@@ -617,41 +615,40 @@ footer {
 #wrapper-home i {
   margin-left: 5px;
 }
-
-     /* 
+ /*
 =================================================================
 =========================DETAIL D'UN CHAT==================================
 =================================================================
  */ 
 
- #wrapper-cat {
+#wrapper-cat {
   display: flex;
   flex-direction: column;
   margin-top: 30px;
   min-height: 100vh;
   align-items: center;
- }
+}
 
- #wrapper-cat h1 {
+#wrapper-cat h1 {
   margin-bottom: 30px;
- }
+}
 
- .main-cat-img{
+.main-cat-img{
   width: 700px;
   height: 500px;
   margin-bottom: 30px;
   position: relative;
 
- }
+}
 
- .small-cat-images img {
+.small-cat-images img {
   margin-bottom: 10px;
   width: 200px;     
   height: 150px;    
   object-fit: cover;
- }
+}
 
- .small-cat-images {
+.small-cat-images {
   width: 200px;
   height: 150px;
   margin-bottom: 30px;

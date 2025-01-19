@@ -20,14 +20,14 @@ class MessageController extends AbstractController
     public function index(EntityManagerInterface $entityManager, MessageRepository $messageRepository): Response
     {
          //On récupère le user connecté et on le stocke
-         $user = $this->getUser();
-         if(!$user) 
-         {
-            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
-        }
+        $user = $this->getUser();
+        if(!$user) 
+    {
+        throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+    }
 
          //On utilise notre requête DQL pour trouver les correspondants du user
-         $correspondents = $messageRepository->findCorrespondents($user);
+        $correspondents = $messageRepository->findCorrespondents($user);
 
          //On retourne le résultat avec les correspondants
         return $this->render('message/index.html.twig', [
@@ -52,7 +52,7 @@ class MessageController extends AbstractController
               //On interroge la BDD pour associer le paramètre receiver à $id
         $receiver = $entityManager->getRepository(User::class)->find($id);
 
-     
+
 
         //On utilise notre requête DQL pour afficher tous les messages entre deux userss
         $messages = $messageRepository->findAllMessages($user, $receiver);
@@ -80,7 +80,7 @@ class MessageController extends AbstractController
             //On persiste et envoie les données en BDD
             $entityManager->persist($message);
             $entityManager->flush();
-           
+
             //On redirige vers la conversation avec le user dont l'id et passé en paramètre
             return $this->redirectToRoute("show_message", ['id' => $id]);
         }
@@ -88,7 +88,7 @@ class MessageController extends AbstractController
 
         }
 
-      
+
         //On affiche le résultat dans notre vue show
         //On retourne les messages et le destinataire
         return $this->render('message/show.html.twig', [

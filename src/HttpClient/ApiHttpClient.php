@@ -18,8 +18,8 @@ class ApiHttpClient extends AbstractController
 
     public function getBreeds()
     {
-        $response = $this->httpClient->request('GET', "/v1/breeds", [
-            'verify_peer' => false
+        $response = $this->httpClient->request('GET', "/v1/breeds", [ //requête à l'endpoint de l'api
+            'verify_peer' => false 
         ]);
 
         return $response->toArray();

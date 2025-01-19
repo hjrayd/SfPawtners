@@ -26,11 +26,6 @@
                 "mandatory": true // Show a message about mandatory cookies
             });
         </script>
-        <script type="text/javascript">
-    
-                tarteaucitron.user.recaptchaapi = 'XXXXX';
-                (tarteaucitron.job = tarteaucitron.job || []).push('recaptcha');        
-        </script>
 
         <meta charset="UTF-8">
         <meta name="description" content="Bienvenue sur Pawtners, le site de rencontre pour chats !">
@@ -44,7 +39,6 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/phosphor-icons@1.4.2/src/css/icons.min.css">
 
-
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% endblock %}
@@ -55,61 +49,45 @@
                 <div class="nav-base">
                     <nav>
                         <ul>
-                            <div class="logo">
-                                <li>
-                                    <a href="{{ path('app_cat')}}">
-                                        <img src="css\images\pawtners.png" alt="Logo de Pawtners">
-                                    </a>
-                                </li>
-                            </div>
-                                <li><a href="{{ path('app_cat')}}"> Les chats </a> <br></li>
-                                <li><a href="{{ path('app_home')}}"> Accueil </a> <br></li>
-                            {# Si le user est connecté #}
+                            <li class="logo">
+                                <a href="{{ path('app_cat')}}">
+                                    <img src="{{ asset('images/pawtners.png') }}" alt="Logo de Pawtners">
+                                </a>
+                            </li>
+                            <li><a href="{{ path('app_cat')}}">Les chats</a></li>
+                            <li><a href="{{ path('app_home')}}">Accueil</a></li>
+
                             {% if app.user is not null %}
-                         
-                                <li><a href="{{ path('app_logout')}}"> Se déconnecter </a> <br></li>
-                                <li><a href="{{path('app_message')}}"> Messagerie </a> <br></li>
-                                <li><a href="{{path('app_category')}}"> Forum </a> <br></li>
-                                <li><a href="{{path('app_like')}}"> Mes likes </a> <br></li>
-                                <li><a href="{{path('app_matche')}}"> Mes match </a> <br></li>
+                                <li><a href="{{ path('app_logout')}}">Se déconnecter</a></li>
+                                <li><a href="{{ path('app_message')}}">Messagerie</a></li>
+                                <li><a href="{{ path('app_category')}}">Forum</a></li>
+                                <li><a href="{{ path('app_like')}}">Mes likes</a></li>
+                                <li><a href="{{ path('app_matche')}}">Mes match</a></li>
                                 <li><a href="{{ path('show_user', {'id': app.user.id}) }}">Mon profil</a></li>
-                    
-                            {# Si le user a le rôle Admin #}
-                            {% if is_granted('ROLE_ADMIN') %}
-                                        <li><a href="{{ path('app_admin')}}"> Dashboard Admin </a> <br></li>
+
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li><a href="{{ path('app_admin')}}">Dashboard Admin</a></li>
+                                {% endif %}
+                            {% else %}
+                                <li><a href="{{ path('app_login')}}">Se connecter</a></li>
+                                <li><a href="{{ path('app_register')}}">S'inscrire</a></li>
                             {% endif %}
                         </ul>
-                    </div>
-
-                            {# Si l'utilisateur n'est pas connecté #}
-                            {% else %} 
-                            <div class="nav-base">
-                                <nav>
-                                    <ul>
-                                        <li><a href="{{ path('app_login')}}"> Se connecter </a> <br></li>
-                                        <li><a href="{{ path('app_register')}}"> S'inscrire </a> <br></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                            {% endif %}
-                            {# Affichage des messages flash #}
-                            {% for message in app.flashes("message") %}
-                                {{ message }}
-                            {% endfor %}
+                    </nav>
+                </div>
             </header>
-        
+            
             {% block body %}
-                
-
             {% endblock %}
         </div>
+
         <footer>
             <div class="footer">
                 <nav>
                     <ul>
-                        <a href=""> <li> Conditions d'utilisations </li> </a>
-                        <a href=""> <li> À propos </li> </a>
-                        <a href=""> <li> Nous contacter </li> </a>
+                        <li><a href="">Conditions d'utilisations</a></li>
+                        <li><a href="">À propos</a></li>
+                        <li><a href="">Nous contacter</a></li>
                     </ul>
                 </nav>
             </div>
@@ -119,7 +97,6 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
             <script src="{{ asset('js/script.js')}}"></script>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    {% endblock %}
+        {% endblock %}
     </body>
 </html>

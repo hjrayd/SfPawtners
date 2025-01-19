@@ -17,9 +17,9 @@ final class ApiController extends AbstractController{
     }
 
     #[Route('/breeds', name: 'app_breeds')]
-    public function breeds(ApiHttpClient $apiHttpClient): Response
+    public function breeds(ApiHttpClient $apiHttpClient): Response 
     {
-        $breeds = $apiHttpClient->getBreeds();
+        $breeds = $apiHttpClient->getBreeds(); //On récupère les races des chats à l'aide de la méthode getBreeds()
         return $this->render('api/index.html.twig', [
             'breeds' => $breeds,
         ]);

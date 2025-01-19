@@ -58,7 +58,7 @@ class CategoryController extends AbstractController
         }
 
         $category = $categoryRepository->find($id);
-      
+
 
         $topic = new Topic();
         $topic->setCategory($category);

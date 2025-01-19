@@ -34,7 +34,7 @@ class LikeController extends AbstractController
 
     #[Route('/like/delete/{id}', name: 'delete_like')]
     public function delete($id, LikeRepository $likeRepository, MatcheRepository $matcheRepository, EntityManagerInterface $entityManager): Response
-   {
+    {
         $userLogin = $this->getUser(); //On récupère l'utilisateur connecté
         if(!$userLogin) {
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
@@ -67,7 +67,7 @@ class LikeController extends AbstractController
         $this->addFlash('message', 'Le like a été supprimé.');
 
         return $this->redirectToRoute('app_cat');
-   }
+    }
 
 
 }

@@ -60,33 +60,33 @@ class SecurityController extends AbstractController
             {
 
             //Création du header
-              $header = [
+            $header = [
                 'typ' => 'JWT',
                 'alg' => 'HS256'
-              ];
+            ];
 
               //Création du contenu (payload)
-              $payload = [
+            $payload = [
                 'user_id' => $user->getId()
-              ];
+            ];
 
               //On génère le token
-              $token = $jwt->generate($header, $payload,
-              $this->getParameter('app.jwtsecret'));
+            $token = $jwt->generate($header, $payload,
+            $this->getParameter('app.jwtsecret'));
 
               //On génère l'url vers app_resetPassword
-              $url = $this->generateUrl('app_resetPassword', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
+            $url = $this->generateUrl('app_resetPassword', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
 
-              $mail->send(
+            $mail->send(
                 'no-reply@pawtners.fr',
                 $user->getEmail(),
                 'Récuperation de mot de passe pour le site Pawtners',
                 'passwordReset',
                 compact('user', 'url') // Equivaut à ['user' => $user, 'url'=>$url]
-              );
+            );
 
-              $this->addFlash('message', 'L\'email à été envoyé à l\'adresse fournie');
-              return $this->redirectToRoute('app_login');
+            $this->addFlash('message', 'L\'email à été envoyé à l\'adresse fournie');
+            return $this->redirectToRoute('app_login');
 
             }
 

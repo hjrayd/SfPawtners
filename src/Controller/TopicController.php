@@ -39,7 +39,7 @@ class TopicController extends AbstractController
         }
 
         $topic = $topicRepository->find($id);
-      
+
         $post = new Post();
         $post->setTopic($topic);
         $post->setUser($user);

@@ -32,7 +32,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class UserController extends AbstractController
 {
-  
+
 
     #[Route('/user/delete', name: 'delete_user')]
     public function delete( 
@@ -40,7 +40,7 @@ class UserController extends AbstractController
     CatRepository $catRepository, LikeRepository $likeRepository, MatcheRepository $matcheRepository, MessageRepository $messageRepository, 
     PostRepository $postRepository, CategoryRepository $categoryRepository, TopicRepository $topicRepository, ReviewRepository $reviewRepository): Response 
     {
-       $user = $this->getUser();
+    $user = $this->getUser();
 
         if($user) {
 
@@ -85,7 +85,7 @@ class UserController extends AbstractController
                         $entityManager->remove($match);
                     }
                 }
- 
+
             }
 
             $messages = $messageRepository->findBy([
@@ -243,7 +243,7 @@ class UserController extends AbstractController
 
     #[Route('/user/{id}', name: 'show_user')]
     public function show(int $id, User $user = null, CatRepository $catRepository, MessageRepository $messageRepository, ReviewRepository $reviewRepository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository): Response {
-   
+
 
         //Formulaire d'ajout d'avis
         $reviewee = $userRepository->find($id);
@@ -264,19 +264,23 @@ class UserController extends AbstractController
         $formReview = $this->createForm(ReviewType::class, $review);
         $formReview->handleRequest($request);
 
-        if($formReview->isSubmitted() && $formReview->isValid()) {
-              if ($reviewee == $reviewer) {
+        if($formReview->isSubmitted() && $formReview->isValid()) 
+        {
+            if ($reviewee == $reviewer) 
+            {
                 $this->addFlash('message', 'Vous ne pouvez pas vous notez vous même');
-              } elseif($alreadyReviewed) {
+            } elseif($alreadyReviewed) 
+
+            {
                 $this->addFlash('message', 'Vous avez déjà noté cet utilisateur');
-              } else {
+            } else {
                 $review->setReviewer($reviewer);
                 $review->setReviewee($reviewee);
                 $entityManager->persist($review);
                 $entityManager->flush();
                 $this->addFlash('message', 'Votre avis a bien été mis en ligne');
-              }
-              return $this->redirectToRoute('show_user', ['id'=>$user->getId()]);
+            }
+            return $this->redirectToRoute('show_user', ['id'=>$user->getId()]);
             } 
         $reviews = $reviewRepository -> findBy([
             "reviewee" => $reviewee

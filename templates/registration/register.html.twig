@@ -23,11 +23,13 @@
             </div>
 
             <div class="img-register">
-                <img src="\css\images\cat-8239223_1280-removebg-preview.png" alt="Coeur patte de chat">
+                <img src="{{ asset('images/patteChat.png') }}" alt="Coeur patte de chat">
+
+
             </div>
 
         </div>
-     
+
         <div class="section-register">
 
                 <h2> S'inscrire </h2>
@@ -50,7 +52,7 @@
                             <button type="submit" class="btn">Trouver un pawtners <i class="fa-solid fa-paw"></i> </button>
                         </div>
                     {{ form_end(registrationForm) }}
-  
+
         </div>  
     </div>
 {% endblock %}
