@@ -10,6 +10,7 @@ use App\Entity\Matche;
 use App\Form\HomeType;
 use App\Form\LikeType;
 use App\Form\FilterType;
+use App\HttpClient\ApiHttpClient;
 use App\Repository\CatRepository;
 use App\Service\SendEmailService;
 use App\Repository\LikeRepository;
@@ -121,7 +122,8 @@ class CatController extends AbstractController
         SluggerInterface $slugger, // slugger formate les URL pour les simplifer
         #[Autowire('%pictures_directory%')] string $picturesDirectory, // injection de dépendance -> on injecte la dépendance au lieu de la créer dans la classe même
         BreedRepository $breedRepository,
-        ImageRepository $imageRepository
+        ImageRepository $imageRepository,
+        ApiHttpClient $apiHttpClient
     ): Response {
 
         //On récupère le User connecté pour ne pas avoir à le renseigner
@@ -138,6 +140,7 @@ class CatController extends AbstractController
 
         //On attribut le user connecté à l'objet Cat
         $cat->setUser($user);
+
 
         //On crée une instance de formulaire basé sur l'entité Cat
         $form = $this->createForm(CatType::class, $cat);
@@ -227,7 +230,7 @@ class CatController extends AbstractController
 
             // Si le formulaire n'est pas soumis ou valide, on renvoie la vue du formulaire
             return $this->render('cat/new.html.twig', [
-                'formAddCat' => $form->createView(),
+                'formAddCat' => $form->createView()
             ]);
         }
     }
@@ -356,10 +359,11 @@ class CatController extends AbstractController
                     $entityManager->flush();
 
                     //On vérifie que l'utilisateur n'a pas déjà liké ce chat
-                $userLike = $likeRepository -> findOneBy([
+                    $userLike = $likeRepository -> findOneBy
+                    ([
                     'catOne' => $cat, //Chat qu"on like
                     'catTwo' => $catTwo //Chat choisit via le formulaire
-                ]);
+                    ]);
 
                     $reverseLike = $likeRepository -> findOneBy ([
                         'catOne' => $catTwo,
@@ -393,17 +397,17 @@ class CatController extends AbstractController
                     );
 
                     // Envoi d'une notification par email au deuxième propriétaire
-                    $mail->send(
-                        'no-reply@pawtners.fr',
-                        $userTwo->getEmail(), 
-                        'Nouveau match !', 
-                        'new_match', 
-                        [
-                            'user' => $userTwo,
-                            'catOne' => $cat,
-                            'catTwo' => $catTwo,
-                            'loginUrl' => $loginUrl
-                        ] 
+                        $mail->send(
+                            'no-reply@pawtners.fr',
+                            $userTwo->getEmail(), 
+                            'Nouveau match !', 
+                            'new_match', 
+                            [
+                                'user' => $userTwo,
+                                'catOne' => $cat,
+                                'catTwo' => $catTwo,
+                                'loginUrl' => $loginUrl
+                            ] 
                     );
                         // Message de succès
                         $this->addFlash('message', 'Félicitations ! ' . $catTwo . ' a matché avec ' . $cat . ' !');
@@ -420,9 +424,6 @@ class CatController extends AbstractController
                         'cityName' => $cityName,
                         'alreadyLike' => $alreadyLike,
                         'userLike' => $userLike
-
-
-                        
                     ]);
     }   
 }

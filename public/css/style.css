@@ -725,6 +725,7 @@ footer {
   display: flex;
   flex-direction: column;
   max-width: 45%;
+  word-wrap: break-word; /*si les mots dépassent ils seront coupés*/
 }
 
  .cat-images aside {
