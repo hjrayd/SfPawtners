@@ -85,6 +85,16 @@ a:visited {
     display: none;
 }
 
+.message-main {
+  background-color: var(--section-color);
+  border-radius: 20px;
+  padding: 5px;
+  padding-left: 15px;
+  margin-top: 15px;
+  width: 30%;
+  border: 1px solid #5E3636;
+}
+
   /* 
 =================================================================
 =========================FOOTER==================================
@@ -843,25 +853,54 @@ display: none;
   padding: 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
+  margin-top: 20px;
+  margin-bottom: 100px;
  }
 
  .review {
   background-color: var(--base-color);
   display: flex;
   flex-direction: column;
-  height: 200px;
+  justify-content: space-around;
+  height: 250px;
   border-radius: 20px;
-  width: 10%;
+  width: 180px;
   overflow-y: scroll;
   align-items: center;
+
+
  }
 
  .review::-webkit-scrollbar {
-  display: none; /* Cache la barre de défilement */
+  display: none; 
 }
 
- 
+.row-review {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+
+}
+
+.review a {
+  background-color: red;
+  color: white;
+  padding: 5px 30px;
+  border-radius: 20px;
+}
+
+.review span {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.review p {
+  font-size: 20px
+}
+
+
 
 #wrapper-user h2 {
   font-size: 30px
@@ -886,6 +925,7 @@ display: none;
  .cats-user {
   display: flex;
   flex-direction: row;
+  margin-bottom: 100px;
 
  }
 
@@ -904,6 +944,20 @@ display: none;
 
  .cat-user a:hover {
   text-decoration: underline;
+ }
+
+ .btn-user-match {
+  margin-top: 20px;
+  margin-bottom: 100px;
+ }
+
+ .btn-user-match a {
+  background-color: var(--nav-color);
+  color: var(--base-color);
+  border-radius: 20px;
+  padding: 5px 30px;
+  margin-right: 20px;
+ 
  }
 
   /* 
@@ -1096,13 +1150,15 @@ padding: 5px;
  }
 
  .reviews {
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 600px;
  }
 
  .review {
-  width: 50%;
+ 
+  margin-bottom: 20px;
  }
 
 

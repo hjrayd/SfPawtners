@@ -19,7 +19,20 @@
         
         <h2> @{{ user }}</h2>
 
-        <h3>   Mes chats <i id="arrow" class="fa-solid fa-caret-down"></i> </h3> <br>
+        {% if app.user == user %}
+
+        <div class="btn-user-match">
+            <a href="{{ path('app_like')}}">Mes likes</a>
+            <a href="{{ path('app_matche')}}">Mes match</a>
+        </div>
+        {% endif %}
+      
+        {% if app.user == user %}
+            <h3>   Mes chats <i id="arrow" class="fa-solid fa-caret-down"></i> </h3> 
+            {% else %}
+            <h3> Les chats de {{user}} <i id="arrow" class="fa-solid fa-caret-down"></i> </h3>
+        {% endif %}
+      
         <div id="cats-user" class="cats-user">
             {% for cat in user.cats %}
                 
@@ -40,14 +53,18 @@
                 {% if reviews %}
                     {% for review in reviews %}
                         <div class="review">
-                            {% if review.reviewer %}
-                                {{ review.reviewer }}
-                            {% else %}
-                                Utilisateur supprimé
-                            {% endif %} 
+
+                            <div class="row-review">
+                                {% if review.reviewer %}
+                                    <span>{{ review.reviewer }}</span>
+                                {% else %}
+                                    <span >Utilisateur supprimé</span>
+                                {% endif %} 
+                               {{ review.reviewRating }}/5
+                            </div>
+
                             <p>{{ review.reviewContent }}</p>
-                            <p>{{ review.reviewRating }}/5</p>
-                            
+                           
                             {% if app.user == review.reviewer or is_granted('ROLE_ADMIN') %}
                                 <a href="{{ path('delete_review', {'id': review.id}) }}">Supprimer</a>
                             {% endif %}
@@ -74,16 +91,13 @@
 
             {%  if app.user == user %}
 
-                <div class="btn-user-match">
-                    <a href="{{ path('app_like')}}">Mes likes</a>
-                    <a href="{{ path('app_matche')}}">Mes match</a>
-                </div>
+              
                    
                 <h3> Avis postés <i id="arrow" class="fa-solid fa-caret-down"></i> </h3>
                     <button> 
                         <a href="{{ path('update_user') }}">Changer mes informations</a> 
                     </button>
-                    
+  
             {% endif %}
         </div>
 

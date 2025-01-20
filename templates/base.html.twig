@@ -84,7 +84,9 @@
 
             <main>
                 {% for message in app.flashes("message") %}
-                    {{ message }}
+                    <div class="message-main">
+                        {{ message }}
+                    </div>
                 {% endfor %}
         
             </main>
