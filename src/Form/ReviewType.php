@@ -23,6 +23,10 @@ class ReviewType extends AbstractType
             ])
             ->add('reviewRating', IntegerType::class, [
                 'label' => 'Note',
+                'attr' => [
+                        'min' => 0, 
+                        'max' => 5
+                ],
                 'constraints' => [
                     new Assert\Range([
                         'min' => 1,

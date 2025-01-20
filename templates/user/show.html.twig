@@ -19,9 +19,10 @@
         
         <h2> @{{ user }}</h2>
 
-        <h3>   Mes chats </h3> <br>
+        <h3>   Mes chats <i id="arrow" class="fa-solid fa-caret-down"></i> </h3> <br>
+        <div id="cats-user" class="cats-user">
             {% for cat in user.cats %}
-                <div id="cats-user" class="cats-user">
+                
                     <div class="cat-user">
 
                         {# First = filtre qui permet de récupèrer le premier élément d'un tableau #}
@@ -29,27 +30,34 @@
                             <img src="{{ asset(firstImage) }}" alt="{{ firstImage.imageAlt }}">
                              <a href="{{path("show_cat", {id:cat.id}) }}"> {{cat}} </a>
                     </div>
-                </div>
+                
             {% endfor %}
+        </div>
 
             <h3> Avis <i id="arrow" class="fa-solid fa-caret-down"></i> </h3>
-            {% if reviews %}
-                {% for review in reviews %}
-                {% if review.reviewer %}
-                    {{ review.reviewer}}
+
+            <div class="reviews">
+                {% if reviews %}
+                    {% for review in reviews %}
+                        <div class="review">
+                            {% if review.reviewer %}
+                                {{ review.reviewer }}
+                            {% else %}
+                                Utilisateur supprimé
+                            {% endif %} 
+                            <p>{{ review.reviewContent }}</p>
+                            <p>{{ review.reviewRating }}/5</p>
+                            
+                            {% if app.user == review.reviewer or is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('delete_review', {'id': review.id}) }}">Supprimer</a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
                 {% else %}
-                    Utilisateur supprimé
-                {% endif %} 
-                {{review.reviewContent}}
-                {{review.reviewRating}}/5
-                {% if app.user == review.reviewer or is_granted('ROLE_ADMIN')  %}
-                    <a href="{{ path('delete_review', {'id': review.id}) }}">Supprimer</a>
+                    <p>Aucun avis pour le moment.</p>
                 {% endif %}
-                {% endfor %}
-            {% else %}
-                Aucun avis pour l'instant.
-            {% endif %}
-            <br>
+            </div>
+            
             
             {% if app.user.ban %}
                 Vous ne pouvez pas ajouter d'avis
@@ -62,17 +70,21 @@
                 {{ form_end(formReview) }}
             {% endif %}
             {% endif %}
-        
-            
-        
+
 
             {%  if app.user == user %}
+
+                <div class="btn-user-match">
+                    <a href="{{ path('app_like')}}">Mes likes</a>
+                    <a href="{{ path('app_matche')}}">Mes match</a>
+                </div>
+                   
                 <h3> Avis postés <i id="arrow" class="fa-solid fa-caret-down"></i> </h3>
                     <button> 
                         <a href="{{ path('update_user') }}">Changer mes informations</a> 
                     </button>
                     
             {% endif %}
-    </div>
+        </div>
 
 {% endblock %}

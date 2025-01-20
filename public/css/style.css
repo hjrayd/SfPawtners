@@ -836,6 +836,31 @@ display: none;
  
  }
 
+ .reviews {
+  background-color: var(--section-color);
+  height: 300px;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ }
+
+ .review {
+  background-color: var(--base-color);
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  border-radius: 20px;
+  width: 10%;
+  overflow-y: scroll;
+  align-items: center;
+ }
+
+ .review::-webkit-scrollbar {
+  display: none; /* Cache la barre de défilement */
+}
+
  
 
 #wrapper-user h2 {
@@ -846,12 +871,39 @@ display: none;
   font-size: 25px;
  }
 
- 
- 
+ .cat-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+  background-color: white;
+  border-radius: 20px;
+  height: 250px;
+  width: 200px;
+  margin-left: 20px;
+ }
 
- .cats-user img {
-  height: 300px;
-  width: 400px;
+ .cats-user {
+  display: flex;
+  flex-direction: row;
+
+ }
+
+ 
+ .cat-user img {
+  height: 150px;
+  width: 100%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+ }
+
+ .cat-user a {
+  font-size: 20px;
+  margin-top: 10px;
+ }
+
+ .cat-user a:hover {
+  text-decoration: underline;
  }
 
   /* 
@@ -1031,6 +1083,30 @@ padding: 5px;
  .section-register {
   margin-top: 20Px;
  }
+
+
+     /* 
+=================================================================
+=========================PROFIL USER==================================
+=================================================================
+ */ 
+
+ .cats-user {
+  flex-direction: column;
+ }
+
+ .reviews {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+ }
+
+ .review {
+  width: 50%;
+ }
+
+
+
 
 
 

@@ -48,7 +48,7 @@ class MessageController extends AbstractController
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
 
-        if(!$user->isVerified()) {
+    
               //On interroge la BDD pour associer le paramètre receiver à $id
         $receiver = $entityManager->getRepository(User::class)->find($id);
 
@@ -83,7 +83,7 @@ class MessageController extends AbstractController
 
             //On redirige vers la conversation avec le user dont l'id et passé en paramètre
             return $this->redirectToRoute("show_message", ['id' => $id]);
-        }
+        
 
 
         }

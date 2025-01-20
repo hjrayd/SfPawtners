@@ -13,7 +13,7 @@
                 Vous ne pouvez pas envoyer de messages.
             {% else %}
                 {% if match.catOne.user == app.user %}
-                    <a href="{{ path('show_messsage', {'id': match.catTwo.user.id}) }}">Envoyer un message</a>
+                    <a href="{{ path('show_message', {'id': match.catTwo.user.id}) }}">Envoyer un message</a>
                     {% else %}
                     <a href="{{ path('show_message', {'id': match.catOne.user.id}) }}">Envoyer un message</a>
                 {% endif %}

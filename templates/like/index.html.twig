@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des likes{% endblock %}
+{% block title %}Mes likes{% endblock %}
 
 {% block body %}
-    <h1>Liste de vos likes</h1>
+    <h1>Mes likes</h1>
         {% for userLike in userLikes %}
 
         <div class="cat-like">
             {{ userLike.catOne.name }} avec
-            {{ userLike.catTwo.name}}
+            {{ userLike.catTwo.name}} le
             {{ userLike.likeDate}}
             <a href="{{ path('delete_like', {'id': userLike.id}) }}" 
             class="btn btn-danger" 

@@ -29,8 +29,11 @@ class ReviewController extends AbstractController
         }
 
         $review = $reviewRepository->find($id);
+
+        $role = $user->getRole();
+
         
-        if($review->getReviewer() !== $user ) {
+        if($review->getReviewer() !== $user || $role !== "ROLE_ADMIN") {
             $this->addFlash('message', 'Vous ne pouvez pas supprimé cet avis');
             return $this->redirectToRoute('show_user', ['id' => $review->getReviewee()->getId()]);
         }
