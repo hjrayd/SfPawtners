@@ -6,31 +6,41 @@
         <div id="wrapper-admin">
 
             {% if is_granted('ROLE_ADMIN') %} 
+                <h1> Dashboard administrateur </h1>
             
                     <!-- Formulaire de recherche -->
                     <div class="search-user">
                         {{ form_start(form) }}
                             {{ form_row(form.pseudo) }}
-                            {{ form_row(form.Valider) }}
+                            <div class="buttons-admin">
+                                {{ form_row(form.Valider) }}
+                                <button> <a href="{{ path('app_admin')}}"> Réinitialiser </a> </button>
+                            </div>
                         {{ form_end(form) }}
-                        <button> <a href="{{ path('app_admin')}}"> Réinitialiser </a> </button>
+                   
                     </div>
                             
                 {% for user in users %}
-
-                    {# On affiche seulement les pseudos des personnes ayant le rôle 'ROLE_USER' #}
-                    {% if 'ROLE_ADMIN' not in user.roles %}
-                        <li><a href="{{ path('show_user', {'id':user.id})}}"> {{ user }} 
-                            Date d'inscription :{{ user.registerDateFr }}
-                        </a> <br></li>
-                
-                        {% if user.ban == false %}
-                                    <a href="{{ path('ban_admin', {'id': user.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir bannir cet utilisateur ?');">Bannir</a>
-                                {% else %}
-                                    <a href="{{ path('unban_admin', {'id': user.id}) }}"  onclick="return confirm('Êtes-vous sûr de vouloir débannir cet utilisateur ?');">Débannir</a>
+                    <div class="users-admin">
+                        {# On affiche seulement les pseudos des personnes ayant le rôle 'ROLE_USER' #}
+                        {% if 'ROLE_ADMIN' not in user.roles %}
+                            <div class="user-info">
+                                <li><a href="{{ path('show_user', {'id':user.id})}}"> {{ user }}  </a> </li>
+                                    Date d'inscription :{{ user.registerDateFr }}
+                                
+                        
+                                {% if user.ban == false %}
+                                            <div class="ban-btn">
+                                                <a href="{{ path('ban_admin', {'id': user.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir bannir cet utilisateur ?');">Bannir</a>
+                                            </div>
+                                        {% else %}
+                                            <div class="unban-btn">
+                                                <a href="{{ path('unban_admin', {'id': user.id}) }}"  onclick="return confirm('Êtes-vous sûr de vouloir débannir cet utilisateur ?');">Débannir</a>
+                                            </div>
+                                {% endif %}
+                            </div>
                         {% endif %}
-                    {% endif %}
-                    
+                    </div>
                 {% endfor %} 
 
             {% endif %}

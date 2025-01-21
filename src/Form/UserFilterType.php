@@ -15,7 +15,14 @@ class UserFilterType extends AbstractType
         $builder
             ->add('pseudo', TextType::class, [
                 'label' => 'Rechercher',
-                'required' => false
+                'label_attr' => [
+                    'class' => 'd-none', 
+                ],
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Rechercher...',
+                   
+                ]
             ])
             ->add('Valider', SubmitType::class, [
                 'label' => 'Rechercher'
