@@ -33,8 +33,8 @@ class MessageRepository extends ServiceEntityRepository
 
             //On joint les deux tables User et Message seulement là ou User est expéditeur ou receveur
             ->join('App\Entity\Message', 'm', 'WITH', 'm.sender = u OR m.receiver = u') //With permet de poser une condition
-                                                                                            //On utilise un leftJoin pour récupérer le nom du user même si il est null dans notre BDD 
-            //On filtre les résultat de la requête finale en n'affichant que les messages si le user et expediteur ou receveur
+                                                                                         
+            //On filtre les résultat de la requête finale en n'affichant que les utilisateurs si le user et expediteur ou receveur
             ->where('m.sender = :user OR m.receiver = :user') 
             ->andWhere('u.id != :user')
             //On associe la valeur a user passé en paramètre + protection contre injection SQL
@@ -77,6 +77,7 @@ class MessageRepository extends ServiceEntityRepository
           $query = $sub->getQuery();
           return $query->getResult(); //On execute la requête et on retourne le résultat
     }
+    
 
     //Fonction pour savoir si deux utilisateurs ont déjà échangés
     public function findIfMessageExchanged (User $user1, User $user2) {

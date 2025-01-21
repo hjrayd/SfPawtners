@@ -108,6 +108,8 @@ CREATE TABLE IF NOT EXISTS `breed_cat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table pawtners.breed_cat : ~0 rows (environ)
+INSERT INTO `breed_cat` (`breed_id`, `cat_id`) VALUES
+	(108, 61);
 
 -- Listage de la structure de table pawtners. cat
 CREATE TABLE IF NOT EXISTS `cat` (
@@ -124,9 +126,9 @@ CREATE TABLE IF NOT EXISTS `cat` (
   PRIMARY KEY (`id`),
   KEY `IDX_9E5E43A8A76ED395` (`user_id`),
   CONSTRAINT `FK_9E5E43A8A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table pawtners.cat : ~12 rows (environ)
+-- Listage des données de la table pawtners.cat : ~13 rows (environ)
 INSERT INTO `cat` (`id`, `user_id`, `name`, `gender`, `date_birth`, `description`, `city`, `litter`, `date_profile`, `vaccinated`) VALUES
 	(48, 57, 'Choumouss', 'Femelle', '2023-02-23', 'Mon chat', '67447', 0, '2025-01-13 07:45:24', 0),
 	(49, 57, 'Mimir', 'Femelle', '2025-01-03', 'chat', '67482', 0, '2025-01-13 08:03:51', 0),
@@ -139,7 +141,8 @@ INSERT INTO `cat` (`id`, `user_id`, `name`, `gender`, `date_birth`, `description
 	(57, 62, 'Loubia', 'Femelle', '2023-07-06', 'Chat', '75056', 0, '2025-01-13 14:10:03', 0),
 	(58, 62, 'Mimi', 'Mâle', '2023-06-07', 'Chat', '67482', 0, '2025-01-13 14:10:37', 0),
 	(59, 57, 'chacha', 'Femelle', '2024-03-08', 'gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg', '67447', 0, '2025-01-20 07:45:23', 0),
-	(60, 57, 'chacha', 'Femelle', '2024-03-01', 'x', '67480', 0, '2025-01-20 09:55:39', 0);
+	(60, 57, 'chacha', 'Femelle', '2024-03-01', 'x', '67480', 0, '2025-01-20 09:55:39', 0),
+	(61, 63, 'Bibou', 'Femelle', '2024-03-07', 'Chat', '67482', 1, '2025-01-20 14:47:53', 0);
 
 -- Listage de la structure de table pawtners. category
 CREATE TABLE IF NOT EXISTS `category` (
@@ -152,7 +155,6 @@ CREATE TABLE IF NOT EXISTS `category` (
 INSERT INTO `category` (`id`, `category_name`) VALUES
 	(19, 'Santé'),
 	(20, 'dfg'),
-	(22, 'Categorie'),
 	(23, 'Categorie');
 
 -- Listage de la structure de table pawtners. coat
@@ -182,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `coat_cat` (
   CONSTRAINT `FK_7B335B83E6ADA943` FOREIGN KEY (`cat_id`) REFERENCES `cat` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table pawtners.coat_cat : ~12 rows (environ)
+-- Listage des données de la table pawtners.coat_cat : ~13 rows (environ)
 INSERT INTO `coat_cat` (`coat_id`, `cat_id`) VALUES
 	(1, 48),
 	(1, 53),
@@ -195,6 +197,7 @@ INSERT INTO `coat_cat` (`coat_id`, `cat_id`) VALUES
 	(2, 58),
 	(2, 59),
 	(3, 55),
+	(3, 61),
 	(4, 60);
 
 -- Listage de la structure de table pawtners. image
@@ -206,9 +209,9 @@ CREATE TABLE IF NOT EXISTS `image` (
   PRIMARY KEY (`id`),
   KEY `IDX_C53D045FE6ADA943` (`cat_id`),
   CONSTRAINT `FK_C53D045FE6ADA943` FOREIGN KEY (`cat_id`) REFERENCES `cat` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table pawtners.image : ~16 rows (environ)
+-- Listage des données de la table pawtners.image : ~19 rows (environ)
 INSERT INTO `image` (`id`, `cat_id`, `image_link`, `image_alt`) VALUES
 	(57, 48, '/uploads/pictures/pexels-pixabay-57416-6784c495199e5.jpg', 'Choumouss'),
 	(58, 49, '/uploads/pictures/pexels-ihsanaditya-1056251-6784c8e74e375.jpg', 'Mimir'),
@@ -225,7 +228,10 @@ INSERT INTO `image` (`id`, `cat_id`, `image_link`, `image_alt`) VALUES
 	(70, 59, '/uploads/pictures/pexels-pixabay-416160-678dff135fd3b.jpg', 'chacha'),
 	(71, 59, '/uploads/pictures/pexels-ihsanaditya-1056251-678dff1360a6d.jpg', 'chacha'),
 	(72, 59, '/uploads/pictures/pexels-pixabay-57416-678dff136146a.jpg', 'chacha'),
-	(73, 60, '/uploads/pictures/pexels-pixabay-416160-678e1d9e61b71.jpg', 'chacha');
+	(73, 60, '/uploads/pictures/pexels-pixabay-416160-678e1d9e61b71.jpg', 'chacha'),
+	(74, 61, '/uploads/pictures/pexels-pixabay-416160-678e6219a64fa.jpg', 'Bibou'),
+	(75, 61, '/uploads/pictures/pexels-ihsanaditya-1056251-678e6219a75d3.jpg', 'Bibou'),
+	(76, 61, '/uploads/pictures/pexels-pixabay-57416-678e6219a7fce.jpg', 'Bibou');
 
 -- Listage de la structure de table pawtners. like
 CREATE TABLE IF NOT EXISTS `like` (
@@ -238,9 +244,21 @@ CREATE TABLE IF NOT EXISTS `like` (
   KEY `IDX_AC6340B34EC1CCA9` (`cat_two_id`),
   CONSTRAINT `FK_AC6340B3259D2B66` FOREIGN KEY (`cat_one_id`) REFERENCES `cat` (`id`),
   CONSTRAINT `FK_AC6340B34EC1CCA9` FOREIGN KEY (`cat_two_id`) REFERENCES `cat` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table pawtners.like : ~0 rows (environ)
+-- Listage des données de la table pawtners.like : ~11 rows (environ)
+INSERT INTO `like` (`id`, `date_like`, `cat_one_id`, `cat_two_id`) VALUES
+	(98, '2025-01-20 12:46:44', 58, 48),
+	(99, '2025-01-20 12:46:54', 57, 49),
+	(100, '2025-01-20 12:47:05', 56, 59),
+	(101, '2025-01-20 13:09:06', 52, 48),
+	(102, '2025-01-20 13:09:52', 48, 52),
+	(103, '2025-01-20 13:37:26', 48, 55),
+	(104, '2025-01-20 13:40:50', 48, 56),
+	(105, '2025-01-20 14:41:09', 57, 48),
+	(106, '2025-01-20 14:41:35', 48, 57),
+	(107, '2025-01-20 14:48:07', 48, 61),
+	(108, '2025-01-20 14:48:32', 61, 48);
 
 -- Listage de la structure de table pawtners. matche
 CREATE TABLE IF NOT EXISTS `matche` (
@@ -253,9 +271,13 @@ CREATE TABLE IF NOT EXISTS `matche` (
   KEY `IDX_9FCAD5104EC1CCA9` (`cat_two_id`),
   CONSTRAINT `FK_9FCAD510259D2B66` FOREIGN KEY (`cat_one_id`) REFERENCES `cat` (`id`),
   CONSTRAINT `FK_9FCAD5104EC1CCA9` FOREIGN KEY (`cat_two_id`) REFERENCES `cat` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table pawtners.matche : ~0 rows (environ)
+-- Listage des données de la table pawtners.matche : ~2 rows (environ)
+INSERT INTO `matche` (`id`, `cat_one_id`, `cat_two_id`, `date_match`) VALUES
+	(40, 48, 52, '2025-01-20 13:09:53'),
+	(41, 48, 57, '2025-01-20 14:41:36'),
+	(42, 61, 48, '2025-01-20 14:48:32');
 
 -- Listage de la structure de table pawtners. message
 CREATE TABLE IF NOT EXISTS `message` (
@@ -269,9 +291,17 @@ CREATE TABLE IF NOT EXISTS `message` (
   KEY `IDX_B6BD307FCD53EDB6` (`receiver_id`),
   CONSTRAINT `FK_B6BD307FCD53EDB6` FOREIGN KEY (`receiver_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FK_B6BD307FF624B39D` FOREIGN KEY (`sender_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table pawtners.message : ~0 rows (environ)
+-- Listage des données de la table pawtners.message : ~5 rows (environ)
+INSERT INTO `message` (`id`, `sender_id`, `receiver_id`, `message_date`, `message_content`) VALUES
+	(20, 60, 57, '2025-01-20 13:10:47', 'test'),
+	(21, 57, 60, '2025-01-20 13:55:35', 'test'),
+	(22, 62, 57, '2025-01-20 14:42:01', 'test'),
+	(23, 57, 63, '2025-01-20 14:48:50', 'test'),
+	(24, 57, 60, '2025-01-21 07:42:16', 'jouoph'),
+	(25, 57, 60, '2025-01-21 14:46:27', 'coucou'),
+	(26, 60, 57, '2025-01-21 14:46:51', 'test');
 
 -- Listage de la structure de table pawtners. messenger_messages
 CREATE TABLE IF NOT EXISTS `messenger_messages` (
@@ -318,9 +348,14 @@ CREATE TABLE IF NOT EXISTS `review` (
   KEY `IDX_794381C6BD992930` (`reviewee_id`),
   CONSTRAINT `FK_794381C670574616` FOREIGN KEY (`reviewer_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FK_794381C6BD992930` FOREIGN KEY (`reviewee_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table pawtners.review : ~0 rows (environ)
+-- Listage des données de la table pawtners.review : ~4 rows (environ)
+INSERT INTO `review` (`id`, `reviewer_id`, `reviewee_id`, `review_content`, `review_rating`) VALUES
+	(15, 60, 57, 'très bien', 5),
+	(16, 63, 57, 'très bien', 5),
+	(17, 57, 63, 'très bien', 5),
+	(18, 57, 62, 'très bien', 5);
 
 -- Listage de la structure de table pawtners. topic
 CREATE TABLE IF NOT EXISTS `topic` (
@@ -352,15 +387,16 @@ CREATE TABLE IF NOT EXISTS `user` (
   `register_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_IDENTIFIER_EMAIL` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table pawtners.user : ~5 rows (environ)
+-- Listage des données de la table pawtners.user : ~3 rows (environ)
 INSERT INTO `user` (`id`, `email`, `roles`, `password`, `is_verified`, `pseudo`, `avatar`, `ban`, `register_date`) VALUES
 	(57, 'haj@mail.com', '["ROLE_ADMIN"]', '$2y$13$hZ98aVgDNC4nb1LJqPs2OuVD.w0o87QQCnOKqRxrvPZKXSALeoa.i', 1, 'haj', NULL, 0, '2025-01-09 10:03:29'),
 	(60, 'test@mail.com', '["ROLE_USER"]', '$2y$13$hxp9xIZPV/Di01duPVEo3.ySbbrejpbad2ZrFXAo4uxi6cMgjt6Wq', 0, 'test', NULL, 0, '2025-01-13 07:51:42'),
 	(61, 'miaou@mail.com', '["ROLE_USER"]', '$2y$13$bQ3UGf3wpmZrTx2QL7E4buUJSCkg6FODxqpdEQGcYQGnGzFefDRxy', 0, 'miaou', NULL, 0, '2025-01-13 07:54:23'),
 	(62, 'chou@mail.com', '["ROLE_USER"]', '$2y$13$.VuVHuVssvSfuhaue0W4sOpbQeyqOvLrzsoO0HPFA1hYem8Wt/S4a', 0, 'chou', NULL, 0, '2025-01-13 09:52:41'),
-	(63, 'hajjj@mail.com', '["ROLE_USER"]', '$2y$13$X9UUVWVJe6kZ9XNQf1PdYOzyBANL79dO42DxdoznpBp4x1ygDkZPm', 1, 'hajar', NULL, 0, '2025-01-13 12:24:14');
+	(63, 'hajjj@mail.com', '["ROLE_USER"]', '$2y$13$X9UUVWVJe6kZ9XNQf1PdYOzyBANL79dO42DxdoznpBp4x1ygDkZPm', 1, 'hajar', NULL, 0, '2025-01-13 12:24:14'),
+	(64, 'chat@mail.com', '["ROLE_USER"]', '$2y$13$v/hLKOLnzRpeUHB9VEQOlODn14pBSRB/DkSiY8aTuF2Z9xVVigQU.', 1, 'chat', '/uploads/avatars/OIP-678e46553c77d.jpg', 0, '2025-01-20 12:49:24');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

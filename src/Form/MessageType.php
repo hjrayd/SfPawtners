@@ -18,13 +18,11 @@ class MessageType extends AbstractType
         $builder
             ->add('messageContent', TextareaType::class,[
                 'label' => 'Votre message'
-            ]);
+            ])
             
-            //Si un destinataire est passé en option comme dans notre méthode show
-            if (isset($options['receiver'])) {
-                $builder
-                        //Le champ est pré rempli avec le pseudo du destinataire
-                    ->add('receiver', EntityType::class, [
+
+        //Le champ est pré rempli avec le pseudo du destinataire
+            ->add('receiver', EntityType::class, [
                         'class' => User::class,
                         'choice_label' => 'pseudo',
                         'data' => ($options['receiver']),
@@ -36,9 +34,9 @@ class MessageType extends AbstractType
                         "label_attr" => [
                             "class" => "d-none"
                         ]
-                    ]);
-            }
-                $builder
+                    ])
+            
+
                 ->add('Envoyer', SubmitType::class);
             
     }
@@ -50,4 +48,5 @@ class MessageType extends AbstractType
             'receiver' => null // si aucun destinataire n'est passé en option il prend la valeur null
         ]);
     }
+
 }

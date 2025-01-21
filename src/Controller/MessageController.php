@@ -43,16 +43,15 @@ class MessageController extends AbstractController
     {
         //On stocke le user connecté dans la variable $user
         $user=$this->getUser();
+        
         if(!$user) 
         {
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
 
     
-              //On interroge la BDD pour associer le paramètre receiver à $id
+        //On interroge la BDD pour associer le paramètre receiver à $id
         $receiver = $entityManager->getRepository(User::class)->find($id);
-
-
 
         //On utilise notre requête DQL pour afficher tous les messages entre deux userss
         $messages = $messageRepository->findAllMessages($user, $receiver);
@@ -83,9 +82,6 @@ class MessageController extends AbstractController
 
             //On redirige vers la conversation avec le user dont l'id et passé en paramètre
             return $this->redirectToRoute("show_message", ['id' => $id]);
-        
-
-
         }
 
 
