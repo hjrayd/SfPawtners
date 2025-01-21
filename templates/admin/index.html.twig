@@ -3,14 +3,18 @@
     {% block title %}Liste des users{% endblock %}
 
         {% block body %}
+        <div id="wrapper-admin">
 
-            {% if is_granted('ROLE_ADMIN') %}  
+            {% if is_granted('ROLE_ADMIN') %} 
+            
                     <!-- Formulaire de recherche -->
-                    {{ form_start(form) }}
-                        {{ form_row(form.pseudo) }}
-                        {{ form_row(form.Valider) }}
-                    {{ form_end(form) }}
-                    <button> <a href="{{ path('app_admin')}}"> Réinitialiser </a> </button>
+                    <div class="search-user">
+                        {{ form_start(form) }}
+                            {{ form_row(form.pseudo) }}
+                            {{ form_row(form.Valider) }}
+                        {{ form_end(form) }}
+                        <button> <a href="{{ path('app_admin')}}"> Réinitialiser </a> </button>
+                    </div>
                             
                 {% for user in users %}
 
@@ -31,5 +35,6 @@
 
             {% endif %}
 
+        </div>
         {% endblock %}
 

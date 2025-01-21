@@ -245,28 +245,38 @@ class UserController extends AbstractController
     public function show(int $id, User $user = null, CatRepository $catRepository, MessageRepository $messageRepository, ReviewRepository $reviewRepository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository): Response {
 
 
-        //Formulaire d'ajout d'avis
-        $reviewee = $userRepository->find($id);
+        //On récupère l'id du user dans l'URL pour afficher ses informations
+        $user = $userRepository->find($id);
         
+        //On définit le reviewer comme celui étant l'utilisateur connecté
         $reviewer = $this->getUser();
+
+        //Si l'utilisateur n'est pas connecté on renvoie un message d'erreur
         if(!$reviewer) 
         {
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
 
-        $canPostReview = $messageRepository->findIfMessageExchanged($reviewee, $reviewer);
+        //Utilisation de notre fonction pour savoir si les deux utilisateurs ont déjà échangé
+        $canPostReview = $messageRepository->findIfMessageExchanged($user, $reviewer);
+
+        //On interroge la BDD pour savoir si le reviewer a déjà noté cet utilisateur
         $alreadyReviewed = $reviewRepository->findBy([
             "reviewer" => $reviewer,
-            "reviewee" => $reviewee
+            "reviewee" => $user
         ]);
 
+        //Instanciation d'un nouvel avis
         $review = new Review();
+
+        //Création du formulaire d'ajout d'avis
         $formReview = $this->createForm(ReviewType::class, $review);
         $formReview->handleRequest($request);
 
         if($formReview->isSubmitted() && $formReview->isValid()) 
         {
-            if ($reviewee == $reviewer) 
+            //On vérifie que l'utilisateur ne se note pas lui même
+            if ($user == $reviewer) 
             {
                 $this->addFlash('message', 'Vous ne pouvez pas vous notez vous même');
             } elseif($alreadyReviewed) 
@@ -274,25 +284,35 @@ class UserController extends AbstractController
             {
                 $this->addFlash('message', 'Vous avez déjà noté cet utilisateur');
             } else {
-                $review->setReviewer($reviewer);
-                $review->setReviewee($reviewee);
-                $entityManager->persist($review);
-                $entityManager->flush();
+                $review->setReviewer($reviewer); //On attribue au champs "reviewer" l'id de l'utilisateur connecté
+                $review->setReviewee($user); //On attribue à l'utilisateur noté l'id du user passé dans l'url
+                $entityManager->persist($review); //On persist l'objet review
+                $entityManager->flush(); //On l'ajoute en BDD
                 $this->addFlash('message', 'Votre avis a bien été mis en ligne');
             }
             return $this->redirectToRoute('show_user', ['id'=>$user->getId()]);
             } 
-        $reviews = $reviewRepository -> findBy([
-            "reviewee" => $reviewee
-        ]);
+            
+            //On recherche tous les avis du reviewee pour les affiché sur son profil
+            $reviews = $reviewRepository -> findBy([
+                "reviewee" => $user
+            ]);
+
+            $reviewsUser = $reviewRepository -> findBy([
+                "reviewer" => $user
+            ]);
+
+            //On récupère tous les chats de l'utilisateur pour les afficher sur son profil
             $cats = $user->getCats();
             
             return $this->render('user/show.html.twig', [
                 'user' => $user,
                 'cats' => $cats, 
                 'review' => $review,
+                'reviewer' => $reviewer,
                 'formReview' => $formReview->createView(),
                 'reviews' => $reviews,
+                'reviewsUser' => $reviewsUser,
                 'canPostReview' => $canPostReview
 
             ]);

@@ -78,6 +78,7 @@ class MessageRepository extends ServiceEntityRepository
           return $query->getResult(); //On execute la requête et on retourne le résultat
     }
 
+    //Fonction pour savoir si deux utilisateurs ont déjà échangés
     public function findIfMessageExchanged (User $user1, User $user2) {
         $messagesExchanged1 = $this->findBy([
             'sender' => $user1,

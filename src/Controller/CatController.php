@@ -380,6 +380,7 @@ class CatController extends AbstractController
 
                         $userOne = $cat->getUser(); //Propriétaire du catOne
                         $userTwo = $catTwo->getUser(); //Propriétaire du catTwo
+                        
                         $loginUrl = $this->generateUrl('app_login', [], UrlGeneratorInterface::ABSOLUTE_URL);
 
                         // Envoi d'une notification par email au pemier propriétaire

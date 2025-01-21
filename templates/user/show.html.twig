@@ -28,9 +28,9 @@
         {% endif %}
       
         {% if app.user == user %}
-            <h3>   Mes chats <i id="arrow" class="fa-solid fa-caret-down"></i> </h3> 
+            <h3>   Mes chats  </h3> 
             {% else %}
-            <h3> Les chats de {{user}} <i id="arrow" class="fa-solid fa-caret-down"></i> </h3>
+            <h3> Les chats de {{user}} </h3>
         {% endif %}
       
         <div id="cats-user" class="cats-user">
@@ -42,12 +42,14 @@
                         {% set firstImage = cat.images|first %}
                             <img src="{{ asset(firstImage) }}" alt="{{ firstImage.imageAlt }}">
                              <a href="{{path("show_cat", {id:cat.id}) }}"> {{cat}} </a>
+                             <i class="fa-solid fa-paw"></i>
+                           
                     </div>
                 
             {% endfor %}
         </div>
 
-            <h3> Avis <i id="arrow" class="fa-solid fa-caret-down"></i> </h3>
+            <h3> Avis </h3>
 
             <div class="reviews">
                 {% if reviews %}
@@ -60,7 +62,7 @@
                                 {% else %}
                                     <span >Utilisateur supprimé</span>
                                 {% endif %} 
-                               {{ review.reviewRating }}/5
+                            <span> {{ review.reviewRating }}/5 </span>
                             </div>
 
                             <p>{{ review.reviewContent }}</p>
@@ -80,21 +82,56 @@
                 Vous ne pouvez pas ajouter d'avis
             {% else %}
             {% if canPostReview %}
-                <h2>Dîtes à {{user}} ce que vous en avez pensé !</h2>
-                {{ form_start(formReview) }}
-                    {{ form_widget(formReview) }}
-                    <button type="submit">Envoyer</button>
-                {{ form_end(formReview) }}
+                <h2>Dites à {{user}} ce que vous en avez pensé !</h2>
+
+                <div class="form-review">
+                    <h3>Poster un avis</h3>
+                    {{ form_start(formReview) }}
+                        {{ form_widget(formReview) }}
+                        <button type="submit">Envoyer</button>
+                    {{ form_end(formReview) }}
+                </div>
+
             {% endif %}
             {% endif %}
 
 
             {%  if app.user == user %}
 
-              
-                   
-                <h3> Avis postés <i id="arrow" class="fa-solid fa-caret-down"></i> </h3>
-                    <button> 
+                <h3> Avis postés  </h3>
+
+                   <div class="reviews">
+
+                    {% if reviewsUser %}
+                        {% for reviewUser in reviewsUser %}
+
+                        <div class="review">
+
+                            <div class="row-review">
+                                {% if reviewUser.reviewee %}
+                               
+                                    <span>{{ reviewUser.reviewee }}</span>
+
+                                   
+                                {% else %}
+                                    <span >Utilisateur supprimé</span>
+                                {% endif %} 
+
+                                <span> {{ reviewUser.reviewRating }} /5 </span>
+                            </div>
+                        
+                            <p>{{ reviewUser.reviewContent }}</p>
+
+                            <a href="{{ path('delete_review', {'id': reviewUser.id}) }}">Supprimer</a>
+                        </div>
+                           
+                        {% endfor %}
+                    {% endif %}
+                 
+                   </div>
+
+
+                    <button class="change-info"> 
                         <a href="{{ path('update_user') }}">Changer mes informations</a> 
                     </button>
   

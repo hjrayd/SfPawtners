@@ -488,7 +488,7 @@ footer {
   margin-top: 10px;
  }
 
- .cat-card a {
+ .btn-detail a {
   background-color: #DCC6C2;
   border-radius: 20Px;
   padding-bottom: 5px;
@@ -602,7 +602,7 @@ footer {
 .btn-add-cat {
   text-align: center;
   background-color: var(--section-color);
-  width: 15%;
+  width: 300px;
   border-radius: 20px;
   padding: 5px;
   height: 20%;
@@ -837,6 +837,10 @@ display: none;
   margin-bottom: 30px;
  }
 
+ #wrapper-user h3 {
+  font-weight: 400;
+ }
+
 .user-avatar {
   border-radius: 50%;
   height: 200px;
@@ -868,6 +872,7 @@ display: none;
   width: 180px;
   overflow-y: scroll;
   align-items: center;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 
 
  }
@@ -897,9 +902,8 @@ display: none;
 }
 
 .review p {
-  font-size: 20px
+  font-size: 18px
 }
-
 
 
 #wrapper-user h2 {
@@ -922,10 +926,16 @@ display: none;
   margin-left: 20px;
  }
 
+ .cat-user:hover {
+  transform: translateY(-20px);
+  transition: 0.8s;
+ }
+
  .cats-user {
   display: flex;
   flex-direction: row;
   margin-bottom: 100px;
+  margin-top: 20px;
 
  }
 
@@ -940,6 +950,7 @@ display: none;
  .cat-user a {
   font-size: 20px;
   margin-top: 10px;
+  margin-bottom: 10px;
  }
 
  .cat-user a:hover {
@@ -959,6 +970,87 @@ display: none;
   margin-right: 20px;
  
  }
+
+ .change-info {
+  background-color: var(--nav-color);
+  border-radius: 20px;
+  border: none;
+  height: 40px;
+  padding: 5px 30px;
+ }
+
+ .change-info a {
+  color: var(--base-color);
+  font-size: 18px;
+ }
+
+ .change-info:hover {
+  opacity: 0.7;
+ }
+
+ .form-review {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--section-color);
+  height: 300px;
+  width: 330px;
+  align-items: center;
+  border-radius: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+ 
+ }
+
+ .form-review form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+
+ }
+
+ .form-review label {
+  font-size: 25px;
+  display: inline-block;
+  width: 80px;
+ }
+
+ .form-review input {
+  border-radius: 20px;
+  width: 200px;
+  border: none;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  padding-left: 10px;
+ }
+
+ .form-review h3 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+ }
+
+ .form-review button {
+  background-color: var(--nav-color);
+  color: white;
+  border-radius: 20px;
+  border: none;
+  font-size: 18px;
+  padding: 5px 30px;
+  cursor: pointer;
+  margin-top: 20px;
+ }
+
+ .form-review button:hover {
+  opacity: 0.7;
+ }
+ 
+ #review_reviewContent {
+  height: 30px;
+ }
+
+
+
 
   /* 
 =================================================================
@@ -1063,7 +1155,193 @@ padding: 5px;
 
 }
 
- 
+  /* 
+=================================================================
+=========================UPDATE USER==================================
+=================================================================
+ */
+
+ #wrapper-update {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 60px;
+  min-height: 100vh;
+ }
+
+ #wrapper-update h2 {
+ font-size: 30px;
+ font-weight: 400;
+ margin-bottom: 10px;
+ border-bottom: 1px solid #5E3636;
+ }
+
+ .update {
+  background-color: var(--section-color);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 20px;
+  padding: 20px;
+ }
+
+ .update-user p{
+  font-size: 20px;
+ }
+
+ .update-user span {
+  font-weight: 600;
+  margin-right: 10px;
+ }
+
+ .update-user {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 100px;
+  align-items: center;
+ }
+
+ .update-pseudo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 100px;
+ }
+
+ .update-pseudo button {
+  background-color: var(--nav-color);
+  color: white;
+  border-radius: 20px;
+  border: none;
+  font-size: 18px;
+  margin-top: 10px;
+  cursor: pointer;
+ }
+
+ .update-pseudo form {
+  display: flex;
+  flex-direction: column;
+
+ }
+
+ .update-pseudo label{
+  font-size: 20px;
+  display: inline-block;
+  width: 200px;
+ }
+
+ .update-pseudo input {
+  border-radius: 20px;
+  border: none;
+  padding-left: 10px;
+  font-size: 16px;
+ }
+
+ .update-password {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 100px;
+ }
+
+ .update-password form {
+  display: flex;
+  flex-direction: column;
+
+ }
+
+ .update-password label {
+  display: inline-block;
+  width: 200px;
+  font-size: 20px;
+  margin-top: 20px;
+ }
+
+ .update-password input {
+  border-radius: 20px;
+  border: none;
+  padding-left: 10px;
+  font-size: 16px;
+ }
+
+ .update-password button {
+  background-color: var(--nav-color);
+  color: white;
+  border-radius: 20px;
+  border: none;
+  font-size: 18px;
+  margin-top: 10px;
+  cursor: pointer;
+ }
+
+ .update-avatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 100px;
+
+ }
+
+ .update-avatar form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ }
+
+ .update-avatar label {
+  font-size: 20px;
+  margin-top: 20px;
+  margin-right: 20px;
+ }
+
+
+ .update-avatar button {
+  background-color: var(--nav-color);
+  color: white;
+  border-radius: 20px;
+  border: none;
+  font-size: 18px;
+  margin-top: 10px;
+  cursor: pointer;
+  width: 30%;
+  margin-top: 20px;
+ }
+
+ .delete-user button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 30px;
+  border-radius: 20px;
+  font-size: 20px;
+ }
+
+ .delete-user button:hover {
+  cursor: pointer;
+ }
+
+
+  /* 
+=================================================================
+=========================ADMIN DASHBOARD==================================
+=================================================================
+ */
+
+ #wrapper-admin {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 60px;
+  min-height: 100vh;
+ }
+
+ .search-user {
+  display: flex;
+  flex-direction: column;
+ }
+
+
+
 
  /* 
 =================================================================
@@ -1160,6 +1438,27 @@ padding: 5px;
  
   margin-bottom: 20px;
  }
+
+    /* 
+=================================================================
+=========================PAGE DES CHATS==================================
+=================================================================
+ */ 
+
+ .header-home {
+  flex-direction: column;
+ }
+
+ .cats-cards {
+  flex-direction: column;
+  margin-left: 0;
+  margin-right: 0;
+
+ }
+
+
+
+
 
 
 

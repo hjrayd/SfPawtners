@@ -3,32 +3,46 @@
 {% block title %}Profil{% endblock %}
 
 {% block body %}
-    <h2> Mes informations: </h2>
-    Mon pseudo : {{user.pseudo}} <br>
-    Mon email : {{user.email}} <br>
-    Date d'inscription : {{user.registerDateFr}} <br>
+    <div id="wrapper-update">
 
-    <h2> Modifier mon pseudo </h2>
-    {{ form_start(formPseudo) }}
-    {{ form_widget(formPseudo) }}
-    <button type="submit">Mettre à jour</button>
-    {{ form_end(formPseudo) }} 
-                
-    <h2> Modifier mon mot de passe </h2>
-    {{ form_start(formPassword) }}
-    {{ form_widget(formPassword) }}
-    <button type="submit">Mettre à jour</button>
-    {{ form_end(formPassword) }}
+        <div class="update">
+            <div class="update-user">
+                <h2> Mes informations </h2>
+                <p> <span> Mon pseudo :</span> {{user.pseudo}} </p> 
+                <p> <span> Mon email :</span> {{user.email}} </p>
+                <p> <span> Date d'inscription :</span> {{user.registerDateFr}} </p>
+            </div>
 
-    <h2> Modifier mon avatar </h2>
-    {{ form_start(formAvatar) }}
-    {{ form_widget(formAvatar) }}
-    <button type="submit">Mettre à jour</button>
-    {{ form_end(formAvatar) }}
+            <div class="update-pseudo">
+                <h2> Modifier mon pseudo </h2>
+                {{ form_start(formPseudo) }}
+                {{ form_widget(formPseudo) }}
+                <button type="submit">Mettre à jour</button>
+                {{ form_end(formPseudo) }} 
+            </div>
+            
+            <div class="update-password">
+                <h2> Modifier mon mot de passe </h2>
+                {{ form_start(formPassword) }}
+                {{ form_widget(formPassword) }}
+                <button type="submit">Mettre à jour</button>
+                {{ form_end(formPassword) }}
+            </div>
 
-    <form method="post" action="{{ path('delete_user') }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.');">
-        <input type="hidden" name="_method" value="DELETE">
-        <button type="submit" >Supprimer mon compte</button>
-    </form>
-                
+            <div class="update-avatar">
+                <h2> Modifier mon avatar </h2>
+                {{ form_start(formAvatar) }}
+                {{ form_widget(formAvatar) }}
+                <button type="submit">Mettre à jour</button>
+                {{ form_end(formAvatar) }}
+            </div>
+
+            <div class="delete-user">
+                <form method="post" action="{{ path('delete_user') }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.');">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" >Supprimer mon compte</button>
+                </form>
+            </div>
+        </div>
+    </div>               
 {% endblock %}

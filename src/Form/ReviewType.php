@@ -35,7 +35,7 @@ class ReviewType extends AbstractType
                     ])
                 ]
             ])
-            ->add('Valider', SubmitType::class)
+          
         ;
     }
 

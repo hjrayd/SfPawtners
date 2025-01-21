@@ -75,7 +75,9 @@
         <div class="cat-card">
             {# First = filtre qui permet de récupèrer le premier élément d'un tableau #}
             {% set firstImage = cat.images|first %}
-            <img src="{{ asset(firstImage) }}" alt="{{ firstImage.imageAlt }}">
+            <a href="{{ path('show_cat', {'id' : cat.id} )}}">
+                <img src="{{ asset(firstImage) }}" alt="{{ firstImage.imageAlt }}">
+            </a>
             <div class="cat-card-text">
                 <p> Nom : {{ cat.name }} </p>
                 <p> Ville: {{ cat.cityName }} </p>
