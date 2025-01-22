@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\UserFilterType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -13,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminController extends AbstractController
 {
     #[Route('/admin', name: 'app_admin')]
-    public function index(UserRepository $userRepository, Request $request): Response
+    public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginatorInterface): Response
     {
         $userLogin = $this->getUser();
         if(!$userLogin) {
@@ -24,18 +25,27 @@ class AdminController extends AbstractController
 
         $form->handleRequest($request);
 
-        $users = [];
+        $data = [];
 
         if ($form->isSubmitted() && $form->isValid()) {
             $filters = $form->getData();
             $pseudo = $filters['pseudo'];
 
-            $users = $userRepository->findUserPseudo($pseudo);
+            $data = $userRepository->findUserPseudo($pseudo);
         } else {
-            $users = $userRepository->findBy([], ["registerDate" => "DESC"]);
+            $data = $userRepository->findBy([], ["registerDate" => "DESC"]);
         }
 
+          //Pagination des users à l'aide de KNB Paginator
+        $users = $paginatorInterface->paginate
+        (
+        $data,
+        $request->query->getInt('page', 1),
+          16 //On affiche 12 users par pages
+        );
+
         return $this->render('admin/index.html.twig', [
+            'data' => $data,
             'users' => $users,
             'form' => $form->createView(),
         ]);

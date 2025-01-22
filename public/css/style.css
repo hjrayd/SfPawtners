@@ -1340,7 +1340,10 @@ padding: 5px;
  #wrapper-admin h1 {
   margin-bottom: 20px;
  }
-
+ 
+ #wrapper-admin h2 {
+  margin-top: 20px;
+ }
  .search-user form {
   display: flex;
   flex-direction: row;
@@ -1441,6 +1444,7 @@ padding: 5px;
   flex-wrap: wrap;
   gap: 40px;
   justify-content: center;
+  margin-bottom: 30px;
  }
 
 

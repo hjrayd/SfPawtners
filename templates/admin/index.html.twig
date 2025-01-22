@@ -14,13 +14,15 @@
                         <div class="search-name">
                             {{ form_row(form.pseudo) }}
                         </div>
-                        
+
                             <div class="buttons-admin">
                                 {{ form_row(form.Valider) }}
                                 <button> <a href="{{ path('app_admin')}}"> Réinitialiser </a> </button>
                             </div>
                         {{ form_end(form) }}
                     </div>
+                    
+                    <h2>Nombre d'utilisateurs : {{ data|length }}</h2>
 
                     <div class="users-admin">
                         {% for user in users %}
@@ -44,8 +46,12 @@
                             {% endif %}
                         {% endfor %}
                     </div>
-
             {% endif %}
+
+            <div class="pagination">
+                {{ knp_pagination_render(users) }}
+            </div>
+
         </div>
         {% endblock %}
 
