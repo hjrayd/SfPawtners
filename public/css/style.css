@@ -1447,6 +1447,125 @@ padding: 5px;
   margin-bottom: 30px;
  }
 
+   /* 
+=================================================================
+=========================CATEGORY FORUM==================================
+=================================================================
+ */
+
+ #wrapper-category {
+
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+  min-height: 100vh;
+
+ }
+
+ #wrapper-category h1 {
+  font-size: 40px;
+ text-align: center;
+ }
+
+ #wrapper-category h2 {
+  font-size: 30px;
+  width: 25%;
+  text-align: center;
+  font-weight: 500;
+  margin-left: 20px;
+  margin-bottom: 20px;
+
+ }
+ .categories {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  justify-content: center;
+  border-radius: 20px;
+  align-items: center;
+  background-color: var(--section-color);
+  margin-left: 20px;
+  
+ }
+
+ .btn-delete-category {
+  color: var(--text-color);
+  border: none;
+  cursor: pointer;
+ }
+
+ .category {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding-left: 35px;
+
+ }
+
+ .category i {
+  font-size: 15px;
+  padding: none;
+ }
+
+ .category a:hover {
+  text-decoration: underline;
+ }
+
+ .category-name {
+  font-size: 20px;
+ }
+
+ .form-category {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--section-color);
+  width: 25%;
+  padding: 30Px;
+  font-size: 25Px;
+  border-radius: 20px;
+  margin: 20px;
+  justify-content: center;
+  align-items: center;  
+ }
+
+ .form-category form {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+
+ }
+
+ .form-category label {
+  display: inline-block;
+  width: 150px;
+
+ }
+
+ .form-category p {
+  margin-bottom: 20px;
+  font-weight: 500;
+ }
+
+ .form-category input {
+  border-radius: 20px;
+  border: none;
+ }
+
+ .form-category button {
+  display: flex;
+  background-color: var(--text-color);
+  color: var(--base-color);
+  padding: 5px 20px;
+  border-radius: 20px;
+  border: none;
+ }
+
+
+
+
 
 
 
@@ -1583,6 +1702,20 @@ padding: 5px;
 .search-name {
   width: 50%;
 }
+
+     /* 
+=================================================================
+=========================DASHBOARD ADMIN==================================
+=================================================================
+ */ 
+
+.categories {
+  width: 50%;
+ }
+
+ #wrapper-category h2 {
+  width: 25%;
+ }
 
 
 
