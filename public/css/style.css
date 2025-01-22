@@ -889,7 +889,7 @@ display: none;
 
 }
 
-.review a {
+.btn-delete-review {
   background-color: red;
   color: white;
   padding: 5px 30px;

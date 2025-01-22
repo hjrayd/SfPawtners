@@ -41,8 +41,8 @@
                         {# First = filtre qui permet de récupèrer le premier élément d'un tableau #}
                         {% set firstImage = cat.images|first %}
                             <img src="{{ asset(firstImage) }}" alt="{{ firstImage.imageAlt }}">
-                             <a href="{{path("show_cat", {id:cat.id}) }}"> {{cat}} </a>
-                             <i class="fa-solid fa-paw"></i>
+                            <a href="{{path("show_cat", {id:cat.id}) }}"> {{cat}} </a>
+                            <i class="fa-solid fa-paw"></i>
                            
                     </div>
                 
@@ -58,7 +58,7 @@
 
                             <div class="row-review">
                                 {% if review.reviewer %}
-                                    <span>{{ review.reviewer }}</span>
+                                <a href="{{ path('show_user', {'id': review.reviewer.id}) }}"> <span>{{ review.reviewer }}</span></a>
                                 {% else %}
                                     <span >Utilisateur supprimé</span>
                                 {% endif %} 
@@ -66,9 +66,8 @@
                             </div>
 
                             <p>{{ review.reviewContent }}</p>
-                           
                             {% if app.user == review.reviewer or is_granted('ROLE_ADMIN') %}
-                                <a href="{{ path('delete_review', {'id': review.id}) }}">Supprimer</a>
+                                <a class="btn-delete-review" href="{{ path('delete_review', {'id': review.id}) }}">Supprimer</a>
                             {% endif %}
                         </div>
                     {% endfor %}
@@ -109,8 +108,9 @@
 
                             <div class="row-review">
                                 {% if reviewUser.reviewee %}
-                               
-                                    <span>{{ reviewUser.reviewee }}</span>
+
+                                <a href="{{ path('show_user', {'id': reviewUser.reviewee.id}) }}"> <span>{{ reviewUser.reviewee }}</span></a>
+                                   
 
                                    
                                 {% else %}
@@ -122,10 +122,14 @@
                         
                             <p>{{ reviewUser.reviewContent }}</p>
 
-                            <a href="{{ path('delete_review', {'id': reviewUser.id}) }}">Supprimer</a>
+                            <a class ="btn-delete-review"="{{ path('delete_review', {'id': reviewUser.id}) }}">Supprimer</a>
                         </div>
                            
                         {% endfor %}
+
+                        {% else %}
+
+                        <p> Aucun avis pour le moment.</p>
                     {% endif %}
                  
                    </div>
