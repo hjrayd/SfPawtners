@@ -4,8 +4,16 @@
 
 {% block body %}
 <div id="wrapper-post">
+
     <h1> {{topic}} </h1>
     {% for post in posts %} <br>
+        {% if post.user %}
+            {% if post.user.avatar %}
+            {{ post.user.avatar}}
+            {% endif %}
+
+        {% endif %}
+        
         {{ post }} par 
         
         {% if post.user %}
