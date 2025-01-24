@@ -4,36 +4,58 @@
 
 {% block body %}
 
+
     <div id="wrapper-category">
 
         <h1> Bienvenue sur le forum ! </h1>
-        <h2>Catégories </h2>
-        <div class="categories">
-            {% for category in categories %} <br>
-            <div class="category">
-                <ul>
-                    <li>
-                        <a class="category-name" href="{{ path('show_category', {id: category.id}) }}">{{ category }}</a>
-                    </li>
-                </ul>
-                
-            
-            
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a class="btn-delete-category" href="{{ path('delete_category', {'id': category.id}) }}"><i class="fa-solid fa-trash"></i></a>
+        
+        <div class="category-items">
+            <div class="category-block">
+                <h2>Catégories </h2>
+                <div class="categories">
+                    {% for category in categories %} <br>
+                        <div class="category">
+                            <ul>
+                                <li>
+                                    <a class="category-name" href="{{ path('show_category', {id: category.id}) }}">{{ category
+                                        }}</a>
+                                </li>
+                            </ul>
+
+
+
+                            {% if is_granted('ROLE_ADMIN') %}
+                                    <a class="btn-delete-category" href="{{ path('delete_category', {'id': category.id}) }}"><i
+                                    class="fa-solid fa-trash"></i></a>
+                            {% endif %}
+                        </div> 
+                    {% endfor %}
+                           
             </div>
-                {% endif %}  
-                <br>
-            {% endfor %}
+        
+
+            <div class="category-topics">
+                  <h3> Derniers topics en date</h3>
+                {% for topic in topics %}
+                   
+                         <a href="{{path('show_topic', {'id' : topic.id}) }}">{{topic}} </a> <br>
+                    {% endfor %}
+            </div>
         </div>
+          
 
-
-        {% if is_granted('ROLE_ADMIN')  %}
+            {% if is_granted('ROLE_ADMIN') %}
             <div class="form-category">
-                <p>Ajouter une catégorie :</p>
-                {{ form(formCategory)}}
+                <div>
+                    <p>Ajouter une catégorie</p>
+                    {{ form_start(formCategory)}}
+                        {{ form_row(formCategory.categoryName)}}
+                        {{ form_row(formCategory.Valider)}}
+                    {{ form_end(formCategory)}}
+                </div>
             </div>
-        {% endif %}
-    </div>
 
+            {% endif %}
+       
+    </div>
 {% endblock %}

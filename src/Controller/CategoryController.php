@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CategoryController extends AbstractController
 {
     #[Route('/category', name: 'app_category')]
-    public function index(CategoryRepository $categoryRepository, Request $request, EntityManagerInterface $entityManager): Response //On fait passer directement le repository
+    public function index(TopicRepository $topicRepository, CategoryRepository $categoryRepository, Request $request, EntityManagerInterface $entityManager): Response //On fait passer directement le repository
     {
         $userLogin = $this->getUser();
         if(!$userLogin) {
@@ -40,12 +40,15 @@ class CategoryController extends AbstractController
 
             return $this -> redirectToRoute('app_category');
         }
+
+        $topics = $topicRepository->findBy([], ['topicDate' => 'DESC'], 5);
         
         //Redirection qui redirige l'utilisateur
         //render permet de faire le lien entre le controller et la vue
         return $this->render('category/index.html.twig', [
             'categories' => $categories,
-            'formCategory' => $formCategory->createView() 
+            'formCategory' => $formCategory->createView(), 
+            'topics' => $topics
         ]);
     }
 

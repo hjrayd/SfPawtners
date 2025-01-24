@@ -1467,15 +1467,6 @@ padding: 5px;
  text-align: center;
  }
 
- #wrapper-category h2 {
-  font-size: 30px;
-  width: 25%;
-  text-align: center;
-  font-weight: 500;
-  margin-left: 20px;
-  margin-bottom: 20px;
-
- }
  .categories {
   display: flex;
   flex-direction: column;
@@ -1522,19 +1513,27 @@ padding: 5px;
   display: flex;
   flex-direction: column;
   background-color: var(--section-color);
-  width: 25%;
-  padding: 30Px;
+  height: 200px;
   font-size: 25Px;
   border-radius: 20px;
-  margin: 20px;
+  margin: 10px 30px;
+  padding: 10px 20px;
   justify-content: center;
-  align-items: center;  
+ }
+
+ .form-category p {
+  display: flex;
+
+  justify-content: center;
+
  }
 
  .form-category form {
   display: flex;
   flex-direction: column;
-  max-width: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 
  }
 
@@ -1552,21 +1551,47 @@ padding: 5px;
  .form-category input {
   border-radius: 20px;
   border: none;
+  padding: 5px 10px;
+  font-size: 20px;
+  font-weight: 300;
  }
 
  .form-category button {
   display: flex;
   background-color: var(--text-color);
   color: var(--base-color);
-  padding: 5px 20px;
   border-radius: 20px;
   border: none;
+  cursor: pointer;
+  margin-top:20px;
+  padding: 5px 30px;
+  font-size: 18px;
  }
 
+ .category-items {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+ }
 
+ .category-items h2 {
+  display: flex;
+  justify-content: center;
+ }
 
+ .category-topics {
+  display: flex;
+  flex-direction: column;
+ }
 
+ #category-topics h3 {
+  font-size: 50px;
+  font-weight: 400;
+ }
 
+ .category-block {
+  width: 100%;
+ }
 
 
 
@@ -1710,13 +1735,25 @@ padding: 5px;
  */ 
 
 .categories {
-  width: 50%;
+  width: 80%;
+  margin: 10px;
  }
 
  #wrapper-category h2 {
   width: 25%;
  }
 
+
+
+ .form-category {
+  width: 80%;
+ }
+
+ .category-items {
+
+ flex-direction: column;
+
+ }
 
 
 
