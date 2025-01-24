@@ -16,7 +16,7 @@
             {% else %}
                 Utilisateur supprimé
             {% endif %} 
-            le {{ topic.dateTopic }} à {{ topic.hourTopic }}</a>
+         le {{ topic.dateTopic }} à {{ topic.hourTopic }}</a>
 
             {% if app.user == topic.user or is_granted('ROLE_ADMIN')  %}
                 <form method="post" action="{{ path('delete_topic', {id: topic.id}) }}";

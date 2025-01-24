@@ -10,6 +10,7 @@
         <h1> Bienvenue sur le forum ! </h1>
         
         <div class="category-items">
+            
             <div class="category-block">
                 <h2>Catégories </h2>
                 <div class="categories">
@@ -17,29 +18,31 @@
                         <div class="category">
                             <ul>
                                 <li>
-                                    <a class="category-name" href="{{ path('show_category', {id: category.id}) }}">{{ category
+                                    <i class="ph ph-paw-print"></i> <a class="category-name" href="{{ path('show_category', {id: category.id}) }}">{{ category
                                         }}</a>
                                 </li>
                             </ul>
 
-
-
                             {% if is_granted('ROLE_ADMIN') %}
-                                    <a class="btn-delete-category" href="{{ path('delete_category', {'id': category.id}) }}"><i
-                                    class="fa-solid fa-trash"></i></a>
+                                    <a class="btn-delete-category" href="{{ path('delete_category', {'id': category.id}) }}">
+                                    <i class="fa-solid fa-trash"></i></a>
                             {% endif %}
                         </div> 
                     {% endfor %}
+                </div>
                            
             </div>
         
 
             <div class="category-topics">
                   <h3> Derniers topics en date</h3>
-                {% for topic in topics %}
-                   
-                         <a href="{{path('show_topic', {'id' : topic.id}) }}">{{topic}} </a> <br>
+               
+                    {% for topic in topics %}
+                    <div class="category-topic">
+                         <a href="{{path('show_topic', {'id' : topic.id}) }}">{{topic}}  </a> <span>le {{topic.dateTopic}}</span> 
+                    </div>
                     {% endfor %}
+             
             </div>
         </div>
           
