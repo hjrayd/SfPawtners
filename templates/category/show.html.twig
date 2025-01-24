@@ -4,46 +4,71 @@
 
 {% block body %}
 
+<div id="wrapper-topic">
+
     <h1> {{category}} </h1>
 
-    Topics : <br>
-    {% for topic in topics %} <br>
 
-        {# Bouton de suppression #}
-        <a href="{{ path('show_topic', {id: topic.id}) }}">{{ topic }} par 
-            {% if topic.user %}
-                {{ topic.user}}
-            {% else %}
-                Utilisateur supprimé
-            {% endif %} 
-         le {{ topic.dateTopic }} à {{ topic.hourTopic }}</a>
+    <div class="topics">
+        {% for topic in topics %} <br>
 
-            {% if app.user == topic.user or is_granted('ROLE_ADMIN')  %}
-                <form method="post" action="{{ path('delete_topic', {id: topic.id}) }}";
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit">Supprimer</button>
-                </form>   
-            {% endif %}
-                <br>
+            {# Bouton de suppression #}
+           <div class="topic">
+                <a class="topic-name" href="{{ path('show_topic', {id: topic.id}) }}">{{ topic }} </a> par 
+                {% if topic.user %}
+                    <strong> <a href="{{ path('show_user', {id: topic.user.id}) }}">{{ topic.user}} </a></strong>
+                {% else %}
+                <span> Utilisateur supprimé</span>
+                {% endif %} 
+                <span> le {{ topic.dateTopic }} à {{ topic.hourTopic }}</span>
 
-        {# Bouton de Verrouillage/Déverouillage #}
-        {% if app.user == topic.user or is_granted('ROLE_ADMIN')  %}
-            <form method="post" action="{{ path(topic.locked ? 'unlock_topic' : 'lock_topic', {id: topic.id}) }}">  {# On vérifie le statut du champ "Locked" dans l'entité topic pour l'affichage du bouton #} 
-                <button type="submit">
-                    {{ topic.locked ? 'Déverrouiller' : 'Verrouiller' }} 
-                </button>
-            </form> 
-        {% endif %}
-        <br>
+                {% if topic.locked == true %}
+                    <i class="fa-solid fa-lock"></i>
+                    {% else %}
+                    <i class="fa-solid fa-unlock"></i>
+                {% endif %}
+
+                {% if app.user == topic.user or is_granted('ROLE_ADMIN')  %}
+                    <form method="post" action="{{ path('delete_topic', {id: topic.id}) }}";
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit">  <i class="fa-solid fa-trash"></i> </button>
+                    </form>   
+                {% endif %}
+            </div>
         
-    {% endfor %}
-    
-    {% if app.user.ban %}
-        Vous ne pouvez pas ajouter de topics.
-    {% else %}
-        Ajouter un topic :
 
-        {{ form(formTopic)}}
-    {% endif %}
+                {# Bouton de Verrouillage/Déverouillage #}
+                {% if app.user == topic.user or is_granted('ROLE_ADMIN')  %}
+                    <form method="post" action="{{ path(topic.locked ? 'unlock_topic' : 'lock_topic', {id: topic.id}) }}">  {# On vérifie le statut du champ "Locked" dans l'entité topic pour l'affichage du bouton #} 
+                        <button class="lock-topic" type="submit">
+                            {{ topic.locked ? 'Déverrouiller' : 'Verrouiller' }} 
+                        </button>
+                    </form> 
+                {% endif %}
+       
+               
+  
+            
+        {% endfor %}
+    </div>
+    
+    <div class="form-topic">
+        {% if app.user.ban %}
+            Vous ne pouvez pas ajouter de topics.
+        {% else %}
+            <h3>Ajouter un topic :</h3>
+
+            {{ form_start(formTopic)}}
+            {{ form_row(formTopic.title)}}
+            <div class="form-topic-submit">
+                {{ form_row(formTopic.Valider)}}
+            </div>
+            {{ form_end(formTopic)}}
+        {% endif %}
+    </div>
+
+</div>
+
+   
   
 {% endblock %}

@@ -1473,7 +1473,7 @@ padding: 5px;
 
  #wrapper-category h1 {
   font-size: 40px;
-  margin-bottom: 40Px;
+  margin-bottom: 50px;
  text-align: center;
  }
 
@@ -1634,6 +1634,121 @@ padding: 5px;
   font-size: 15px;
   margin-left: 5px;
  }
+
+    /* 
+=================================================================
+=========================TOPIC FORUM==================================
+=================================================================
+ */
+
+ #wrapper-topic {
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+  min-height: 100vh;
+ }
+
+ #wrapper-topic h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+ }
+
+ .topics {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 30px;
+  gap: 25px;
+ }
+
+ .topics a:hover {
+  text-decoration: underline;
+ }
+
+ .topic span {
+  font-style: italic;
+ }
+
+ .form-topic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 30px;
+  background: var(--section-color);
+  border-radius: 20px;
+  gap: 10px;
+
+ }
+
+ .form-topic h3 {
+  font-size: 25px;
+  font-weight: 500;
+ }
+
+ .form-topic {
+  padding-top: 30px;
+  padding-bottom: 30px;
+ }
+
+.form-topic input {
+  border: none;
+  border-radius: 20px;
+  padding-left: 10px;
+  margin-left: 20px;
+}
+
+.form-topic-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-topic-submit button {
+  background-color: var(--nav-color);
+  color: var(--base-color);
+  border: none;
+  border-radius: 20px;
+  padding: 5px 30px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.topic i {
+  margin-left: 5px;
+}
+
+.topic button{
+  background-color: var(--base-color);
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.topic {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.topic-name {
+  font-size: 20px;
+}
+
+.lock-topic {
+  background-color: var(--nav-color);
+  color: var(--base-color);
+  border-radius: 20px;
+  padding: 5px 10px;
+  border: none;
+  margin-top: 10px;
+  cursor: pointer;
+}
 
 
 

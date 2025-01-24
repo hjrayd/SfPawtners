@@ -23,13 +23,16 @@
             {% endif %}
          <br>
     {% endfor %}
-
-    {% if app.user.ban %}
+    
+    {% if topic.locked == true %}
+    Ce topic est verrouillé
+    {% elseif app.user.ban %}
         Vous ne pouvez pas ajouter de posts.
     {% else %}
         Ajouter un post :
-
-        {{ form(formPost)}}
+        {{ form(formPost) }}
     {% endif %}
+
+
    
 {% endblock %}
