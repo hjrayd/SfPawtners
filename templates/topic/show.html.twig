@@ -15,15 +15,25 @@
                         <img src="{{ asset(post.user.avatar) }}" class="topic-avatar" >
                     {% endif %}
                 {% endif %}
-            
-            {{ post }} par 
-            
-            {% if post.user %}
-                {{ post.user}}
-            {% else %}
-                Utilisateur supprimé
+
+                    {% if post.user %}
+                <strong>
+                    <a href="{{ path('show_user', {id: post.user.id}) }}">
+                        {{ post.user}} : 
+                    </a>
+                </strong>
+                    
+                {% else %}
+                <span class="user-delete">
+                    Utilisateur supprimé : 
+                </span>
             {% endif %} 
-                le {{ post.datePost }} à {{ post.hourPost}} <br>
+
+            <p>{{ post }}</p>
+
+            <span class= "date-post">
+                le {{ post.datePost }} à {{ post.hourPost}}
+            </span>
 
                 {% if app.user == post.user or is_granted('ROLE_ADMIN')  %}
                     <form method="post" action="{{ path('delete_post', {id: post.id}) }}";

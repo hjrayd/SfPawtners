@@ -1853,6 +1853,30 @@ padding: 5px;
   font-size: 18px;
  }
 
+.post p {
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+ .post span {
+  margin-left: 5px;
+ }
+
+ .user-delete {
+  font-style: italic;
+ }
+
+ .date-post {
+  font-style: italic;
+ }
+
+ .post strong {
+  margin-right: 5px;
+  font-size: 16px;
+ }
+
+
+
 
  /* 
 =================================================================
