@@ -1333,60 +1333,61 @@ padding: 5px;
 =================================================================
  */
 
- #wrapper-admin {
+#wrapper-admin {
   display: flex;
   align-items: center;
   flex-direction: column;
   margin-top: 60px;
   min-height: 100vh;
- }
+}
 
- #wrapper-admin h1 {
+#wrapper-admin h1 {
   margin-bottom: 20px;
- }
- 
- #wrapper-admin h2 {
+}
+
+#wrapper-admin h2 {
   margin-top: 20px;
- }
- .search-user form {
+}
+
+.search-user form {
   display: flex;
   flex-direction: row;
   width: 100%;
   align-items: center;
   justify-content: center;
- }
+}
 
- .search-user input {
- border-radius: 20px;
- border: none;
- width: 100%;
- padding: 10px;
- }
+.search-user input {
+border-radius: 20px;
+border: none;
+width: 100%;
+padding: 10px;
+}
 
- 
- .buttons-admin {
+.buttons-admin {
   flex-direction: row;
   display: flex;
   gap: 5px;
   margin-left: 20px;
- }
+}
 
- .buttons-admin button {
+.buttons-admin button {
   background-color: var(--section-color);
   color: var(--text-color);
   border: 1px solid var(--text-color);
   padding: 5px 20px;
- }
+  cursor: pointer;
+}
 
 
- .search-user {
+.search-user {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
- }
+}
 
- .user-info {
+.user-info {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1395,52 +1396,49 @@ padding: 5px;
   gap: 20px;
   border-radius: 20px;
   border: 1px solid var(--text-color);
- }
+}
 
- .user-info a:hover {
+.user-info a:hover {
   text-decoration: underline;
 
- }
+}
 
- .search-name {
+.search-name {
   width: 30%;
- }
-
+}
 
 
 .user-name {
   font-size: 25px;
 }
 
-
-
- .ban-btn {
+.ban-btn {
   display: flex;
   background-color: red;
   border: none;
   width: 100px;
   justify-content: center;
   border-radius: 20px;
- }
+}
 
- .ban-btn a {
+.ban-btn a {
   color: white;
- }
+}
 
- .unban-btn {
+.unban-btn {
   display: flex;
   background-color: #4169e1;
   border: none;
   width: 100px;
   justify-content: center;
   border-radius: 20px;
- }
+}
 
- .unban-btn a {
+.unban-btn a {
   color: white;
- }
+}
 
- .users-admin {
+.users-admin {
   margin-top: 100px;
   width: 100%;
   display: flex;
@@ -1449,35 +1447,35 @@ padding: 5px;
   gap: 40px;
   justify-content: center;
   margin-bottom: 30px;
- }
+}
 
-   /* 
+/* 
 =================================================================
 =========================CATEGORY FORUM==================================
 =================================================================
  */
 
- #wrapper-category {
+#wrapper-category {
 
   display: flex;
   flex-direction: column;
   margin-top: 60px;
   min-height: 100vh;
 
- }
+}
 
- #wrapper-category h2 {
+#wrapper-category h2 {
   margin-bottom: 30px;
   font-weight: 500;
- }
+}
 
- #wrapper-category h1 {
+#wrapper-category h1 {
   font-size: 40px;
   margin-bottom: 50px;
- text-align: center;
- }
+text-align: center;
+}
 
- .categories {
+.categories {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -1490,40 +1488,40 @@ padding: 5px;
   margin-bottom: 40px;
   gap: 5px;
   
- }
+}
 
- .categories li {
+.categories li {
   list-style: none;
- }
+}
 
- .category i {
+.category i {
   margin-right: 5px;
- }
+}
 
- .btn-delete-category {
+.btn-delete-category {
   color: var(--text-color);
   border: none;
   cursor: pointer;
   background-color: transparent;
- }
+}
 
- .category {
+.category {
   display: flex;
   flex-direction: row;
   gap: 5px;
   justify-content: space-between;
   align-items: center;
   width: 100%;
- 
- }
+
+}
 
 
 
- .category-name {
+.category-name {
   font-size: 20px;
- }
+}
 
- .form-category {
+.form-category {
   display: flex;
   flex-direction: column;
   background-color: var(--section-color);
@@ -1533,45 +1531,45 @@ padding: 5px;
   margin: 10px 30px;
   padding: 10px 20px;
   justify-content: center;
- }
+}
 
- .form-category p {
+.form-category p {
   display: flex;
 
   justify-content: center;
 
- }
+}
 
- .form-category form {
+.form-category form {
   display: flex;
   flex-direction: column;
   width: 100%;
   align-items: center;
   justify-content: center;
 
- }
+}
 
- .form-category label {
+.form-category label {
   display: inline-block;
   margin-right: 15px;
   font-size: 20px;
 
- }
+}
 
- .form-category p {
+.form-category p {
   margin-bottom: 20px;
   font-weight: 500;
- }
+}
 
- .form-category input {
+.form-category input {
   border-radius: 20px;
   border: none;
   padding: 5px 10px;
   font-size: 20px;
   font-weight: 300;
- }
+}
 
- .form-category button {
+.form-category button {
   display: flex;
   background-color: var(--text-color);
   color: var(--base-color);
@@ -1581,61 +1579,61 @@ padding: 5px;
   margin-top:20px;
   padding: 5px 30px;
   font-size: 18px;
- }
+}
 
- .category-items {
+.category-items {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
- }
+}
 
- .category-items h2 {
+.category-items h2 {
   display: flex;
   justify-content: center;
- }
+}
 
- .category-topic { 
-   display: flex;
+.category-topic { 
+  display: flex;
   flex-direction: column;
   font-size: 20px;
   margin-bottom: 20px;
- }
+}
 
- .category-topics{
+.category-topics{
   display: flex;
   flex-direction: column;
   justify-content: center;
- }
+}
 
- .category i {
+.category i {
   font-size: 15px;
   padding: none;
- }
+}
 
- .category a:hover {
+.category a:hover {
   text-decoration: underline;
- }
+}
 
- .category-topic a:hover {
+.category-topic a:hover {
   text-decoration: underline;
- }
+}
 
- .category-topics h3 {
+.category-topics h3 {
   font-size: 28px;
 
   margin-bottom: 30px;
- 
- }
 
- .category-block {
+}
+
+.category-block {
   width: 30%
- }
+}
 
- .category-topics span {
+.category-topics span {
   font-style: italic;
   font-size: 15px;
   margin-left: 5px;
- }
+}
 
     /* 
 =================================================================
@@ -1643,42 +1641,42 @@ padding: 5px;
 =================================================================
  */
 
- #wrapper-topic {
+#wrapper-topic {
   display: flex;
   flex-direction: column;
   margin-top: 60px;
   min-height: 100vh;
- }
+}
 
- #wrapper-topic h1 {
+#wrapper-topic h1 {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 30px;
- }
+}
 
- .topics {
+.topics {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   margin-bottom: 30px;
   gap: 25px;
- }
+}
 
- .topics a:hover {
+.topics a:hover {
   text-decoration: underline;
- }
+}
 
- .topic span {
+.topic span {
   font-style: italic;
- }
+}
 
- .form-topic label  {
+.form-topic label  {
   font-size: 20px;
- }
+}
 
- .form-topic {
+.form-topic {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1688,17 +1686,18 @@ padding: 5px;
   border-radius: 20px;
   gap: 10px;
 
- }
+}
 
- .form-topic h3 {
+.form-topic h3 {
   font-size: 25px;
   font-weight: 500;
- }
 
- .form-topic {
+}
+
+.form-topic {
   padding-top: 30px;
   padding-bottom: 30px;
- }
+}
 
 .form-topic input {
   border: none;
@@ -1827,6 +1826,7 @@ padding: 5px;
 .form-post h3  {
   font-size: 25px;
   font-weight: 500;
+  margin-bottom: 25px;
 
 }
 
