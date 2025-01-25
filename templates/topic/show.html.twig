@@ -6,43 +6,57 @@
 <div id="wrapper-post">
 
     <h1> {{topic}} </h1>
-    {% for post in posts %} <br>
-        {% if post.user %}
-            {% if post.user.avatar %}
-            {{ post.user.avatar}}
-            {% endif %}
+    <div class="posts">
+        {% for post in posts %} 
 
-        {% endif %}
-        
-        {{ post }} par 
-        
-        {% if post.user %}
-            {{ post.user}}
-        {% else %}
-            Utilisateur supprimé
-        {% endif %} 
-            le {{ post.datePost }} à {{ post.hourPost}} <br>
+            <div class="post">
+                {% if post.user %}
+                    {% if post.user.avatar %}
+                        <img src="{{ asset(post.user.avatar) }}" class="topic-avatar" >
+                    {% endif %}
+                {% endif %}
+            
+            {{ post }} par 
+            
+            {% if post.user %}
+                {{ post.user}}
+            {% else %}
+                Utilisateur supprimé
+            {% endif %} 
+                le {{ post.datePost }} à {{ post.hourPost}} <br>
 
-            {% if app.user == post.user or is_granted('ROLE_ADMIN')  %}
-                <form method="post" action="{{ path('delete_post', {id: post.id}) }}";
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit">Supprimer</button>
-                </form>  
-            {% endif %}
-         <br>
-    {% endfor %}
+                {% if app.user == post.user or is_granted('ROLE_ADMIN')  %}
+                    <form method="post" action="{{ path('delete_post', {id: post.id}) }}";
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn-delete-post" type="submit"> <i class="fa-solid fa-trash"></i> </button>
+                    </form>  
+                {% endif %}
+            </div>
+
+            {% else %}
+                Aucun post pour le moment
+        {% endfor %}
+    </div>
     
-    {% if topic.locked == true %}
-    Ce topic est verrouillé
-    {% elseif app.user.ban %}
-        Vous ne pouvez pas ajouter de posts.
-    {% else %}
-        Ajouter un post :
-        {{ form(formPost) }}
+    <div class="form-post">
+        {% if topic.locked == true %}
+            Ce topic est verrouillé
+        {% elseif app.user.ban %}
+            Vous ne pouvez pas ajouter de posts.
+        {% else %}
+            <h3>Ajouter un post</h3>
+        {{ form_start(formPost) }}
+        {{ form_row(formPost.postContent) }}
+        <div class="submit-post">
+            {{ form_row(formPost.Valider) }}
+        </div>
+
+        {{ form_end(formPost) }}
     {% endif %}
 
+    </div>
+    
 
 </div>
- 
-   
+
 {% endblock %}

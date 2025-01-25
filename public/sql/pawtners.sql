@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `breed` (
 ) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table pawtners.breed : ~67 rows (environ)
-DELETE FROM `breed`;
+
 INSERT INTO `breed` (`id`, `breed_name`) VALUES
 	(106, 'Abyssinian'),
 	(107, 'Aegean'),
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `breed_cat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table pawtners.breed_cat : ~1 rows (environ)
-DELETE FROM `breed_cat`;
+
 INSERT INTO `breed_cat` (`breed_id`, `cat_id`) VALUES
 	(107, 61);
 
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `cat` (
 ) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table pawtners.cat : ~13 rows (environ)
-DELETE FROM `cat`;
+
 INSERT INTO `cat` (`id`, `user_id`, `name`, `gender`, `date_birth`, `description`, `city`, `litter`, `date_profile`, `vaccinated`) VALUES
 	(48, 57, 'Choumouss', 'Femelle', '2023-02-23', 'Mon chat', '67447', 0, '2025-01-13 07:45:24', 0),
 	(49, 57, 'Mimir', 'Femelle', '2025-01-03', 'chat', '67482', 0, '2025-01-13 08:03:51', 0),
@@ -155,7 +155,7 @@ CREATE TABLE IF NOT EXISTS `category` (
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table pawtners.category : ~8 rows (environ)
-DELETE FROM `category`;
+
 INSERT INTO `category` (`id`, `category_name`) VALUES
 	(19, 'Santé'),
 	(24, 'Psychologie Féline'),
@@ -174,7 +174,7 @@ CREATE TABLE IF NOT EXISTS `coat` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table pawtners.coat : ~6 rows (environ)
-DELETE FROM `coat`;
+
 INSERT INTO `coat` (`id`, `coat_name`) VALUES
 	(1, 'Noir'),
 	(2, 'Blanc'),
@@ -195,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `coat_cat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table pawtners.coat_cat : ~13 rows (environ)
-DELETE FROM `coat_cat`;
+
 INSERT INTO `coat_cat` (`coat_id`, `cat_id`) VALUES
 	(1, 48),
 	(1, 53),
@@ -223,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `image` (
 ) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table pawtners.image : ~17 rows (environ)
-DELETE FROM `image`;
+
 INSERT INTO `image` (`id`, `cat_id`, `image_link`, `image_alt`) VALUES
 	(57, 48, '/uploads/pictures/pexels-pixabay-57416-6784c495199e5.jpg', 'Choumouss'),
 	(58, 49, '/uploads/pictures/pexels-ihsanaditya-1056251-6784c8e74e375.jpg', 'Mimir'),
@@ -257,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `like` (
 ) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table pawtners.like : ~1 rows (environ)
-DELETE FROM `like`;
+
 INSERT INTO `like` (`id`, `date_like`, `cat_one_id`, `cat_two_id`) VALUES
 	(101, '2025-01-24 12:58:13', 58, 61);
 
@@ -275,7 +275,7 @@ CREATE TABLE IF NOT EXISTS `matche` (
 ) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table pawtners.matche : ~0 rows (environ)
-DELETE FROM `matche`;
+
 
 -- Listage de la structure de table pawtners. message
 CREATE TABLE IF NOT EXISTS `message` (
@@ -292,7 +292,6 @@ CREATE TABLE IF NOT EXISTS `message` (
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table pawtners.message : ~0 rows (environ)
-DELETE FROM `message`;
 
 -- Listage de la structure de table pawtners. messenger_messages
 CREATE TABLE IF NOT EXISTS `messenger_messages` (
@@ -310,7 +309,7 @@ CREATE TABLE IF NOT EXISTS `messenger_messages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table pawtners.messenger_messages : ~0 rows (environ)
-DELETE FROM `messenger_messages`;
+
 
 -- Listage de la structure de table pawtners. post
 CREATE TABLE IF NOT EXISTS `post` (
@@ -327,7 +326,7 @@ CREATE TABLE IF NOT EXISTS `post` (
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table pawtners.post : ~1 rows (environ)
-DELETE FROM `post`;
+
 INSERT INTO `post` (`id`, `user_id`, `topic_id`, `post_content`, `post_date`) VALUES
 	(23, 61, 23, 'Je pense que la marque whiskas n\'est pas assez nutritive, il vaudrait privilégier des marques telles que Hills ou Ziggy', '2025-01-24 15:49:52');
 

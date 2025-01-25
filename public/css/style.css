@@ -1504,6 +1504,7 @@ padding: 5px;
   color: var(--text-color);
   border: none;
   cursor: pointer;
+  background-color: transparent;
  }
 
  .category {
@@ -1552,7 +1553,8 @@ padding: 5px;
 
  .form-category label {
   display: inline-block;
-  width: 150px;
+  margin-right: 15px;
+  font-size: 20px;
 
  }
 
@@ -1672,6 +1674,10 @@ padding: 5px;
   font-style: italic;
  }
 
+ .form-topic label  {
+  font-size: 20px;
+ }
+
  .form-topic {
   display: flex;
   flex-direction: column;
@@ -1767,9 +1773,85 @@ padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 30px;
+ }
+
+ .topic-avatar {
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+ }
+
+ .post {
+  display: flex;
+  flex-direction: row;
+ }
+
+ .posts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+ }
+
+ .btn-delete-post {
+  color: var(--text-color);
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  margin-left: 10px;
+ }
+
+ .form-post {
+  background-color: var(--section-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 5px;
+  border-radius: 20px;
+  margin: 30px;
+ 
+
+ }
+
+ .form-post input {
+  border-radius: 20px;
+  border: none;
+  padding-left: 10px;
+  font-size: 16px;
+  margin-left: 10px;
+ }
+
+ .form-post h3  {
+  font-size: 25px;
+  font-weight: 500;
+
+ }
+
+ .form-post label {
+  font-size: 20px;
+ }
+
+ .submit-post {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
  }
 
 
+ #post_Valider {
+  background-color: var(--nav-color);
+  color: var(--base-color);
+  border-radius: 20px;
+  border: none;
+  padding: 5px 30px;
+  margin-top: 15px;
+  cursor: pointer;
+  font-size: 18px;
+ }
 
 
  /* 

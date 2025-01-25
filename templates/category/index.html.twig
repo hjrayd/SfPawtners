@@ -24,28 +24,30 @@
                             </ul>
 
                             {% if is_granted('ROLE_ADMIN') %}
-                                    <a class="btn-delete-category" href="{{ path('delete_category', {'id': category.id}) }}">
-                                    <i class="fa-solid fa-trash"></i></a>
+                                <form method="post" action="{{ path('delete_category', {id: category.id}) }}";
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button class="btn-delete-category" type="submit">  <i class="fa-solid fa-trash"></i> </button>
+                                </form>  
                             {% endif %}
                         </div> 
                     {% endfor %}
                 </div>
-                           
+
             </div>
         
 
             <div class="category-topics">
-                  <h3> Derniers topics en date</h3>
-               
+                <h3> Derniers topics en date</h3>
+
                     {% for topic in topics %}
                     <div class="category-topic">
-                         <a href="{{path('show_topic', {'id' : topic.id}) }}">{{topic}}  </a> <span>le {{topic.dateTopic}}</span> 
+                        <a href="{{path('show_topic', {'id' : topic.id}) }}">{{topic}}  </a> <span>le {{topic.dateTopic}}</span> 
                     </div>
                     {% endfor %}
-             
+
             </div>
         </div>
-          
+
 
             {% if is_granted('ROLE_ADMIN') %}
             <div class="form-category">
