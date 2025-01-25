@@ -1762,47 +1762,49 @@ padding: 5px;
 =================================================================
  */
 
- #wrapper-post {
+#wrapper-post {
   display: flex;
   flex-direction: column;
   margin-top: 60px;
   min-height: 100vh;
- }
+}
 
- #wrapper-post h1 {
+#wrapper-post h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 30px;
- }
+  margin-bottom: 50px;
+}
 
- .topic-avatar {
+.topic-avatar {
   width: 25px;
   height: 25px;
   margin-right: 5px;
- }
+}
 
- .post {
+.post {
   display: flex;
   flex-direction: row;
- }
+}
 
- .posts {
+.posts {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  align-items: center;
- }
+  justify-content: center;
+  margin-bottom: 30px;
+  margin-left: 20px;
+}
 
- .btn-delete-post {
+.btn-delete-post {
   color: var(--text-color);
   border: none;
   cursor: pointer;
   background-color: transparent;
   margin-left: 10px;
- }
+}
 
- .form-post {
+.form-post {
   background-color: var(--section-color);
   display: flex;
   justify-content: center;
@@ -1812,37 +1814,34 @@ padding: 5px;
   padding: 10px 5px;
   border-radius: 20px;
   margin: 30px;
- 
+}
 
- }
-
- .form-post input {
+.form-post input {
   border-radius: 20px;
   border: none;
   padding-left: 10px;
   font-size: 16px;
   margin-left: 10px;
- }
+}
 
- .form-post h3  {
+.form-post h3  {
   font-size: 25px;
   font-weight: 500;
 
- }
+}
 
- .form-post label {
+.form-post label {
   font-size: 20px;
- }
+}
 
- .submit-post {
+.submit-post {
   display: flex;
   justify-content: center;
   align-items: center;
 
- }
+}
 
-
- #post_Valider {
+#post_Valider {
   background-color: var(--nav-color);
   color: var(--base-color);
   border-radius: 20px;
@@ -1851,34 +1850,34 @@ padding: 5px;
   margin-top: 15px;
   cursor: pointer;
   font-size: 18px;
- }
+}
 
 .post p {
   font-size: 20px;
   margin-right: 5px;
 }
 
- .post span {
+.post span {
   margin-left: 5px;
- }
+}
 
- .user-delete {
+.user-delete {
   font-style: italic;
- }
+}
 
- .date-post {
+.date-post {
   font-style: italic;
- }
+}
 
- .post strong {
+.post strong {
   margin-right: 5px;
   font-size: 16px;
- }
+}
 
 
 
 
- /* 
+/* 
 =================================================================
 =========================RESPONSIVE==================================
 =================================================================
@@ -1887,15 +1886,15 @@ padding: 5px;
 
 
 
-     /* 
+/* 
 =================================================================
 =========================CONNEXION==================================
 =================================================================
  */ 
- .form-login button {
+.form-login button {
   width: 90%;
   }
- 
+
 
     /* 
 =================================================================
@@ -1903,9 +1902,9 @@ padding: 5px;
 =================================================================
  */ 
 
- #wrapper-register {
+#wrapper-register {
     flex-direction: column;
- }
+}
 
 .section-presentation h1 {
   margin: 0;
@@ -1920,59 +1919,59 @@ padding: 5px;
   padding-bottom:  20px;
 }
 
- .section-register label {
+.section-register label {
   margin-top: 15px;
   width: 200px;
   font-size: 20px;
 
- }
+}
 
- .section-presentation {
+.section-presentation {
   justify-content: center;
   margin-bottom: 20px;
   text-align: center;
   margin-bottom: 0;
- }
+}
 
- .section-presentation img {
+.section-presentation img {
   display: none;
- }
+}
 
- .section-presentation i {
+.section-presentation i {
   display: none;
- }
+}
 
- .section-register input {
+.section-register input {
   width: 80%;
 
- }
+}
 
- .section-register {
+.section-register {
   margin-top: 20Px;
- }
+}
 
 
-     /* 
+/* 
 =================================================================
 =========================PROFIL USER==================================
 =================================================================
  */ 
 
- .cats-user {
+.cats-user {
   flex-direction: column;
- }
+}
 
- .reviews {
+.reviews {
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 600px;
- }
+}
 
- .review {
- 
+.review {
+
   margin-bottom: 20px;
- }
+}
 
     /* 
 =================================================================
@@ -1980,37 +1979,37 @@ padding: 5px;
 =================================================================
  */ 
 
- .header-home {
+.header-home {
   flex-direction: column;
- }
+}
 
- .cats-cards {
+.cats-cards {
   flex-direction: column;
   margin-left: 0;
   margin-right: 0;
 
- }
+}
 
-     /* 
+/* 
 =================================================================
 =========================DASHBOARD ADMIN==================================
 =================================================================
  */ 
 
- .search-user form {
+.search-user form {
   flex-direction: column;
 
- }
+}
 
- .buttons-admin {
+.buttons-admin {
   margin-top: 20px;
- }
+}
 
 .search-name {
   width: 50%;
 }
 
-     /* 
+/* 
 =================================================================
 =========================DASHBOARD ADMIN==================================
 =================================================================
@@ -2019,36 +2018,28 @@ padding: 5px;
 .categories {
   width: 80%;
   margin: 10px;
- }
+}
 
- #wrapper-category h2 {
+#wrapper-category h2 {
   width: 25%;
- }
+}
 
 
 
- .form-category {
+.form-category {
   width: 80%;
- }
+}
 
- .category-items {
+.category-items {
 
- flex-direction: column;
+flex-direction: column;
 
- }
-
-
-
-
-
-
-
-
+}
 
 }
 
 
- 
+
 
 
 
