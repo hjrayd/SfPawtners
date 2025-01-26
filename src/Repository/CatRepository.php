@@ -20,19 +20,20 @@ class CatRepository extends ServiceEntityRepository
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder('c'); //Création d'une nouvelle instance du queryBuilder pour la requête DQL
+
         $qb->select('c')
             ->from('App\Entity\Cat', 'c');
 
         // dd(count($filters['breeds']));
 
         if (count($filters['breeds']) > 0) {
-            $qb->leftJoin('c.breeds', 'b') //On joint la table Breed avec la table Cat équivalent d'un INNER JOIN
+            $qb->leftJoin('c.breeds', 'b') //On joint la table Breed avec la table Cat
             ->andWhere('b.id IN (:breeds)')
             ->setParameter('breeds', $filters['breeds']);
         }
 
         if (count($filters['coats']) > 0) {
-            $qb->leftJoin('c.coats', 'co') //On joint la table Breed avec la table Cat équivalent d'un INNER JOIN
+            $qb->leftJoin('c.coats', 'co') //On joint la table Breed avec la table Cat
             ->andWhere('co.id IN (:coats)')
             ->setParameter('coats', $filters['coats']);
         }

@@ -26,12 +26,12 @@ class FilterType extends AbstractType
                 'multiple' => true,
                 'required' => false,
                 'expanded' => false
-             
+
             ])
             ->add('ageMin', IntegerType::class, [
                 'required' => false,
-                 'label' => 'Âge minimum',
-                 'attr' => [
+                'label' => 'Âge minimum',
+                'attr' => [
                         'min' => 0, 
                     ]
                         
@@ -50,7 +50,7 @@ class FilterType extends AbstractType
                 'multiple' => true,
                 'required' => false,
                 'expanded' => true
-             
+
             ])
 
             ->add('gender', ChoiceType::class, [
@@ -68,13 +68,13 @@ class FilterType extends AbstractType
                     'required' => false
                 ]);
 
-          
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             "data_class" => null
-         ]);
+        ]);
     }
 }

@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Lorsque l'on clique sur le bouton cela fait apparaitre ou disparaitre le formulaire
             btnLike.addEventListener('click', function() {
-  
+
                 if (formLike.style.display === 'flex') {
                     formLike.style.display = 'none';  
                 } else {
@@ -49,7 +49,31 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function menuBurger() {
+    const sidenav = document.getElementById("sideNav");
+    const openBtn = document.getElementById("openBtn");
+    const closeBtn = document.getElementById("closeBtn");
+    
+    if (sideNav && openBtn && closeBtn) {
+
+    openBtn.onclick = openNav;
+    closeBtn.onclick = closeNav;
+
+    function openNav () {
+        sidenav.classList.add("active");
+    }
+
+    function closeNav () {
+        sidenav.classList.remove("active");
+    }
+
+    } else {
+        console.log('Les éléments sideNav, openBtn et closeBtn sont manquants');
+    }
+}
+
     // On appelle les fonctions
+    menuBurger();
     slideFormHome();
     formLikeCat();
 });
