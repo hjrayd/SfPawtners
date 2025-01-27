@@ -561,6 +561,12 @@ footer {
 }
 
 
+#filter_breeds {
+  border-radius: 0%;
+  padding: 10px;
+}
+
+
 .search-cat input {
   padding: 15px;
   width: 100%;
@@ -628,7 +634,7 @@ footer {
   background-color: var(--nav-color);
   color: var(--base-color);
   border-radius: 80%;
-  padding: 15px;
+  padding: 5px 10px;
 }
 
 .pagination a {
@@ -2225,6 +2231,22 @@ text-align: center;
   justify-content: center;
   text-align: center;
   margin-bottom: 20px;
+ }
+
+ .send-message {
+  background-color: var(--nav-color);
+  color: var(--base-color);
+  border-radius: 25px;
+  padding: 5px 15px;
+  margin-bottom: 20px;
+ }
+
+ .send-message i {
+  margin-left: 5px;
+ }
+
+ .send-message:hover {
+  opacity: 0.7;
  }
 
 

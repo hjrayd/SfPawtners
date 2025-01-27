@@ -20,18 +20,27 @@
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit">  <i class="fa-solid fa-trash"></i> </button>
                 </form>   
+            </div>
 
                 {% if app.user.ban %}
                     Vous ne pouvez pas envoyer de messages.
                 {% else %}
                 {% if match.catOne.user == app.user %}
-                        <a href="{{ path('show_message', {'id': match.catTwo.user.id}) }}">Envoyer un message</a>
+                        <a href="{{ path('show_message', {'id': match.catTwo.user.id}) }}">
+                            <div class="send-message">
+                                Envoyer un message <i class="fa-solid fa-envelope"></i>
+                            </div>
+                        </a>
                         {% else %}
-                        <a href="{{ path('show_message', {'id': match.catOne.user.id}) }}">Envoyer un message</a>
+                        <a href="{{ path('show_message', {'id': match.catOne.user.id}) }}">
+                            <div class="send-message">
+                                Envoyer un message <i class="fa-solid fa-envelope"></i>
+                            </div>
+                        </a>
                     {% endif %}
                 {% endif %}
     
-            </div>
+            
         {% endfor %}
 
     </div>
