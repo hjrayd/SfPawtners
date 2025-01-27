@@ -3,17 +3,25 @@
 {% block title %}Mes likes{% endblock %}
 
 {% block body %}
-    <h1>Mes likes</h1>
+<div id="wrapper-like">
+    <div class="like-title">
+        <h1>Mes likes</h1>
+    </div>
+
+    <div class="cat-likes">
         {% for userLike in userLikes %}
-
-        <div class="cat-like">
-            {{ userLike.catOne.name }} avec
-            {{ userLike.catTwo.name}} le
-            {{ userLike.likeDate}}
-            <a href="{{ path('delete_like', {'id': userLike.id}) }}" 
-            class="btn btn-danger" 
-            >Supprimer le like</a>
-        </div>
-
+            <div class="cat-like">
+                <p>
+                    <a href="{{ path('show_cat', {id: userLike.catOne.id}) }}">{{ userLike.catOne.name }}</a> avec
+                    <a href="{{ path('show_cat', {id: userLike.catTwo.id}) }}">{{ userLike.catTwo.name}}</a> 
+                </p>
+                <span> le {{ userLike.likeDate}}</span>
+                <form method="post" action="{{ path('delete_like', {id: userLike.id}) }}";
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit">  <i class="fa-solid fa-trash"></i> </button>
+                </form>   
+            </div>
         {% endfor %}
+    </div> <!-- Fermeture de la div .cat-likes -->
+</div>
 {% endblock %}

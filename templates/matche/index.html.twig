@@ -3,23 +3,40 @@
 {% block title %} Mes matchs {% endblock %}
 
 {% block body %}
-
-    <h1> Mes matchs : </h1>
+<div id="wrapper-match">
+    <div class="match-title">
+        <h1> Mes matchs : </h1>
+    </div>
+   
+    <div class="cat-matchs">
         {% for match in userMatches %}
-            {{ match.catOne }} et {{ match.catTwo }} le 
-            {{ match.matchDate }}
+            <div class="cat-match">
 
-            {% if app.user.ban %}
-                Vous ne pouvez pas envoyer de messages.
-            {% else %}
+                <p>{{ match.catOne }} et {{ match.catTwo }} </p>
+                
+                <span>le {{ match.matchDate }}</span>
+    
+                <form method="post" action="{{ path('delete_matche', {id: match.id}) }}";
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit">  <i class="fa-solid fa-trash"></i> </button>
+                </form>   
+
+                {% if app.user.ban %}
+                    Vous ne pouvez pas envoyer de messages.
+                {% else %}
                 {% if match.catOne.user == app.user %}
-                    <a href="{{ path('show_message', {'id': match.catTwo.user.id}) }}">Envoyer un message</a>
-                    {% else %}
-                    <a href="{{ path('show_message', {'id': match.catOne.user.id}) }}">Envoyer un message</a>
+                        <a href="{{ path('show_message', {'id': match.catTwo.user.id}) }}">Envoyer un message</a>
+                        {% else %}
+                        <a href="{{ path('show_message', {'id': match.catOne.user.id}) }}">Envoyer un message</a>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-            
-           
+    
+            </div>
         {% endfor %}
 
+    </div>
+        
+</div>
+
+    
 {% endblock %}

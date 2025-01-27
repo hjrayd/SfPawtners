@@ -3,17 +3,32 @@
 {% block title %}Messagerie{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col">
-            <h1>Messagerie</h1>
-                <p>Boite de réception: </p>
-                <ul>
-                    {% for correspondent in correspondents %}
-                        <li> <a href="{{path("show_message", {id:correspondent.id}) }}"> 
-                               {{ correspondent.pseudo }}
-                            </a>
-                    {% endfor %}
-                </ul>
-        </div>
+    <div id="wrapper-messagerie">
+        <h1>Messagerie</h1>
+        <p class="title-messagerie">Boite de réception: </p>
+        
+        <table>
+            <tbody>
+                {% for correspondent in correspondents %}
+                    <tr>
+                        <td>
+                            <div class="correspondent">
+                                {% if correspondent.avatar %}
+                                    <img src="{{ asset(correspondent.avatar) }}" alt="avatar de {{correspondent}}" class="correspondent-avatar">
+                                {% endif %}
+                                <a href="{{ path('show_message', {id: correspondent.id}) }}">
+                                    {{ correspondent.pseudo }}
+                                </a>
+
+                                {# <div class="last-message">
+                                    {{lastMessage}}
+                                </div>  
+                                 #}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}

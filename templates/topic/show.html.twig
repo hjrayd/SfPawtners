@@ -12,7 +12,7 @@
             <div class="post">
                 {% if post.user %}
                     {% if post.user.avatar %}
-                        <img src="{{ asset(post.user.avatar) }}" class="topic-avatar" >
+                        <img src="{{ asset(post.user.avatar) }}" alt ="avatar de {{post.user}}" class="topic-avatar" >
                     {% endif %}
                 {% endif %}
 

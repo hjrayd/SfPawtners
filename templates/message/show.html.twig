@@ -3,28 +3,80 @@
 {% block title %}Envoyer un message{% endblock %}
 
 {% block body %}
-<h1> Conversation avec {{ receiver.pseudo}} </h1>
-    <a href="{{path("app_message")}}">Retour à la messagerie -></a>
-    {% if messages is not empty %}
-        <ul>
-            {% for message in messages %}
-                <strong> {{ message.sender.pseudo}} </strong>
-                    {{ message.messageContent }} 
-                    {{message.date}} <br>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Aucun message.</p>
-    {% endif %}
 
-    {% if app.user.ban %}
-        Vous ne pouvez pas envoyer de message.
-    {% else %}
-        {{ form_start(formMessage) }}
-        {{ form_row(formMessage.messageContent) }}
-        {{ form_row(formMessage.Envoyer) }}
-        {{ form_end(formMessage) }}
-    {% endif %}
+<div id="wrapper-conversation">
+    <h1> Conversation avec {{ receiver.pseudo}} </h1>
+
+    <div class="return-button">
+        <a href="{{path("app_message")}}">Retour à la messagerie <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+   
+
+    <div class="messages">
+        {% if messages is not empty %}
+        
+            {% for message in messages %}
+                {% if app.user == message.sender %}
+                <div class="message-sender">
+
+                    <div class="message">
+                        {% if message.sender.avatar %}
+                            <img src="{{ asset(message.sender.avatar) }}" alt="avatar de {{message.sender}}" class="sender-avatar">
+                        {% else %}
+                        <img src="{{ asset('images/blank-profile-picture-973460_1280.png') }}" alt="avatar de {{message.sender}}" class="sender-avatar">
+                        {% endif %}
+                        <strong> {{ message.sender.pseudo}} </strong>
+
+                        <div class="message-content">
+                            {{ message.messageContent }} 
+                            <span>{{message.date}} </span>
+                        </div>
+                    </div>
+                </div>
+                    
+                    {% else %}
+                    <div class="message-receiver-receiver">
+                        <div class="message-receiver">
+                            {% if message.sender.avatar %}
+                                <img src="{{ asset(message.sender.avatar) }}" alt="avatar de {{message.sender}}" class="sender-avatar">
+                            {% else %}
+                            <img src="{{ asset('images/blank-profile-picture-973460_1280.png') }}" alt="avatar de {{message.sender}}" class="sender-avatar">
+                            {% endif %}
+                            <strong> <a href="{{ path('show_user', {id: message.sender.id}) }}">{{ message.sender.pseudo}}</a> </strong>
+    
+                            <div class="message-content">
+                                {{ message.messageContent }} 
+                                <span>{{message.date}} </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                {% endif %}
+            {% endfor %}
+  
+        {% else %}
+            <p>Aucun message.</p>
+        {% endif %}
+    </div>
+    
+
+    <div class="form-message">
+        {% if app.user.ban %}
+            Vous ne pouvez pas envoyer de message.
+        {% else %}
+            {{ form_start(formMessage) }}
+            {{ form_row(formMessage.messageContent) }}
+
+            <div class="btn-message">
+                {{ form_row(formMessage.Envoyer) }}
+            </div>
+
+            {{ form_end(formMessage) }}
+        {% endif %}
+    </div>
+   
+</div>
+
     
 {% endblock %}
 

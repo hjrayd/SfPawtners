@@ -66,7 +66,7 @@ class LikeController extends AbstractController
 
         $this->addFlash('message', 'Le like a été supprimé.');
 
-        return $this->redirectToRoute('app_cat');
+        return $this->redirectToRoute('app_like');
     }
 
 

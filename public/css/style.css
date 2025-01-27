@@ -1888,6 +1888,345 @@ text-align: center;
   font-size: 16px;
 }
 
+    /* 
+=================================================================
+=========================MESSAGERIE==================================
+=================================================================
+ */
+
+ #wrapper-messagerie {
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+  min-height: 100vh;
+ }
+
+ #wrapper-messagerie h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 40px;
+ }
+
+ #wrapper-messagerie td {
+  border-bottom: 1px solid var(--nav-color);
+ }
+
+ #wrapper-messagerie table {
+  margin-top: 30px;
+ }
+
+ .title-messagerie {
+  font-size: 22px;
+  margin-left: 5px;
+ }
+
+ .correspondent {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  margin-left: 20px;
+ }
+
+ .last-message {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  font-style: italic;
+
+ }
+
+
+
+ .correspondent-avatar {
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+  margin-left: 5px;
+ }
+
+
+ .correspondent a {
+  font-size: 25px;
+ }
+
+ .correspondent a:hover {
+  text-decoration: underline;
+ }
+
+   /* 
+=================================================================
+=========================SHOW MESSAGE==================================
+=================================================================
+ */*
+
+ #wrapper-conversation {
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+  min-height: 100vh;
+ }
+
+ #wrapper-conversation h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ }
+
+.sender-avatar {
+  width: 25px;
+  border-radius: 25px;
+  height: 25px;
+}
+
+.messages {
+ display: flex;
+ gap: 20px;
+ flex-direction: column;
+ align-items: center;
+ margin: 30px 20px;
+}
+
+.return-button {
+  background-color: var(--nav-color);
+  width: 250px;
+  padding: 10px 25px;
+  border-radius: 25px;
+}
+
+.return-button:hover {
+  opacity: 0.7;
+}
+
+.return-button a {
+  color: var(--base-color);
+}
+
+.form-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--section-color);
+  padding: 20px;
+  margin-top: 25px;
+}
+
+.form-message textarea {
+  border-radius: 25px;
+  border: none;
+  height: 20px;
+  padding-left: 10px;
+}
+
+.form-message label {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.form-message form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  
+}
+
+.btn-message button {
+  background-color: var(--nav-color);
+  color: var(--base-color);
+  padding: 5px 25px;
+  margin-top: 10px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+
+}
+
+.message-sender {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+ 
+ }
+
+ .messages span {
+  font-style: italic;
+  font-size: 15px;
+ }
+
+ .message-receiver-receiver {
+  display: flex;
+   width: 100%;
+  justify-content: flex-start;
+ }
+
+.btn-message button:hover {
+  opacity: 0.7;
+}
+
+.message {
+  background-color: var(--section-color);
+  padding: 10px;
+  border-radius: 25px;
+  width: 30%;
+  align-items: center;
+  display: flex;
+  gap: 10px;
+
+}
+
+.message-content {
+  font-size: 20px;
+}
+
+.message-receiver{
+  display: flex;
+  flex-direction: row;
+  background-color: var(--section-color);
+  padding: 10px;
+  border-radius: 25px;
+  width: 30%;
+  gap: 10px;
+
+ }
+
+ /* 
+=================================================================
+=========================LIKE PAGE==================================
+=================================================================
+ */
+
+ #wrapper-like {
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+  min-height: 100vh;
+
+ }
+
+ #wrapper-like h1 {
+    font-weight: 500;
+    font-size: 40px; 
+     border-bottom: 1px solid var(--text-color);
+     width: 300px;
+ }
+
+ .cat-likes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 15px;
+ }
+
+ .cat-like {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+ }
+
+ .cat-like p {
+  font-size: 20px;
+ }
+
+ .cat-like span {
+  font-style: italic;
+ }
+
+
+ .cat-like a:hover {
+  text-decoration: underline;
+ }
+
+ .cat-like button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 5px;
+  color: var(--text-color);
+
+ }
+
+
+
+ .like-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 20px;
+ }
+
+ /* 
+=================================================================
+=========================MATCH PAGE==================================
+=================================================================
+ */
+
+ #wrapper-match {
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+  min-height: 100vh;
+
+ }
+
+ #wrapper-match h1 {
+    font-weight: 500;
+    font-size: 40px; 
+     border-bottom: 1px solid var(--text-color);
+     width: 300px;
+ }
+
+ .cat-matchs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 15px;
+ }
+
+ .cat-match {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+ }
+
+ .cat-match p {
+  font-size: 20px;
+ }
+
+ .cat-match span {
+  font-style: italic;
+ }
+
+
+ .cat-match a:hover {
+  text-decoration: underline;
+ }
+
+ .cat-match button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 5px;
+  color: var(--text-color);
+
+ }
+ .match-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 20px;
+ }
+
 
 
 

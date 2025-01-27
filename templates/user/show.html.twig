@@ -13,7 +13,7 @@
 
 
         {% if user.avatar %} {# Si le user a un avatar ALORS on l'affiche sinon bug #}
-            <img src="{{ asset(user.avatar) }}" class="user-avatar" >
+            <img src="{{ asset(user.avatar) }}" alt="avatar de {{user}}" class="user-avatar" >
         {% endif %}
     
         
