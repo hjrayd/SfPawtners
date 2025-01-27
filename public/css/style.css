@@ -115,6 +115,7 @@ a:visited {
  */
 
 footer {
+
     padding-top: 70px;
     padding-bottom: 30px;
     background-color: var(--base-color);
@@ -538,6 +539,8 @@ footer {
 .filter-cat select {
   border-radius: 20px;
   margin-left: 10px;
+  padding: 0 10px;
+  border: 1px solid var(--nav-color);
 }
 
 .filter-cat button {
@@ -563,7 +566,7 @@ footer {
 
 #filter_breeds {
   border-radius: 0%;
-  padding: 10px;
+
 }
 
 
@@ -1951,6 +1954,7 @@ text-align: center;
   height: 25px;
   margin-right: 5px;
   margin-left: 5px;
+  border-radius: 25px;
  }
 
 
@@ -1985,6 +1989,7 @@ text-align: center;
   width: 25px;
   border-radius: 25px;
   height: 25px;
+
 }
 
 .messages {
@@ -2024,6 +2029,8 @@ text-align: center;
   border: none;
   height: 20px;
   padding-left: 10px;
+  padding-top: 10px;
+  font-size: 16px;
 }
 
 .form-message label {
@@ -2047,6 +2054,7 @@ text-align: center;
   border-radius: 25px;
   border: none;
   cursor: pointer;
+  font-size: 16px;
 
 }
 
@@ -2480,6 +2488,18 @@ flex-direction: column;
   justify-content: center;
 }
 
+    /* 
+=================================================================
+=========================FOOTER==================================
+=================================================================
+ */ 
+
+ footer ul {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+ }
 
 
 
