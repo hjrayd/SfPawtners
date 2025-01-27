@@ -68,7 +68,10 @@
 
                             <p>{{ review.reviewContent }}</p>
                             {% if app.user == review.reviewer or is_granted('ROLE_ADMIN') %}
-                                <a class="btn-delete-review" href="{{ path('delete_review', {'id': review.id}) }}">Supprimer</a>
+                                <form method="post" action="{{ path('delete_review', {id: review.id}) }}";
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button class="btn-delete-review" type="submit"> Supprimer </button>
+                                </form>   
                             {% endif %}
                         </div>
                     {% endfor %}
@@ -122,8 +125,10 @@
                             </div>
                         
                             <p>{{ reviewUser.reviewContent }}</p>
-
-                            <a class ="btn-delete-review"="{{ path('delete_review', {'id': reviewUser.id}) }}">Supprimer</a>
+                            <form method="post" action="{{ path('delete_review', {id: reviewUser.id}) }}";
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button class="btn-delete-review" type="submit"> Supprimer </button>
+                            </form>      
                         </div>
                            
                         {% endfor %}

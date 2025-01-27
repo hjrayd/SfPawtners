@@ -909,6 +909,7 @@ footer {
 .btn-delete-review {
   background-color: red;
   color: white;
+  border: none;
   padding: 5px 30px;
   border-radius: 20px;
 }
