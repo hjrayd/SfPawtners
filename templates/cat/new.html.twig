@@ -9,42 +9,60 @@
 {% endblock %}
 
 {% block body %}
+
 <div id="wrapper-add-cat">
     <div class="form-cat">
         {% if app.user.ban %}
             Vous ne pouvez pas ajouter de profils.
         {% else %}
             <h1>Ajouter le profil de votre chat !</h1>
-            {{ form_start(formAddCat) }}
-            <div class="formCat-rows">
-                {{ form_row(formAddCat.name) }}
-                {{ form_row(formAddCat.gender) }}
+
+            <div class="form-add-cat">
+                    {{ form_start(formAddCat) }}
+                        <div class="div-row">
+                            {{ form_row(formAddCat.name) }}
+                        </div>
+                        
+                        <div class="div-row">
+                            {{ form_row(formAddCat.gender) }}
+                        </div>
+                        <div class="div-row">
+                            {{ form_row(formAddCat.dateBirth) }}
+                        </div>
+                        <div class="div-row">
+                            {{ form_row(formAddCat.description) }}
+                        </div>
+                        <div class="div-row">
+                            {{ form_row(formAddCat.city) }}
+                        </div>
+                        <div class="div-row">
+                            {{ form_row(formAddCat.litter) }}
+                        </div>
+                        <div class="div-row">
+                            {{ form_row(formAddCat.vaccinated) }}
+                        </div>
+                        <div class="div-row">
+                            {{ form_row(formAddCat.breeds) }}
+                        </div>
+                        <div class="div-row">
+                            {{ form_row(formAddCat.coats) }}
+                        </div>
+                        <div class="div-row">
+                            {{ form_row(formAddCat.images) }}
+                        </div>
+                        
+                
+
+                    {{ form_row(formAddCat.Valider) }} 
+
+                {{ form_end(formAddCat) }}
             </div>
-            {{ form_row(formAddCat.dateBirth) }}
             
-            <div class="formCat-rows">
-                {{ form_row(formAddCat.description) }}
-                {{ form_row(formAddCat.city) }}
-            </div>
-            <div class="formCat-rows">
-                {{ form_row(formAddCat.litter) }}
-                {{ form_row(formAddCat.vaccinated) }}
-            </div>
-            <div class="formCat-rows">
-                {{ form_row(formAddCat.breeds) }}
-                {{ form_row(formAddCat.coats) }}
-            </div>
-            <div class="add-cat-img">
-                {{ form_row(formAddCat.images) }}
-            </div>
-
-            {{ form_row(formAddCat.Valider) }} 
-
-            {{ form_end(formAddCat) }}
 
         {% endif %}  
     </div>
 </div>
+
 {% endblock %}
 
 {% block javascripts %}

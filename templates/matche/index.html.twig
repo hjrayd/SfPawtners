@@ -12,7 +12,14 @@
         {% for match in userMatches %}
             <div class="cat-match">
 
-                <p>{{ match.catOne }} et {{ match.catTwo }} </p>
+                <p> 
+                    <a href="{{ path('show_cat', {id: match.catOne.id}) }}">
+                        {{ match.catOne }}
+                    </a> et
+                    <a href="{{ path('show_cat', {id: match.catTwo.id}) }}">
+                        {{ match.catTwo }} 
+                    </a> 
+                </p>
                 
                 <span>le {{ match.matchDate }}</span>
     

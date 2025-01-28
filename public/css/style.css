@@ -921,6 +921,7 @@ footer {
   border: none;
   padding: 5px 30px;
   border-radius: 20px;
+  cursor: pointer;
 }
 
 .review span {
@@ -1097,90 +1098,59 @@ footer {
 .form-cat {
   display: flex;
   flex-direction: column;
-  border-radius: 20px;
-  margin-top: 30px;
-  width: 100%; 
-  max-width: 40%;
-  padding: 20px;
   background-color: var(--section-color);
+  width: 500px;
+  max-width: 100%;
+  border-radius: 25px;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+}
 
+.form-cat h1 {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .form-cat form {
   display: flex;
+  align-items: center;
   flex-direction: column;
-align-items: center;
-justify-content: center;
-font-size: 20px;
+  justify-content: center;
+  gap: 10px;
+  padding: 20Px;
+  width: 100%;
+
 }
 
-.form-cat select {
-border: none;
-padding: 5px;
+
+.div-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  flex-direction: row;
 }
 
 
 .form-cat label {
   display: inline-block;
-  width: 100%;
-  margin-top: 20px;
+  width: 200px;
 }
 
-.form-cat input,
-.form-cat textarea {
-  border-radius: 20px;
-  border: none;
-  width: 80%; 
-  padding-left: 10px;
-}
-
-
-.formCat-rows div {
-  width: 100% ; 
-}
-
-#cat_city {
-    width: 100%;
-    border-radius: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.form-cat textarea {
-  resize: none;
-}
-
-.form-cat input {
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-right: 5px;
-}
-
-.form-cat h1 {
-  margin-top: 30px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.form-cat button {
+.form-add-cat {
   display: flex;
   align-items: center;
-  justify-content: center;
-  border-radius: 20px;
-  border: none;
-  font-size: 20px;
-  padding: 10px 20px;
-  background-color: var(--text-color);
-  color: var(--base-color);
-  cursor: pointer;
-
+  width: 100%;
 }
 
-.add-cat-img {
+.date-birth div {
   display: flex;
-  flex-direction: column;
-
+  justify-content: center;
+  align-items: center;
 }
+
+
+
 
   /* 
 =================================================================
@@ -2332,6 +2302,17 @@ text-align: center;
 .section-register {
   margin-top: 20Px;
 }
+
+    /* 
+=================================================================
+=========================AJOUT D'UN CHATs==================================
+=================================================================
+ */ 
+
+ .formCat-rows {
+  flex-direction: column;
+ }
+ 
 
 
 /* 
