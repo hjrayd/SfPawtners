@@ -1099,15 +1099,18 @@ footer {
   display: flex;
   flex-direction: column;
   background-color: var(--section-color);
-  width: 500px;
+  width: 600px;
   max-width: 100%;
   border-radius: 25px;
-  padding: 20px;
+
   align-items: center;
   justify-content: center;
+  margin-top: 30px;
 }
 
 .form-cat h1 {
+
+  text-align: center;
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -1117,30 +1120,73 @@ footer {
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
-  padding: 20Px;
+  gap: 20px;
   width: 100%;
 
+
+}
+
+#cat_Valider {
+  display: flex;
+  border: none;
+  border-radius: 25px;
+  background-color: var(--nav-color);
+  color: white;
+  padding: 5px 20px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+#cat_gender {
+  border-radius: 25px;
+}
+
+#cat_images {
+  border: none;
+}
+
+.div-row input {
+  padding-left: 5px;
+  border-radius: 25px;
+  width: 150px;
+  border: 1px solid var(--nav-color);
+  font-size: 16Px;
+}
+
+.div-row select {
+  border: 1px solid var(--nav-color);
+  padding: 3px;
+  width: 150Px;
 }
 
 
 .div-row {
   display: flex;
+  align-items: center;
   width: 100%;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: row;
 }
 
+.upload-btn input {
+  border-radius: 0px;
+  margin: 0;
+  padding: 0;
+}
 
 .form-cat label {
   display: inline-block;
   width: 200px;
+  font-size: 18px;
 }
 
 .form-add-cat {
+  padding: 30px;
   display: flex;
   align-items: center;
-  width: 100%;
+  justify-content: center;
+
 }
 
 .date-birth div {
@@ -2309,10 +2355,7 @@ text-align: center;
 =================================================================
  */ 
 
- .formCat-rows {
-  flex-direction: column;
- }
- 
+
 
 
 /* 
