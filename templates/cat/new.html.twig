@@ -35,11 +35,14 @@
                         <div class="div-row">
                             {{ form_row(formAddCat.city) }}
                         </div>
-                        <div class="div-row">
-                            {{ form_row(formAddCat.litter) }}
-                        </div>
-                        <div class="div-row">
-                            {{ form_row(formAddCat.vaccinated) }}
+                        <div class="div-row-choice">
+                            <div class="choice">
+                                {{ form_row(formAddCat.litter) }}
+                            </div>
+                            <div class="choice">
+                                {{ form_row(formAddCat.vaccinated) }}
+                            </div>
+                           
                         </div>
                         <div class="div-row">
                             {{ form_row(formAddCat.breeds) }}

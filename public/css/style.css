@@ -1154,6 +1154,11 @@ footer {
   font-size: 16Px;
 }
 
+.div-row textarea {
+  border-radius: 25px;
+  border: var(--nav-color);
+}
+
 .div-row select {
   border: 1px solid var(--nav-color);
   padding: 3px;
@@ -1194,6 +1199,20 @@ footer {
   justify-content: center;
   align-items: center;
 }
+
+.div-row-choice {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: space-evenly;
+}
+
+.choice div {
+  display: flex;
+  gap: 30px;
+}
+
 
 
 
@@ -2355,7 +2374,26 @@ text-align: center;
 =================================================================
  */ 
 
+.div-row div{
+  display: flex;
+}
 
+.form-add-cat {
+  max-width: 100%;
+}
+
+.div-row div {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.form-add-cat form {
+  display: flex;
+  flex-direction: column;
+  padding-left: 30px;
+  max-width: 100%;
+}
 
 
 /* 
