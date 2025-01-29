@@ -2767,10 +2767,39 @@ margin-top: 20px;
 }
 
 .category-items {
-
 flex-direction: column;
-
 }
+
+   /* 
+=================================================================
+========================= UPDATE INFOS ==================================
+=================================================================
+ */ 
+
+ #edit_pseudo {
+  display: flex;
+  text-align: center;
+ }
+
+ #edit_password {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+ }
+
+ #edit_avatar {
+  display: flex;
+  text-align: center;
+ }
+
+ .update-avatar button {
+padding: 5px 25px;
+width: 50%;
+ }
+
+
+
+
 
      /* 
 =================================================================
