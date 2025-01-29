@@ -880,11 +880,14 @@ color: var(--base-color);
 }
 
 .main-cat-img{
-  width: 700px;
-  height: 500px;
+  width: 50%;
   margin-bottom: 30px;
   position: relative;
 
+}
+
+.main-cat-img img {
+  width: 100%;
 }
 
 .small-cat-images img {
@@ -900,6 +903,7 @@ color: var(--base-color);
   margin-bottom: 30px;
   max-height: 100vh;
   margin-right: 30px;
+
  }
 
  .cat-images img {
@@ -913,6 +917,8 @@ color: var(--base-color);
  .cat-images {
   display: flex;
   flex-direction: row-reverse;
+
+  justify-content: center;
 
  }
 
@@ -955,6 +961,11 @@ color: var(--base-color);
  .cat-images aside {
   display: flex;
   flex-direction: column;
+  margin-left: 30px;
+  font-size: 25px;
+  justify-content: center;
+  align-items: center;
+
  }
 
  .cat-text span {
@@ -974,13 +985,6 @@ color: var(--base-color);
   word-wrap: break-word; /*si les mots dépassent ils seront coupés*/
 }
 
- .cat-images aside {
-  margin-left: 50px;
-  font-size: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
- }
 
  .btn-like {
   background-color: #DCC6C2;
@@ -1006,10 +1010,10 @@ color: var(--base-color);
   justify-content: center;
   border-radius: 20px;
   padding: 20px;
-  height: 20%;
-  width: 20%;
+  height: 200px;
+  width: 200px;
   top: 10%;
-  right: 5%;
+  right: 8%;
   border: 1px solid #5E3636;
 }
 
@@ -2673,6 +2677,38 @@ margin-top: 20px;
 
 }
 
+    /* 
+=================================================================
+=========================DETAIL D'UN CHAT==================================
+=================================================================
+ */ 
+
+ .cat-text {
+  padding-top: 20px;
+  flex-direction: column;
+  gap: 0px;
+  width: 100%;
+ }
+
+ .row-text {
+  width: 100%;
+ }
+
+ #wrapper-cat aside {
+  margin: 0;
+  margin-bottom: 10px;
+ }
+
+ .main-cat-img {
+  width: 80%;
+ }
+
+ 
+
+ 
+
+
+
 /* 
 =================================================================
 =========================DASHBOARD ADMIN==================================
@@ -2746,7 +2782,50 @@ flex-direction: column;
   flex-direction: column;
  }
 
-/* 
+
+    /* 
+=================================================================
+=========================FOOTER==================================
+=================================================================
+ */ 
+
+ footer ul {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+ }
+
+
+}
+
+@media screen and (max-width: 1359px) {
+
+  .small-cat-images {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+   }
+
+   .cat-images {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   }
+
+
+
+   .small-cat-images img {
+ 
+    width: 100%;
+   }
+
+ }
+
+ @media screen and (max-width: 840px) {
+
+  /* 
 =================================================================
 =========================MENU BURGER==================================
 =================================================================
@@ -2815,24 +2894,16 @@ flex-direction: column;
   justify-content: center;
 }
 
-    /* 
-=================================================================
-=========================FOOTER==================================
-=================================================================
- */ 
-
- footer ul {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-
  }
 
-
-
+ @media screen and (max-width: 1338px) {
+#form-like {
+  top: 30%;
+  right: 40%;
 
 }
+
+ }
 
 
 
