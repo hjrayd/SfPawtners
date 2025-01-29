@@ -1473,6 +1473,13 @@ color: var(--base-color);
  .update-user span {
   font-weight: 600;
   margin-right: 10px;
+ } 
+ 
+ .update-user-content {
+  display: flex;
+
+  flex-direction: column;
+  gap: 20px;
  }
 
  .update-user {
@@ -1618,6 +1625,7 @@ color: var(--base-color);
 }
 
 #wrapper-admin h1 {
+  text-align: center;
   margin-bottom: 20px;
 }
 
@@ -1879,6 +1887,7 @@ text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .category i {
@@ -2745,30 +2754,9 @@ margin-top: 20px;
  }
 
 
-/* 
-=================================================================
-=========================DASHBOARD ADMIN==================================
-=================================================================
- */ 
-
-.categories {
-  width: 80%;
-  margin: 10px;
-}
-
-#wrapper-category h2 {
-  width: 25%;
-}
 
 
 
-.form-category {
-  width: 80%;
-}
-
-.category-items {
-flex-direction: column;
-}
 
    /* 
 =================================================================
@@ -2796,6 +2784,8 @@ flex-direction: column;
 padding: 5px 25px;
 width: 50%;
  }
+
+
 
 
 
@@ -2932,6 +2922,40 @@ width: 50%;
 
 }
 
+ }
+
+ @media screen and (max-width: 1084px) {
+
+  .category-items {
+    flex-direction: column;
+  }
+
+  .category-block {
+    width: 100%;
+  }
+
+  .category-block h2 {
+    display: flex;
+    text-align: center;
+  }
+
+  .categories {
+    margin: 0;
+  }
+
+  
+  #wrapper-category h2 {
+    width: 25%;
+  }
+  
+
+  .form-category {
+    width: 80%;
+  }
+  
+  
+
+  
  }
 
 
