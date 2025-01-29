@@ -14,37 +14,72 @@
     <title>Accueil</title>
 </head>
 <body>
+    <div id="wrapper-accueil">
+        <div class="header-accueil">
+            <h1> Bienvenue sur Pawtners !</h1>
+            <p> Le premier site de rencontre pour chats en France !</p>
+            <div class="img-header">
+                <img src="{{ asset('images/family-cat.png') }}" alt="Famille de chats">
+            </div>
+            
+        </div>
+       
+        
+        <div class="accueil-main">
+            <div class="instruct-site">
+                <h2> Comment ça marche ?</h2>
+
+                <h3> Création d'un profil </h3>
+                <p> Créer un ou plusieurs profils pour chaque chats que vous souhaitez mettre en ligne : <a href=""></a> </p>
+        
+                <h3> Place aux matchs !</h3>
+                <p> Consultez les profils des petits félins mis en ligne <a href=""></a> 
+                    Un profil vous plaît ?
+                    Cliquez sur le bouton en forme de coeur et choisissez le nom de votre chat dans la liste déroulante.
+                    Si l'utilisateur aime votre chat en retour, c'est un match !
+                </p>
+            </div>
+            
+    
+            <h2>Pourquoi rejoindre pawtners ?</h2>
+            <div class="cards-accueil">
+                <div class="card-accueil">
+                    <div class="card-accueil-header">
+                        <i class="fa-solid fa-paw"></i>
+                    </div>
+                    <p> Des profils entièrement personnalisés à l'image de vos chats</p>
+                </div>
+
+                <div class="card-accueil">
+                    <div class="card-accueil-header">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <p> Une experience sécurisée pour des rencontres sans tracas </p>
+                </div>
+                
+                <div class="card-accueil">
+                    <div class="card-accueil-header">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <p> Une communauté bienveillante </p>
+                </div>
+            </div>
+   
+            <h2> Envie de commencer l'aventure ?</h2>
+            <p> Commencez dès maintenant en créant un compte ou en vous connectant !</p>
+    
+            <div class="home-buttons">
+                <a href=""></a>
+                <a href=""></a>
+            </div>
+        </div>
+        
+    </div>
     
 </body>
 </html>
 
 
-<h1> Bienvenue sur Pawtners !</h1>
-<p> Le premier site de rencontre pour chats !</p>
 
-<h2> Comment ça marche ?</h2>
-
-<h3> Création d'un profil </h3>
-<p> Créer un ou plusieurs profils pour chaque chats que vous souhaitez mettre en ligne : <a href=""></a> </p>
-
-<h3> Place aux matchs !</h3>
-<p> Consultez les profils des petits félins mis en ligne <a href=""></a> 
-    Un profil vous plaît ?
-    Cliquez sur le bouton en forme de coeur et choisissez le nom de votre chat dans la liste déroulante.
-    Si l'utilisateur aime votre chat en retour, c'est un match !
-</p>
-
-<h2>Pourquoi rejoindre pawtners ?</h2>
-    <p> Des profils entièrement personnalisés à l'image de vos chats</p>
-    <p> Une experience sécurisée pour des rencontres sans tracas </p>
-    <p> Une communauté bienveillante </p>
-
-<h2> Envie de commencer l'aventure ?</h2>
-<p> Commencez dès maintenant en créant un compte ou en vous connectant !</p>
-
-<div class="home-buttons">
-    <a href=""></a>
-    <a href=""></a>
-</div>
 
 {% endblock %}
