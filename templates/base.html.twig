@@ -65,10 +65,9 @@
                                 <a class ="close-btn" href="#" id="closeBtn">X</a>
                                 <ul>
                                     <!-- Liste de navigation -->
+                                    <li><a href="{{ path('app_home') }}">Accueil</a></li>
+                                    <li><a href="{{ path('app_cat') }}">Les chats</a></li>
                                     {% if app.user is not null %}
-                                        <li><a href="{{ path('app_cat') }}">Les chats</a></li>
-                                        <li><a href="{{ path('app_home') }}">Accueil</a></li>
-    
                                         {% if is_granted('ROLE_ADMIN') %}
                                             <li><a href="{{ path('app_admin') }}">Dashboard Admin</a></li>
                                         {% endif %}

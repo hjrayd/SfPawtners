@@ -15,6 +15,7 @@
 </head>
 <body>
     <div id="wrapper-accueil">
+
         <div class="header-accueil">
             <h1> Bienvenue sur Pawtners !</h1>
             <p> Le premier site de rencontre pour chats en France !</p>
@@ -26,8 +27,12 @@
        
         
         <div class="accueil-main">
+
             <div class="instruct-site">
-                <h2> Comment ça marche ?</h2>
+                <div class="title-instruct">
+                    <h2> Comment ça marche ?</h2>
+                </div>
+                
 
                 <h3> Création d'un profil </h3>
                 <p> Créer un ou plusieurs profils pour chaque chats que vous souhaitez mettre en ligne : <a href=""></a> </p>
@@ -56,7 +61,7 @@
                     </div>
                     <p> Une experience sécurisée pour des rencontres sans tracas </p>
                 </div>
-                
+
                 <div class="card-accueil">
                     <div class="card-accueil-header">
                         <i class="fa-solid fa-heart"></i>
@@ -65,13 +70,19 @@
                 </div>
             </div>
    
-            <h2> Envie de commencer l'aventure ?</h2>
-            <p> Commencez dès maintenant en créant un compte ou en vous connectant !</p>
-    
-            <div class="home-buttons">
-                <a href=""></a>
-                <a href=""></a>
-            </div>
+            {% if app.user is null %}
+                <div class="login-accueil">
+                    <h2> Envie de commencer l'aventure ?</h2>
+                    <p> Commencez dès maintenant en créant un compte ou en vous connectant !</p>
+            
+                    <div class="accueil-buttons">
+                        <a href="{{ path('app_login') }}"> Se connecter</a>
+                        <a href="{{ path('app_register') }}"> S'inscrire</a>
+                    </div>
+                </div>
+            {% endif %}
+            
+          
         </div>
         
     </div>

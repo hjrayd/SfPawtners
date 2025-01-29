@@ -416,6 +416,7 @@ footer {
   text-align: center;
   margin-bottom: 30px;
   margin-top: 30px;
+  font-size: 40px;
  }
 
  .img-header {
@@ -433,7 +434,7 @@ footer {
   background-color: var(--section-color);
   position: relative;
   overflow: hidden;
-  margin-bottom: 40px;
+  margin-bottom: 200px;
  }
 
  .header-accueil p {
@@ -459,12 +460,36 @@ footer {
    margin-bottom: 50px;
    font-size: 25px;
 
+
 }
 
 .accueil-main h3 {
   text-align: center;
   font-weight: 400;
   font-size: 22px;
+}
+
+.title-instruct {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.instruct-site h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--base-color);
+}
+
+.instruct-site {
+  background-color: var(--nav-color);
+  color: var(--base-color);
+  border-radius: 25Px;
+  padding: 20Px;
 }
 
 .instruct-site p {
@@ -478,7 +503,7 @@ footer {
   justify-content: center;
   flex-direction: row;
   gap: 100px;
-  margin-bottom: 100px;
+  margin-bottom: 200px;
   
 }
 
@@ -502,16 +527,63 @@ footer {
 .card-accueil:hover {
   transform: translateY(-20px);
   transition: 0.3s;
+  background-color: var(--nav-color);
+ 
 }
+
+.card-accueil:hover i {
+ color: var(--base-color);
+}
+
+.card-accueil:hover p {
+color: var(--base-color);
+}
+
 
 .card-accueil i {
   font-size: 25px;
 }
 
+
 .card-accueil p {
   text-align: center;
 
 }
+
+.login-accueil p {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.accueil-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.accueil-buttons a {
+  background-color: var(--nav-color);
+  color: var(--base-color);
+  padding: 10px 25px;
+  border-radius: 25px;
+  border: none;
+  width: 200px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.accueil-buttons a:hover {
+  opacity: 0.7;
+}
+
+.instruct-site {
+  margin-bottom: 200px;
+}
+
+
+
 
 
 
@@ -2615,6 +2687,16 @@ text-align: center;
 flex-direction: column;
 
 }
+
+     /* 
+=================================================================
+=========================ACCUEIL==================================
+=================================================================
+ */ 
+
+ .cards-accueil {
+  flex-direction: column;
+ }
 
 /* 
 =================================================================
