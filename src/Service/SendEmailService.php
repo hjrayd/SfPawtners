@@ -16,6 +16,7 @@ class SendEmailService
         string $template,
         array $context
     ): void
+    
     {
         // On crée le mail
         $email = (new TemplatedEmail())

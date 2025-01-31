@@ -10,6 +10,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class CityController extends AbstractController
 {
     #[Route('api/cities', name: 'api_cities')]
+
     public function getCities(HttpClientInterface $httpClient)
     {
          // L'URL de l'API Geo Gouv pour récupérer les villes
@@ -30,9 +31,9 @@ class CityController extends AbstractController
 
     // On formate les résultats pour Select2
     $results = array_map(function ($city) {
-        return [
-            'id' => $city['code'], // code INSEE pour l'ID
-            'text' => $city['nom'] // nom de la ville pour l'affichage
+        return [ //chaque commune est transformée en tableau associatif
+            'id' => $city['code'], // code INSEE pour l'ID/ Select2 attends la clé "id" et non pas "code"
+            'text' => $city['nom'] // nom de la ville pour l'affichage/ Select2 attends la clé "text" et non pas "nom"
         ];
     }, $data);
 

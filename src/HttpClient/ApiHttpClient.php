@@ -13,12 +13,12 @@ class ApiHttpClient extends AbstractController
 
     public function __construct(HttpClientInterface $httpc)
     {
-        $this->httpClient = $httpc;
+        $this->httpClient = $httpc; //Injection de dépendance depuis le framework.yaml
     }
 
     public function getBreeds()
     {
-        $response = $this->httpClient->request('GET', "/v1/breeds", [ //requête à l'endpoint de l'api
+        $response = $this->httpClient->request('GET', "/v1/breeds", [ //requête à l'endpoint de l'api (URL spécifique)
             'verify_peer' => false 
         ]);
 
