@@ -1437,6 +1437,7 @@ max-width: 100%;
 .div-row textarea {
   border-radius: 25px;
   border: var(--nav-color);
+  padding-left: 10px;
 }
 
 .div-row select {
