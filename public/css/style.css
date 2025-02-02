@@ -1814,6 +1814,7 @@ padding: 10px;
 #wrapper-category h2 {
   margin-bottom: 30px;
   font-weight: 500;
+  width: 100%;
 }
 
 #wrapper-category h1 {
@@ -3024,12 +3025,9 @@ width: 50%;
 
   .categories {
     margin: 0;
+    margin-bottom: 20px;
   }
 
-  
-  #wrapper-category h2 {
-    width: 25%;
-  }
   
 
   .form-category {
