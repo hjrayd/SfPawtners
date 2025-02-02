@@ -434,7 +434,7 @@ footer {
   background-color: var(--section-color);
   position: relative;
   overflow: hidden;
-  margin-bottom: 200px;
+  margin-bottom: 150px;
  }
 
  .header-accueil h2, h3 {
@@ -486,7 +486,7 @@ footer {
   justify-content: center;
   flex-direction: row;
   gap: 100px;
-  margin-bottom: 200px;
+  margin-bottom: 150px;
   
 }
 
@@ -616,16 +616,18 @@ border-top: 1px solid var(--nav-color);
 }
 
 .instruct-site {
-  margin-bottom: 50Px;
+  margin-bottom: 150Px;
 }
 
 .consult-cat {
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: 100%;
 }
 
 .card-instruct h3 {
+  font-size: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -640,15 +642,14 @@ border-top: 1px solid var(--nav-color);
   justify-content: space-evenly;
 }
 
-.card-instruct p {
-  font-size: 20px;
-  text-align: center;
-  width: 500px;
-}
 
 .card-instruct p {
+  font-size: 18px;
+max-width: 100%;
+  width: 500px;
   padding: 20px;
   border-radius: 25Px;
+  text-align: justify;
   color: var(--base-color);
   background-color: var(--text-color);
   border: 1px solid var(--nav-color);
@@ -2861,6 +2862,22 @@ width: 50%;
  .cards-accueil {
   flex-direction: column;
  }
+
+ .card-instruct-main {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+ }
+
+.card-instruct-main img {
+  margin-top: 20px;
+}
+
+.login-accueil {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 20px;
+}
 
 
     /* 
