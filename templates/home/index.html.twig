@@ -18,13 +18,18 @@
 
         <div class="header-accueil">
             <h1> Bienvenue sur Pawtners !</h1>
-            <p> Le premier site de rencontre pour chats en France !</p>
+            <h2> Le premier site de rencontre pour chats en France !</h2>
+            <h3>Découvrez de nombreux profils et créez les vôtres pour offrir à vos chats la compagnie idéale ! </h3>
+
+            <div class="header-accueil-btn">
+                <a class ="cat-accueil" href="{{ path('app_cat') }}"> Découvrir les chats</a>
+            </div>
+            
             <div class="img-header">
                 <img src="{{ asset('images/family-cat.png') }}" alt="Famille de chats">
             </div>
             
         </div>
-       
         
         <div class="accueil-main">
 
@@ -33,22 +38,40 @@
                     <h2> Comment ça marche ?</h2>
                 </div>
                 
-
-                <h3> Création d'un profil </h3>
-                    <div class="consult-cat">
-                        <p> Créer un ou plusieurs profils pour chaque chats que vous souhaitez mettre en ligne  </p>
-                    
-                        <a class ="cat-accueil" href="{{ path('app_cat') }}"> Les chats </a>
+                <div class="card-instruct">
+                    <h3> Création d'un profil </h3>
+                    <div class="card-instruct-main">
+                        <div class="img-card-instruct">
+                            <img src="{{ asset('images/freelancer.png') }}" alt="Personnage consultant son ordinateur">
+                        </div>
+                        
+                        <div class="consult-cat">
+                            <p> Créer un ou plusieurs profils pour chaque chats que vous souhaitez mettre en ligne  </p>
+                        </div>
                     </div>
+                    
+                </div>
+                
                     
             
         
-                <h3> Place aux matchs !</h3>
-                <p> Consultez les profils des petits félins mis en ligne <a href=""></a> 
-                    Un profil vous plaît ?
-                    Cliquez sur le bouton en forme de coeur et choisissez le nom de votre chat dans la liste déroulante.
-                    Si l'utilisateur aime votre chat en retour, c'est un match !
-                </p>
+                <div class="card-instruct">
+                    <h3> Place aux matchs !</h3>
+                    <div class="card-instruct-main">
+                        <div class="consult-cat">
+                            <p> Consultez les profils des petits félins mis en ligne. <a href=""></a> 
+                                Un profil vous plaît ?
+                                Cliquez sur le bouton en forme de coeur et choisissez le nom de votre chat dans la liste déroulante.
+                                Si l'utilisateur aime votre chat en retour, c'est un match !
+                            </p>
+                        </div>
+                        
+                        <div class="img-card-instruct">
+                            <img src="{{ asset('images/two-cats.png') }}" alt="Deux chats">
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
             
     
@@ -75,7 +98,7 @@
                     <p> Une communauté bienveillante </p>
                 </div>
             </div>
-   
+
             {% if app.user is null %}
                 <div class="login-accueil">
                     <h2> Envie de commencer l'aventure ?</h2>
@@ -88,7 +111,7 @@
                 </div>
             {% endif %}
             
-          
+
         </div>
         
     </div>

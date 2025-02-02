@@ -437,11 +437,13 @@ footer {
   margin-bottom: 200px;
  }
 
- .header-accueil p {
+ .header-accueil h2, h3 {
   text-align: center;
-  font-size: 20px;
-
+  font-weight: 500;
+  margin-bottom: 20px;
  }
+
+
 
  .header-accueil::after {
   content: "";
@@ -476,26 +478,7 @@ footer {
 
 }
 
-.instruct-site h2 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20%;
-  padding-bottom: 5px;
-  border-bottom: 1px solid var(--base-color);
-}
 
-.instruct-site {
-  background-color: var(--nav-color);
-  color: var(--base-color);
-  border-radius: 25Px;
-  padding: 20Px;
-}
-
-.instruct-site p {
-  text-align: center;
-  margin: 20px;
-}
 
 .cards-accueil {
   display: flex;
@@ -508,28 +491,34 @@ footer {
 }
 
 .cat-accueil {
+  margin-top: 20px;
   background-color: var(--base-color);
-  padding: 5px 25px;
+  padding: 10px;
   border-radius: 25px;
   border: none;
   text-align: center;
-  width: 200px;
+  width: 300px;
   margin-bottom: 30px;
   transition: 0.3s;
+  font-size: 20px
 } 
 
 .cat-accueil:hover {
-  opacity: 0.7;
+  background-color: #5E3636;
+  color: var(--base-color);
   transition: 0.3s;
 }
 
-.consult-cat {
+
+.header-accueil-btn {
+
   display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
 
 }
+
 
 
 
@@ -579,6 +568,12 @@ color: var(--base-color);
   margin-bottom: 30px;
 }
 
+.login-accueil {
+  background-color: var(--section-color);
+  padding: 30px;
+  margin-bottom: 25px;
+}
+
 .accueil-buttons {
   display: flex;
   flex-direction: row;
@@ -602,8 +597,45 @@ color: var(--base-color);
   opacity: 0.7;
 }
 
-.instruct-site {
-  margin-bottom: 200px;
+.img-card-instruct {
+  width: 300px;
+  height: 300px;
+}
+
+.img-card-instruct img{
+  width: 100%;
+}
+
+.card-instruct {
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+}
+
+.consult-cat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-instruct h3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  text-decoration: underline;
+}
+
+.card-instruct-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.card-instruct p {
+  font-size: 20px;
+  text-align: center;
+  width: 300px;
 }
 
 
@@ -614,7 +646,8 @@ color: var(--base-color);
 
 
 
-     /* 
+
+/* 
 =================================================================
 =========================CATS==================================
 =================================================================
