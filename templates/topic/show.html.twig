@@ -6,6 +6,16 @@
 <div id="wrapper-post">
 
     <h1> {{topic}} </h1>
+
+    <div class="btn-back-post">
+        <a href="{{ path('show_category', {id: topic.category.id}) }}">
+            Retour <i class="fa-solid fa-arrow-right"></i> 
+        </a>
+    </div>
+    
+
+
+
     <div class="posts">
         {% for post in posts %} 
 
@@ -44,7 +54,7 @@
             </div>
 
             {% else %}
-                Aucun post pour le moment
+            <p>Aucun post pour le moment</p> 
         {% endfor %}
     </div>
     

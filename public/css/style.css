@@ -2104,6 +2104,29 @@ text-align: center;
   cursor: pointer;
 }
 
+.btn-back-category {
+  display: flex;
+  color: var(--base-color);
+  background-color: var(--nav-color);
+  border-radius: 25px;
+  padding: 10px 25px;
+  width: 150px;
+  cursor: pointer;
+  text-align: center;
+  justify-content: center;
+  margin-left: 5px;
+}
+
+.btn-back-category a {
+  color: var(--base-color);
+}
+
+.btn-back-category i {
+  margin-left: 5px;
+}
+
+
+
     /* 
 =================================================================
 =========================POST FORUM==================================
@@ -2122,6 +2145,12 @@ text-align: center;
   align-items: center;
   justify-content: center;
   margin-bottom: 50px;
+}
+
+#wrapper-post p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .topic-avatar {
@@ -2222,6 +2251,28 @@ text-align: center;
   margin-right: 5px;
   font-size: 16px;
 }
+
+.btn-back-post {
+  display: flex;
+  color: var(--base-color);
+  background-color: var(--nav-color);
+  border-radius: 25px;
+  padding: 10px 25px;
+  width: 150px;
+  cursor: pointer;
+  text-align: center;
+  justify-content: center;
+  margin-left: 5px;
+}
+
+.btn-back-post a {
+  color: var(--base-color);
+}
+
+.btn-back-post i {
+  margin-left: 5px;
+}
+
 
     /* 
 =================================================================
@@ -3037,7 +3088,7 @@ width: 50%;
   
 
   
- }
+}
 
 
 

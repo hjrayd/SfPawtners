@@ -7,13 +7,16 @@
 <div id="wrapper-topic">
 
     <h1> {{category}} </h1>
+    <div class="btn-back-category">
+        <a href="{{ path('app_category') }}"> Retour <i class="fa-solid fa-arrow-right"></i>  </a>
+    </div>
 
 
     <div class="topics">
         {% for topic in topics %} <br>
 
             {# Bouton de suppression #}
-           <div class="topic">
+        <div class="topic">
                 <a class="topic-name" href="{{ path('show_topic', {id: topic.id}) }}">{{ topic }} </a> par 
                 {% if topic.user %}
                     <strong> <a href="{{ path('show_user', {id: topic.user.id}) }}">{{ topic.user}} </a></strong>

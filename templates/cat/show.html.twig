@@ -7,8 +7,10 @@
 
         <h1> Détail de {{ cat }} </h1>
 
+      
+
             <div class="cat-images">
-               
+
 
                 <aside>
                     <p>Propriétaire : <a href="{{ path('show_user', {'id':cat.user.id})}}"> {{ cat.user }} </a> </p> 
@@ -19,8 +21,7 @@
                         </form>   
                     {% endif %}   
                 </aside>
-                         
-          
+
     
                 {# On récupère la première image uploadé pour la mettre dans une div à part #}
                 <div class="main-cat-img">
@@ -44,8 +45,8 @@
                                             {% if userLike %}
                                                 <a href="{{ path('delete_like', {'id': userLike.id}) }}" 
                                                     <i class="fa-solid fa-heart"></i>
-                                               </a>
-                                               
+                                            </a>
+
                                                 {% else %}
                                                 <i class="fa-regular fa-heart"  id ="btn-heart"> </i> 
                                             {% endif %}    
