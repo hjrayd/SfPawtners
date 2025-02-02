@@ -91,10 +91,10 @@ class Message
         return $this->messageContent;
     }
 
-  
+
     public function getDate(): ?string 
     {
-        return $this->messageDate->format('d.m.Y H:i:s');
+        return $this->messageDate->format('d/m/Y H:i');
     }
     
 
