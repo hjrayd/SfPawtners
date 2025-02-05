@@ -21,7 +21,6 @@ class UserFilterType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'placeholder' => 'Rechercher...',
-                   
                 ]
             ])
             ->add('Valider', SubmitType::class, [

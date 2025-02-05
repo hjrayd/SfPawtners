@@ -14,16 +14,18 @@
                         <td>
                             <div class="correspondent">
                                 {% if correspondent.avatar %}
-                                    <img src="{{ asset(correspondent.avatar) }}" alt="avatar de {{correspondent}}" class="correspondent-avatar">
+                                    <img src="{{ asset(correspondent.avatar) }}" alt="avatar de {{ correspondent }}" class="correspondent-avatar">
+                                {% else %}
+                                    <img src="{{ asset('images/blank-profile-picture-973460_1280.png') }}" alt="avatar de {{ correspondent.pseudo }}" class="correspondent-avatar">
                                 {% endif %}
                                 <a href="{{ path('show_message', {id: correspondent.id}) }}">
                                     {{ correspondent.pseudo }}
                                 </a>
 
                                 {# <div class="last-message">
-                                    {{lastMessage}}
+                                    {{ lastMessage }}
                                 </div>  
-                                 #}
+                                #}
                             </div>
                         </td>
                     </tr>

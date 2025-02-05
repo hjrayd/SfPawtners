@@ -31,14 +31,16 @@ class EditPasswordType extends AbstractType
                 ],
                 'second_options' => ['label' => 'Confirmer le mot de passe'],
                 'mapped' => false,
-           
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            "data_class" => null
-         ]);
+            "data_class" => null,
+            'csrf_protection' => true,
+            'csrf_field_name' => '_token',
+            'csrf_token_id'   => 'task_item'
+        ]);
     }
 }

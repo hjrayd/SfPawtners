@@ -29,7 +29,7 @@ class ResetPasswordType extends AbstractType
             ],
             'second_options' => ['label' => 'Confirmer le mot de passe'],
             'mapped' => false,
-       
+
         ]);
     }
 

@@ -27,7 +27,7 @@ class EditAvatarType extends AbstractType
                         'image/jpeg',
                         'image/jpg',
                         'image/png',
-                     
+
                     ],
                     'mimeTypesMessage' => 'Veuillez importer une image qui respecte les formats acceptés.',
                 ])
@@ -39,7 +39,10 @@ class EditAvatarType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            "data_class" => User::class
-         ]);
+            "data_class" => User::class,
+            'csrf_protection' => true,
+            'csrf_field_name' => '_token',
+            'csrf_token_id'   => 'task_item',
+        ]);
     }
 }
