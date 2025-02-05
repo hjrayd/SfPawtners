@@ -37,10 +37,7 @@ class EditPasswordType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            "data_class" => null,
-            'csrf_protection' => true,
-            'csrf_field_name' => '_token',
-            'csrf_token_id'   => 'task_item'
+            "data_class" => null
         ]);
     }
 }

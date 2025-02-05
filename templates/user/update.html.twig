@@ -20,7 +20,6 @@
                 <h2> Modifier mon pseudo </h2>
                 {{ form_start(formPseudo) }}
                 {{ form_widget(formPseudo) }}
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('pseudo') }}">
                 <button type="submit">Mettre à jour</button>
                 {{ form_end(formPseudo) }} 
             </div>
@@ -29,7 +28,6 @@
                 <h2> Modifier mon mot de passe </h2>
                 {{ form_start(formPassword) }}
                 {{ form_widget(formPassword) }}
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('password') }}">
                 <button type="submit">Mettre à jour</button>
                 {{ form_end(formPassword) }}
             </div>
