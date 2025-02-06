@@ -81,6 +81,18 @@ class CatController extends AbstractController
             {
                  $filters = $filterForm->getData(); //On récupère les données du formulaire
                 $data = $catRepository->findByFilters($filters);
+
+                if($userLogin) {
+                    $catsUser = $userLogin->getCats(); 
+
+                    //On filtre les chats à l'aide du array_filter qui exclue les chats de l'utilisateur connecté
+                    $data = array_filter($data, function ($cat) use ($catsUser) {
+                    
+                    //Si l'objet $cat est contenu dans le tableau $catsUser -> cela retourne true est il est exclu
+                    return !$catsUser->contains($cat);
+                    });
+                    }
+
             }
 
              //Pagination des chats à l'aide de KNB Paginator
@@ -91,26 +103,10 @@ class CatController extends AbstractController
                 12 //On affiche 12 chats par pages
                 );
 
-              // Pour chaque chat, on fait une requête API pour récupérer le nom de la ville
-            foreach ($cats as $cat) {
-                if ($cat->getCity()) 
-                {
-                    $response = $httpClient->request('GET', 'https://geo.api.gouv.fr/communes/' . $cat->getCity());
-                    $responseContent = $response->getContent();
-                    $cityData = json_decode($responseContent, true); // On convertit la réponse JSON en tableau
-
-                    if (!empty($cityData)) {
-                        $cat->cityName = $cityData['nom']; // On attribue le nom de la ville à une propriété 'cityName'
-                    } else {
-                        $cat->cityName = 'Inconnu'; // Si la ville est introuvable, on met 'Inconnu'
-                    }
-                }
-            }
             return $this->render('cat/index.html.twig', [
                 'cats' => $cats,
                 'homeForm' => $homeForm->createView(),
-                'filterForm' => $filterForm->createView(),
-                'cityName' => $cityName
+                'filterForm' => $filterForm->createView()
             ]);
         
     }
@@ -199,7 +195,7 @@ class CatController extends AbstractController
                         } catch (FileException $e) {
                             
                             // Si l'upload rencontre un problème on affiche un message d'erreur
-                            $this->addFlash('error', 'Erreur lors de l\'upload de l\'image : ' . $e->getMessage());
+                            $this->addFlash('message', 'Erreur lors de l\'upload de l\'image : ' . $e->getMessage());
                             
                             //Et on redirige vers le formulaire
                             return $this->redirectToRoute('new_cat');
@@ -223,8 +219,9 @@ class CatController extends AbstractController
             } catch (\Exception $e) 
             
             {
-                $this->addFlash('error', 'Erreur lors de l\'enregistrement : ' . $e->getMessage());
+                $this->addFlash('message', 'Erreur lors de l\'enregistrement : ' . $e->getMessage());
             }
+            $this->addFlash('message', 'Votre chat a bien été ajouté !');
             return $this->redirectToRoute('app_cat'); // Redirection si succès
         } else {
 
@@ -314,24 +311,7 @@ class CatController extends AbstractController
             // On traite le formulaire
             $form->handleRequest($request);
 
-            $cityName = null;
-            if ($cat->getCity()) {
-                // Requête à l'API pour récupérer les informations de la ville par code INSEE
-                $response = $httpClient->request('GET', 'https://geo.api.gouv.fr/communes/' . $cat->getCity());
-                
-                // Récupérer le contenu de la réponse de l'API
-                $responseContent = $response->getContent();
-                $cityData = json_decode($responseContent, true);  // Convertir la réponse JSON en tableau
-            
-                // Vérifier si des données sont renvoyées
-                if (!empty($cityData)) {
-                    // Extraire le nom de la ville à partir des données
-                    $cityName = $cityData['nom'];  // Nom de la ville (la clé 'nom' contient la ville)
-                } else {
-                    $cityName = 'Inconnu';  // Si aucun résultat n'est trouvé
-                }
-            }
-            
+        
             //Si il est soumit et valide
             if ($form->isSubmitted() && $form->isValid()) {
                 $like->setCatOne($cat); // On attribue au $catOne dans Like le chat qu'on like
@@ -422,7 +402,6 @@ class CatController extends AbstractController
                     return $this->render('cat/show.html.twig', [
                         'cat' => $cat,
                         'form' => $form->createView(),
-                        'cityName' => $cityName,
                         'alreadyLike' => $alreadyLike,
                         'userLike' => $userLike
                     ]);

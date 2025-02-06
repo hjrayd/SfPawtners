@@ -2635,6 +2635,72 @@ text-align: center;
  }
 
 
+ /* 
+=================================================================
+=========================PASSWORD FORGOTTEN==================================
+=================================================================
+ */
+
+ #wrapper-password {
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+  min-height: 100vh;
+ }
+
+ #wrapper-password h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+ }
+
+ #wrapper-password h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+ }
+
+ .form-password {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ }
+
+ .form-password label {
+  margin-right: 15px;
+  font-size: 20px;
+ }
+
+ .form-password input {
+  border-radius: 25px;
+
+  padding-left: 5px;
+  font-size: 20px;
+  border: 1px solid var(--text-color);
+ }
+
+ .form-password button {
+  display: flex;
+  background-color: var(--nav-color);
+  color: var(--base-color);
+  border-radius: 25px;
+  padding: 5px 15px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+ }
+
+ .btn-password-forgot {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ margin-top: 20px;
+ } 
+
+
+
 
 
 /* 

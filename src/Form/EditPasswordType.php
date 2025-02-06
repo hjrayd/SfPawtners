@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -37,7 +38,10 @@ class EditPasswordType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            "data_class" => null
+            "data_class" => User::class,
+            'csrf_protection' => true,
+            'csrf_field_name' => '_editPassword',
+            'csrf_token_id'   => 'edit_password',
         ]);
     }
 }
