@@ -40,6 +40,12 @@ class TopicController extends AbstractController
 
         $topic = $topicRepository->find($id);
 
+        if(!$topic) 
+        {
+            $this->addFlash('message', 'Ce topic n\'existe pas');
+            return $this->redirectToRoute('app_category');
+        }
+
         $post = new Post();
         $post->setTopic($topic);
         $post->setUser($user);
@@ -71,19 +77,35 @@ class TopicController extends AbstractController
     public function lock($id , TopicRepository $topicRepository, EntityManagerInterface $entityManager): Response
     {
         $userLogin = $this->getUser();
+
         if(!$userLogin) 
         {
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
 
+        $roles = $userLogin->getRoles();
+
         $topic = $topicRepository -> find($id);
+
+        if(!$topic)
+        {
+            $this->addFlash('message', 'Ce topic n\'existe pas');
+            return $this->redirectToRoute('app_category');
+        }
+
         $categoryId = $topic->getCategory()->getId();
+
+        if($topic->getUser() === $userLogin || in_array("ROLE_ADMIN", $roles)) {
 
         $topic -> setLocked(true);
         $entityManager -> persist($topic);
         $entityManager -> flush();
 
         return $this->redirectToRoute('show_category', ['id' => $categoryId]);
+        } else {
+            $this->addFlash('message', 'Vous ne pouvez pas verrouiller ce topic.');
+            return $this->redirectToRoute('app_category');
+        }
 
 
     }
@@ -92,19 +114,33 @@ class TopicController extends AbstractController
     public function unlock($id , TopicRepository $topicRepository, EntityManagerInterface $entityManager): Response
     {   
         $userLogin = $this->getUser();
+
         if(!$userLogin) 
         {
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
+
+        $roles = $userLogin->getRoles();
+
         $topic = $topicRepository -> find($id);
+        if(!$topic)
+        {
+            $this->addFlash('message', 'Ce topic n\'existe pas');
+            return $this->redirectToRoute('app_category');
+        }
+
         $categoryId = $topic->getCategory()->getId();
 
+        if($topic->getUser() === $userLogin || in_array("ROLE_ADMIN", $roles)) {
         $topic -> setLocked(false);
         $entityManager -> persist($topic);
         $entityManager -> flush();
 
         return $this->redirectToRoute('show_category', ['id' => $categoryId]);
-
+        } else {
+            $this->addFlash('message', 'Vous ne pouvez pas déverrouiller ce topic.');
+            return $this->redirectToRoute('app_category');
+        }
 
     }
 
@@ -112,16 +148,23 @@ class TopicController extends AbstractController
     public function delete($id , TopicRepository $topicRepository, EntityManagerInterface $entityManager, PostRepository $postRepository): Response
     {
         $userLogin = $this->getUser();
+
         if(!$userLogin) 
         {
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
+
+        $roles = $userLogin->getRoles();
+        
         $topic = $topicRepository -> find($id);
 
         if(!$topic) {
-            throw $this->CreateNotFoundException('Topic non trouvé') ;
+            $this->addFlash('message', 'Ce topic n\'existe pas');
+            return $this->redirectToRoute('app_category');
         }
 
+
+        if($topic->getUser() === $userLogin || in_array("ROLE_ADMIN", $roles)) {
         $posts = $postRepository -> findBy ([
             "topic" => $topic
         ]);
@@ -138,6 +181,10 @@ class TopicController extends AbstractController
         $this->addFlash('message', 'Le topic a bien été supprimé');
 
         return $this->redirectToRoute('show_category', ['id' => $categoryId]);
+    } else {
+        $this->addFlash('message', 'Vous ne pouvez pas supprimer ce topic.');
+        return $this->redirectToRoute('app_category');
+    }
 
     }
 }

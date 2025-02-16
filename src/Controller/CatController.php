@@ -240,8 +240,19 @@ class CatController extends AbstractController
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
 
+        $roles = $userLogin->getRoles();
+
+
         $cat = $catRepository->find($id);
 
+        if(!$cat) {
+            $this->addFlash('message', 'Le chat n\'existe pas');
+            return $this->redirectToRoute('app_cat');
+        }
+
+        if($cat->getUser() === $userLogin || in_array("ROLE_ADMIN", $roles)) 
+        {
+        
             $likes = $likeRepository->findBy([
                 'catOne' => $cat
             ]);
@@ -280,19 +291,32 @@ class CatController extends AbstractController
             $this->addFlash('message', $cat.' a bien été supprimé');
 
 
-        return $this->redirectToRoute('app_cat');
+            return $this->redirectToRoute('app_cat');
+            
+        } else {
+            $this->addFlash('message', 'Vous n\'avez pas les autorisations pour effectuer cette commande');
+            return $this->redirectToRoute('app_cat');
+        }
+
+        
 
         
     }
 
 
     #[Route('/cat/{id}', name: 'show_cat')]
-    public function show(HttpClientInterface $httpClient, Cat $cat, LikeRepository $likeRepository, SendEmailService $mail,EntityManagerInterface $entityManager, CatRepository $catRepository, MatcheRepository $matcheRepository, Request $request): Response
+    public function show(HttpClientInterface $httpClient, int $id, LikeRepository $likeRepository, SendEmailService $mail,EntityManagerInterface $entityManager, CatRepository $catRepository, MatcheRepository $matcheRepository, Request $request): Response
     {
+
+            $cat = $catRepository->find($id);
+            if(!$cat)
+            {
+                $this->addFlash('message', 'Ce chat n’existe pas.');
+                return $this->redirectToRoute('app_cat');
+            }
 
             // On récupère le user connecté
             $user = $this->getUser();
-            
             $alreadyLike = null;
 
             $userLike = null;

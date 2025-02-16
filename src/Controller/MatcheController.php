@@ -43,6 +43,15 @@ class MatcheController extends AbstractController
 
         }
 
+        // Récupération des chats de l'utilisateur connecté
+        $userCats = $userLogin->getCats()->toArray();
+
+        // Vérifier si l'utilisateur possède l'un des chats liés au match
+        if (!in_array($match->getCatOne(), $userCats) && !in_array($match->getCatTwo(), $userCats)) {
+            $this->addFlash('message', 'Vous n\'avez pas les droits pour supprimer ce match.');
+            return $this->redirectToRoute('app_matche');
+        }
+
         $likeOne = $likeRepository-> findOneBy ([
             'catOne' => $match->getCatOne(),
             'catTwo' => $match->getCatTwo()

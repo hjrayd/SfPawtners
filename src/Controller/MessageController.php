@@ -55,6 +55,11 @@ class MessageController extends AbstractController
         //On interroge la BDD pour associer le paramètre receiver à $id
         $receiver = $userRepository->find($id);
 
+        if(!$receiver) {
+            $this->addFlash('message', 'Cet utilisateur n\'existe pas.');
+            return $this->redirectToRoute('app_cat');
+        }
+
         //On utilise notre requête DQL pour afficher tous les messages entre deux userss
         $messages = $messageRepository->findAllMessages($user, $receiver);
 

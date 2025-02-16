@@ -36,14 +36,29 @@ class PostController extends AbstractController
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
 
+        $roles = $userLogin->getRoles();
+
         $post = $postRepository -> find($id);
+        
+
+        if(!$post) {
+            $this->addFlash('message', 'Ce post n\'existe pas.');
+            return $this->redirectToRoute('app_category');
+        }
 
         $topicId = $post->getTopic()->getId();
-        $entityManager -> remove($post);
+
+        if($post->getUser() === $userLogin || in_array("ROLE_ADMIN", $roles))
+        {
+            $entityManager -> remove($post);
         $entityManager->flush();
         $this->addFlash('message', 'Le post a bien été supprimé');
 
         return $this->redirectToRoute('show_topic', ['id' => $topicId]);
+        } else {
+            $this->addFlash('message', 'Vous n\'avez pas les droits pour supprimer ce post');
+            return $this->redirectToRoute('show_topic', ['id' => $topicId]);
+        }
 
     }
 }

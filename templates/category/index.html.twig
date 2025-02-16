@@ -41,7 +41,7 @@
 
                     {% for topic in topics %}
                     <div class="category-topic">
-                        <a href="{{path('show_topic', {'id' : topic.id}) }}">{{topic}}  </a> <span>le {{topic.dateTopic}}</span> 
+                        <a href="{{path('show_topic', {'id' : topic.id}) }}">{{topic}}  </a> <span> par {{topic.user}} le {{topic.dateTopic}}</span> 
                     </div>
                     {% endfor %}
 

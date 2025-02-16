@@ -41,6 +41,19 @@ class LikeController extends AbstractController
         }
 
         $like = $likeRepository->find($id); //On recherche l'id du like passé dans l'URL
+        if(!$like) {
+            $this->addFlash('message', 'Ce like n\'existe pas');
+            return $this->redirectToRoute('app_cat');
+        }
+
+    
+        $userCats = $userLogin->getCats()->toArray();
+        if (!in_array($like->getCatTwo(), $userCats)) {
+            $this->addFlash('message', 'Vous n\'avez pas les droits pour supprimer ce like.');
+            return $this->redirectToRoute('app_like');
+        }
+
+
 
 
         $match = $matcheRepository-> findOneBy ([

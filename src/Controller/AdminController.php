@@ -59,6 +59,8 @@ class AdminController extends AbstractController
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
 
+        $roles = $userLogin->getRoles();
+
         $user = $userRepository->find($id);
 
         if(!$user) {
@@ -66,11 +68,16 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('app_admin');
         }
 
+        if (in_array("ROLE_ADMIN", $roles)) {
         $user->setBan(true);
         $entityManager->flush();
 
         $this->addFlash('message', 'L\'utilisateur à bien été banni');
         return $this->redirectToRoute('app_admin');
+        } else {
+            $this->addFlash('message', 'Vous n\'avez pas l\'autorisation d\effectuer cette action.');
+            return $this->redirectToRoute('app_cat');
+        }
 
 
     }
@@ -82,6 +89,8 @@ class AdminController extends AbstractController
         if(!$userLogin) {
             throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
         }
+
+        $roles = $userLogin->getRoles();
         
         $user = $userRepository->find($id);
 
@@ -90,11 +99,16 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('app_admin');
         }
 
+        if (in_array("ROLE_ADMIN", $roles)) {
         $user->setBan(false);
         $entityManager->flush();
 
         $this->addFlash('message', 'L\'utilisateur à bien été débanni');
         return $this->redirectToRoute('app_admin');
+        } else {
+            $this->addFlash('message', 'Vous n\'avez pas l\'autorisation d\'effectuer cette action.');
+            return $this->redirectToRoute('app_cat');
+        }
 
     }
 

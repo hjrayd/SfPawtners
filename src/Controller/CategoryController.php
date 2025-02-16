@@ -62,6 +62,11 @@ class CategoryController extends AbstractController
 
         $category = $categoryRepository->find($id);
 
+        if(!$category) {
+            $this->addFlash('message', 'Cette catégorie n\'existe pas.');
+            return $this->redirectToRoute('app_category');
+        }
+
 
         $topic = new Topic();
         $topic->setCategory($category);
@@ -99,6 +104,17 @@ class CategoryController extends AbstractController
         }
         
         $category = $categoryRepository -> find($id);
+        if(!$category) {
+            $this->addFlash('message', 'Cette catégorie n\'existe pas.');
+            return $this->redirectToRoute('app_category');
+        }
+
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('message', 'Vous n\'avez pas les autorisations pour effectuer cette commande.');
+            return $this->redirectToRoute('app_category');
+        }
+        
+
         $topics = $topicRepository -> findBy([
             "category" => $category
         ]);

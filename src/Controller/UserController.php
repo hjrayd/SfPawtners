@@ -247,6 +247,12 @@ class UserController extends AbstractController
 
         //On récupère l'id du user dans l'URL pour afficher ses informations
         $user = $userRepository->find($id);
+
+        if(!$user)
+        {
+            $this->addFlash('message', 'Cet utilisateur n\'existe pas.');
+            return $this->redirectToRoute('app_cat');
+        }
         
         //On définit le reviewer comme celui étant l'utilisateur connecté
         $reviewer = $this->getUser();

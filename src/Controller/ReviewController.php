@@ -30,19 +30,26 @@ class ReviewController extends AbstractController
 
         $review = $reviewRepository->find($id);
 
-        $role = $user->getRoles();
+        if(!$review)
+        {
+            $this->addFlash('message', 'Cette avis n\'existe pas');
+            return $this->redirectToRoute('show_user', ['id' => $review->getReviewee()->getId()]);
+        }
 
-        
-        if($review->getReviewer() !== $user && !in_array("ROLE_ADMIN", $role)) {
+        $roles = $user->getRoles();
+
+        if($review->getReviewer() === $user || in_array("ROLE_ADMIN", $roles)){
+            $entityManager -> remove($review);
+            $entityManager -> flush();
+
+        $this->addFlash('message', 'L\'avis à bien été supprimé');
+        return $this->redirectToRoute('show_user', ['id' => $review->getReviewee()->getId()]);
+        } else {
             $this->addFlash('message', 'Vous ne pouvez pas supprimé cet avis');
             return $this->redirectToRoute('show_user', ['id' => $review->getReviewee()->getId()]);
         }
 
-        $entityManager -> remove($review);
-        $entityManager -> flush();
-
-        $this->addFlash('message', 'L\'avis à bien été supprimé');
-        return $this->redirectToRoute('show_user', ['id' => $review->getReviewee()->getId()]);
+        
 
 
     }
